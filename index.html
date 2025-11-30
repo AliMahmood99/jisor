@@ -1547,6 +1547,20 @@
         // Make switchTab available globally
         window.switchTab = switchTab;
 
+        // Handle URL hash navigation
+        function handleHashNavigation() {
+            const hash = window.location.hash.substring(1); // Remove #
+            if (hash && (hash === 'overview' || hash === 'applications' || hash === 'pool')) {
+                switchTab(hash);
+            }
+        }
+
+        // Handle hash changes
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        // Check hash on load
+        window.addEventListener('DOMContentLoaded', handleHashNavigation);
+
         // Update time
         function updateTime() {
             const now = new Date();
