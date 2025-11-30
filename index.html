@@ -1475,14 +1475,20 @@
         window.addEventListener('DOMContentLoaded', function() {
             campaignData = JSON.parse(localStorage.getItem('jisorCampaignData'));
             if (campaignData) {
+                console.log('Loading data...', campaignData);
                 loadOverview(campaignData);
                 loadApplicationsTab(campaignData);
                 loadPoolTab(campaignData);
+                console.log('Data loaded successfully');
+            } else {
+                console.error('No campaign data found in localStorage');
             }
         });
 
-        // Tab switching
+        // Tab switching function
         function switchTab(tabName) {
+            console.log('Switching to tab:', tabName);
+
             // Update tab buttons
             document.querySelectorAll('.main-tab').forEach(tab => {
                 tab.classList.remove('active');
@@ -1495,10 +1501,17 @@
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
-            document.getElementById(tabName + '-tab').classList.add('active');
+
+            const targetTab = document.getElementById(tabName + '-tab');
+            if (targetTab) {
+                targetTab.classList.add('active');
+                console.log('Successfully switched to:', tabName);
+            } else {
+                console.error('Tab not found:', tabName + '-tab');
+            }
         }
 
-        // Make function global
+        // Make function global immediately
         window.switchTab = switchTab;
 
         // ==================== OVERVIEW TAB ====================
