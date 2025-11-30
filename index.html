@@ -1461,58 +1461,104 @@
         let currentPoolFilter = 'all';
         let campaignData = null;
 
+        // Tab switching function - Define FIRST
+        function switchTab(tabName) {
+            console.log('🔄 Switching to tab:', tabName);
+
+            // Update tab buttons
+            const tabs = document.querySelectorAll('.main-tab');
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            // Update tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                if (content.id === tabName + '-tab') {
+                    content.classList.add('active');
+                    console.log('✅ Showing:', content.id);
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // Make switchTab available globally
+        window.switchTab = switchTab;
+
         // Update time
         function updateTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+            const timeEl = document.getElementById('current-time');
+            if (timeEl) {
+                timeEl.textContent = `${hours}:${minutes}`;
+            }
         }
+
+        // Start time updates
         updateTime();
         setInterval(updateTime, 60000);
 
-        // Load all data on page load
-        window.addEventListener('DOMContentLoaded', function() {
-            campaignData = JSON.parse(localStorage.getItem('jisorCampaignData'));
-            if (campaignData) {
-                console.log('Loading data...', campaignData);
-                loadOverview(campaignData);
-                loadApplicationsTab(campaignData);
-                loadPoolTab(campaignData);
-                console.log('Data loaded successfully');
-            } else {
-                console.error('No campaign data found in localStorage');
-            }
-        });
+        // Load all data immediately when scripts load
+        (function initializeApp() {
+            console.log('🚀 Initializing app...');
 
-        // Tab switching function
-        function switchTab(tabName) {
-            console.log('Switching to tab:', tabName);
+            // Try to get data from localStorage
+            const storedData = localStorage.getItem('jisorCampaignData');
 
-            // Update tab buttons
-            document.querySelectorAll('.main-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.dataset.tab === tabName) {
-                    tab.classList.add('active');
+            if (storedData) {
+                try {
+                    campaignData = JSON.parse(storedData);
+                    console.log('✅ Data loaded from localStorage:', {
+                        applications: campaignData.applications.length,
+                        acceptedPool: campaignData.acceptedPool.length
+                    });
+                } catch (e) {
+                    console.error('❌ Error parsing data:', e);
+                    return;
                 }
-            });
-
-            // Update tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-
-            const targetTab = document.getElementById(tabName + '-tab');
-            if (targetTab) {
-                targetTab.classList.add('active');
-                console.log('Successfully switched to:', tabName);
             } else {
-                console.error('Tab not found:', tabName + '-tab');
+                console.error('❌ No data in localStorage!');
+                return;
+            }
+
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadAllData);
+            } else {
+                loadAllData();
+            }
+        })();
+
+        function loadAllData() {
+            if (!campaignData) {
+                console.error('❌ No campaign data available');
+                return;
+            }
+
+            console.log('📊 Loading all tabs data...');
+
+            try {
+                loadOverview(campaignData);
+                console.log('✅ Overview loaded');
+
+                loadApplicationsTab(campaignData);
+                console.log('✅ Applications loaded');
+
+                loadPoolTab(campaignData);
+                console.log('✅ Pool loaded');
+
+                console.log('🎉 All data loaded successfully!');
+            } catch (error) {
+                console.error('❌ Error loading data:', error);
             }
         }
-
-        // Make function global immediately
-        window.switchTab = switchTab;
 
         // ==================== OVERVIEW TAB ====================
         function loadOverview(data) {
