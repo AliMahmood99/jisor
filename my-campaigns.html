@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Campaigns - JISOR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --primary-light: #818CF8;
+            --accent: #EC4899;
+            --accent-light: #F472B6;
+
+            --success: #10B981;
+            --success-bg: #D1FAE5;
+            --warning: #F59E0B;
+            --warning-bg: #FEF3C7;
+            --error: #EF4444;
+            --error-bg: #FEE2E2;
+            --info: #3B82F6;
+            --info-bg: #DBEAFE;
+
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+
+            --gradient-primary: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            --gradient-accent: linear-gradient(135deg, #EC4899 0%, #F97316 100%);
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+            --shadow-card: 0 2px 12px rgba(99,102,241,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .mobile-container {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--gray-50);
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            background: white;
+        }
+
+        .time {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 8px 20px 20px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--gray-50);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray-600);
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 0 20px 20px;
+            background: white;
+        }
+
+        .stat-card {
+            padding: 16px;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.08;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card.solo::before {
+            background: var(--gradient-primary);
+        }
+
+        .stat-card.mass::before {
+            background: var(--gradient-accent);
+        }
+
+        .stat-card.solo {
+            border-color: rgba(99,102,241,0.2);
+        }
+
+        .stat-card.mass {
+            border-color: rgba(236,72,153,0.2);
+        }
+
+        .stat-card.active {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card.solo.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+        }
+
+        .stat-card.mass.active {
+            background: var(--gradient-accent);
+            border-color: transparent;
+        }
+
+        .stat-card.active::before {
+            opacity: 0;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card.solo .stat-badge {
+            background: rgba(99,102,241,0.15);
+            color: var(--primary);
+        }
+
+        .stat-card.mass .stat-badge {
+            background: rgba(236,72,153,0.15);
+            color: var(--accent);
+        }
+
+        .stat-card.active .stat-badge {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-card.solo .stat-icon {
+            background: rgba(99,102,241,0.15);
+            color: var(--primary);
+        }
+
+        .stat-card.mass .stat-icon {
+            background: rgba(236,72,153,0.15);
+            color: var(--accent);
+        }
+
+        .stat-card.active .stat-icon {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-card.solo .stat-label { color: var(--primary); }
+        .stat-card.mass .stat-label { color: var(--accent); }
+        .stat-card.active .stat-label { color: rgba(255,255,255,0.9); }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-card.solo .stat-value { color: var(--primary); }
+        .stat-card.mass .stat-value { color: var(--accent); }
+        .stat-card.active .stat-value { color: white; }
+
+        .stat-desc {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .stat-card.solo .stat-desc { color: var(--gray-500); }
+        .stat-card.mass .stat-desc { color: var(--gray-500); }
+        .stat-card.active .stat-desc { color: rgba(255,255,255,0.8); }
+
+        /* Filters */
+        .filters-section {
+            padding: 16px 20px;
+            background: white;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .filters-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .filters-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .filters-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.25s;
+        }
+
+        .filter-chip.inactive {
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .filter-chip.active {
+            background: var(--gray-900);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .filter-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .filter-chip.inactive .filter-dot.active { background: var(--success); }
+        .filter-chip.inactive .filter-dot.pending { background: var(--warning); }
+        .filter-chip.inactive .filter-dot.completed { background: var(--info); }
+        .filter-chip.active .filter-dot { background: rgba(255,255,255,0.6); }
+
+        /* Campaigns List */
+        .campaigns-section {
+            padding: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .section-count {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 600;
+        }
+
+        .campaigns-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Campaign Card */
+        .campaign-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--gray-100);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .campaign-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-strip {
+            height: 4px;
+        }
+
+        .card-strip.solo { background: var(--gradient-primary); }
+        .card-strip.mass { background: var(--gradient-accent); }
+
+        .card-header {
+            padding: 16px 20px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .type-badge.solo {
+            background: rgba(99,102,241,0.1);
+            color: var(--primary);
+        }
+
+        .type-badge.mass {
+            background: rgba(236,72,153,0.1);
+            color: var(--accent);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .status-badge.pending {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .status-badge.completed {
+            background: var(--info-bg);
+            color: var(--info);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .status-badge.active .status-dot {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .card-body {
+            padding: 0 20px 16px;
+        }
+
+        .campaign-name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .campaign-id {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            color: var(--gray-400);
+            margin-bottom: 16px;
+        }
+
+        .campaign-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--gray-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        .meta-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 10px;
+            color: var(--gray-400);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .meta-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .card-footer {
+            padding: 16px 20px;
+            background: var(--gray-50);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .budget-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .budget-label {
+            font-size: 10px;
+            color: var(--gray-400);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .budget-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .view-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .view-btn.solo {
+            background: var(--primary);
+            color: white;
+        }
+
+        .view-btn.mass {
+            background: var(--accent);
+            color: white;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: 90px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .fab:hover {
+            transform: translateX(50%) scale(1.1);
+            box-shadow: 0 12px 32px rgba(99,102,241,0.5);
+        }
+
+        /* Bottom Tab Bar */
+        .bottom-tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 8px 20px;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom, 0));
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 99;
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            color: var(--gray-400);
+        }
+
+        .tab-item.active {
+            color: var(--primary);
+        }
+
+        .tab-item.active::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .tab-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .tab-label {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .campaign-card {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        .campaign-card:nth-child(1) { animation-delay: 0.05s; }
+        .campaign-card:nth-child(2) { animation-delay: 0.1s; }
+        .campaign-card:nth-child(3) { animation-delay: 0.15s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <svg width="17" height="12" fill="currentColor">
+                    <rect x="0" y="3" width="3" height="9" rx="1"/>
+                    <rect x="4.5" y="2" width="3" height="10" rx="1"/>
+                    <rect x="9" y="0" width="3" height="12" rx="1"/>
+                    <rect x="13.5" y="0" width="3" height="12" rx="1"/>
+                </svg>
+                <svg width="16" height="11" fill="currentColor">
+                    <path d="M8 2.4C10.9 2.4 13.5 3.6 15.2 5.6L16 4.7C14 2.4 11.1 1 8 1C4.9 1 2 2.4 0 4.7L0.8 5.6C2.5 3.6 5.1 2.4 8 2.4Z"/>
+                </svg>
+                <svg width="25" height="12" fill="currentColor">
+                    <rect x="0" y="0" width="22" height="12" rx="3" stroke="currentColor" stroke-width="1" fill="none"/>
+                    <rect x="2" y="2" width="17" height="8" rx="1.5"/>
+                    <path d="M23 4v4a2 2 0 0 0 2-2 2 2 0 0 0-2-2z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <h1 class="header-title">My Campaigns</h1>
+                <div class="header-actions">
+                    <button class="header-btn">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="9" r="7"/>
+                            <path d="M14 14l3 3"/>
+                        </svg>
+                    </button>
+                    <button class="header-btn">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 6h12M3 12h12M3 18h12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <p class="header-subtitle">Manage and track all your campaigns</p>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card solo active" onclick="filterCampaigns('solo')">
+                <span class="stat-badge">You Choose</span>
+                <div class="stat-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="10" cy="6" r="4"/>
+                        <path d="M4 18v-2a6 6 0 0112 0v2"/>
+                    </svg>
+                </div>
+                <div class="stat-label">Solo Campaigns</div>
+                <div class="stat-value">7</div>
+                <div class="stat-desc">Direct influencer selection</div>
+            </div>
+
+            <div class="stat-card mass" onclick="filterCampaigns('mass')">
+                <span class="stat-badge">Open Call</span>
+                <div class="stat-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="5" cy="5" r="3"/>
+                        <circle cx="15" cy="5" r="3"/>
+                        <circle cx="10" cy="14" r="3"/>
+                        <path d="M8 6l2 6M12 6l-2 6"/>
+                    </svg>
+                </div>
+                <div class="stat-label">Mass Campaigns</div>
+                <div class="stat-value">5</div>
+                <div class="stat-desc">Influencers apply to campaign</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <div class="filters-label">Filter by Status</div>
+            <div class="filters-scroll">
+                <button class="filter-chip active">
+                    All
+                    <span style="background: rgba(0,0,0,0.15); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700;">12</span>
+                </button>
+                <button class="filter-chip inactive">
+                    <span class="filter-dot active"></span>
+                    Active
+                    <span style="background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-500);">4</span>
+                </button>
+                <button class="filter-chip inactive">
+                    <span class="filter-dot pending"></span>
+                    Pending
+                    <span style="background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-500);">3</span>
+                </button>
+                <button class="filter-chip inactive">
+                    <span class="filter-dot completed"></span>
+                    Completed
+                    <span style="background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-500);">5</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Campaigns List -->
+        <section class="campaigns-section">
+            <div class="section-header">
+                <h2 class="section-title">All Campaigns</h2>
+                <span class="section-count">12 campaigns</span>
+            </div>
+
+            <div class="campaigns-list">
+
+                <!-- Mass Campaign Card -->
+                <div class="campaign-card mass-type" onclick="window.location.href='index.html'">
+                    <div class="card-strip mass"></div>
+                    <div class="card-header">
+                        <span class="type-badge mass">
+                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="3" cy="3" r="1.5"/>
+                                <circle cx="7" cy="3" r="1.5"/>
+                                <circle cx="5" cy="7" r="1.5"/>
+                            </svg>
+                            Mass
+                        </span>
+                        <span class="status-badge active">
+                            <span class="status-dot"></span>
+                            Active
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="campaign-name">Ramadan Food Products Campaign</h3>
+                        <p class="campaign-id">#MASS-2025-00089</p>
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <div class="meta-icon">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="12" height="12" rx="2"/>
+                                        <path d="M5 1v2M11 1v2M2 6h12"/>
+                                    </svg>
+                                </div>
+                                <div class="meta-content">
+                                    <span class="meta-label">Publish Date</span>
+                                    <span class="meta-value">1 Ramadan 1446</span>
+                                </div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-icon">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="8" cy="8" r="6"/>
+                                        <path d="M8 4v4l3 2"/>
+                                    </svg>
+                                </div>
+                                <div class="meta-content">
+                                    <span class="meta-label">Closes In</span>
+                                    <span class="meta-value" style="color: var(--warning);">3 days left</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Influencers Section -->
+                    <div style="padding: 14px 20px; border-top: 1px solid var(--gray-100); background: linear-gradient(180deg, transparent 0%, rgba(249,250,251,0.8) 100%);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-size: 12px; font-weight: 600; color: var(--gray-600);">Applicants</span>
+                            <span style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(236,72,153,0.1); color: var(--accent);">18 / 25 needed</span>
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
+                                    A
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Abdullah</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
+                                    R
+                                    <div style="position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--info); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="8" height="8" fill="white" viewBox="0 0 20 20">
+                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Reem</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    F
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Fahd</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--gray-900); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    +15
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">More</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 16px; padding: 8px 0;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></span>
+                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">12</strong> Accepted</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--warning);"></span>
+                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">6</strong> Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div style="padding: 0 20px 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; color: var(--gray-500); font-weight: 500;">Pool Completion</span>
+                            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; color: var(--accent);">72%</span>
+                        </div>
+                        <div style="height: 5px; background: var(--gray-200); border-radius: 10px; overflow: hidden;">
+                            <div style="height: 100%; width: 72%; background: var(--gradient-accent); border-radius: 10px; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="budget-info">
+                            <span class="budget-label">Total Budget</span>
+                            <span class="budget-value">125,000 SAR</span>
+                        </div>
+                        <button class="view-btn mass" onclick="event.stopPropagation();">
+                            Details
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 6l-3 3 3 3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Solo Campaign Card -->
+                <div class="campaign-card solo-type">
+                    <div class="card-strip solo"></div>
+                    <div class="card-header">
+                        <span class="type-badge solo">
+                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="5" cy="3" r="2"/>
+                                <path d="M2 9v-1a3 3 0 016 0v1"/>
+                            </svg>
+                            Solo
+                        </span>
+                        <span class="status-badge active">
+                            <span class="status-dot"></span>
+                            Active
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="campaign-name">Skincare Product Launch</h3>
+                        <p class="campaign-id">#SOLO-2025-00125</p>
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <div class="meta-icon">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="12" height="12" rx="2"/>
+                                        <path d="M5 1v2M11 1v2M2 6h12"/>
+                                    </svg>
+                                </div>
+                                <div class="meta-content">
+                                    <span class="meta-label">Publish Date</span>
+                                    <span class="meta-value">20 March 2025</span>
+                                </div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-icon">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="12" height="12" rx="3"/>
+                                        <circle cx="8" cy="8" r="2"/>
+                                    </svg>
+                                </div>
+                                <div class="meta-content">
+                                    <span class="meta-label">Platform</span>
+                                    <span class="meta-value">Instagram</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected Influencers -->
+                    <div style="padding: 14px 20px; border-top: 1px solid var(--gray-100); background: linear-gradient(180deg, transparent 0%, rgba(249,250,251,0.8) 100%);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="font-size: 12px; font-weight: 600; color: var(--gray-600);">Selected Influencers</span>
+                            <span style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(99,102,241,0.1); color: var(--primary);">3 influencers</span>
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
+                                    S
+                                    <div style="position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--info); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="8" height="8" fill="white" viewBox="0 0 20 20">
+                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Sarah</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
+                                    N
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Nora</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--warning);"></span>
+                                    M
+                                    <div style="position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--info); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="8" height="8" fill="white" viewBox="0 0 20 20">
+                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Maryam</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 16px; padding: 8px 0;">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></span>
+                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">2</strong> Accepted</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--warning);"></span>
+                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">1</strong> Awaiting</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div style="padding: 0 20px 14px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; color: var(--gray-500); font-weight: 500;">Campaign Progress</span>
+                            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; color: var(--primary);">67%</span>
+                        </div>
+                        <div style="height: 5px; background: var(--gray-200); border-radius: 10px; overflow: hidden;">
+                            <div style="height: 100%; width: 67%; background: var(--gradient-primary); border-radius: 10px; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="budget-info">
+                            <span class="budget-label">Total Budget</span>
+                            <span class="budget-value">45,000 SAR</span>
+                        </div>
+                        <button class="view-btn solo">
+                            Details
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 6l-3 3 3 3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Completed Campaign -->
+                <div class="campaign-card solo-type">
+                    <div class="card-strip solo"></div>
+                    <div class="card-header">
+                        <span class="type-badge solo">
+                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="5" cy="3" r="2"/>
+                                <path d="M2 9v-1a3 3 0 016 0v1"/>
+                            </svg>
+                            Solo
+                        </span>
+                        <span class="status-badge completed">
+                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 3L4 7l-2-2"/>
+                            </svg>
+                            Completed
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="campaign-name">Seafood Restaurant Ad</h3>
+                        <p class="campaign-id">#SOLO-2025-00098</p>
+                        <div class="campaign-meta">
+                            <div class="meta-item">
+                                <div class="meta-icon">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="2" width="12" height="12" rx="2"/>
+                                        <path d="M5 1v2M11 1v2M2 6h12"/>
+                                    </svg>
+                                </div>
+                                <div class="meta-content">
+                                    <span class="meta-label">Completed</span>
+                                    <span class="meta-value">10 Feb 2025</span>
+                                </div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-icon">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M8 2v4l3 2"/>
+                                        <circle cx="8" cy="8" r="6"/>
+                                    </svg>
+                                </div>
+                                <div class="meta-content">
+                                    <span class="meta-label">Reach</span>
+                                    <span class="meta-value">1.2M views</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="budget-info">
+                            <span class="budget-label">Amount Paid</span>
+                            <span class="budget-value">8,000 SAR</span>
+                        </div>
+                        <button class="view-btn solo">
+                            Report
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 6l-3 3 3 3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAB Button -->
+        <button class="fab">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M14 6v16M6 14h16"/>
+            </svg>
+        </button>
+
+        <!-- Bottom Tab Bar -->
+        <nav class="bottom-tab-bar">
+            <div class="tab-item">
+                <svg class="tab-icon" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                    <path d="M9 22V12h6v10"/>
+                </svg>
+                <span class="tab-label">Home</span>
+            </div>
+            <div class="tab-item">
+                <svg class="tab-icon" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+                <span class="tab-label">Messages</span>
+            </div>
+            <div class="tab-item" style="width: 60px;"></div>
+            <div class="tab-item active">
+                <svg class="tab-icon" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                <span class="tab-label">Campaigns</span>
+            </div>
+            <div class="tab-item">
+                <svg class="tab-icon" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span class="tab-label">Profile</span>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Filter campaigns
+        function filterCampaigns(type) {
+            const cards = document.querySelectorAll('.stat-card');
+            cards.forEach(card => card.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            const campaigns = document.querySelectorAll('.campaign-card');
+            campaigns.forEach(campaign => {
+                if (type === 'all') {
+                    campaign.style.display = 'block';
+                } else if (campaign.classList.contains(type + '-type')) {
+                    campaign.style.display = 'block';
+                } else {
+                    campaign.style.display = 'none';
+                }
+            });
+        }
+
+        // Status filters
+        const filterChips = document.querySelectorAll('.filter-chip');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => {
+                    c.classList.remove('active');
+                    c.classList.add('inactive');
+                });
+                chip.classList.remove('inactive');
+                chip.classList.add('active');
+            });
+        });
+
+        // Tab navigation
+        const tabItems = document.querySelectorAll('.tab-item');
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabItems.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

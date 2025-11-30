@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Campaign Overview - JISOR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Campaign Hero Section */
+        .campaign-hero {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .campaign-badge-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .campaign-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--primary-bg);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .campaign-type-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .campaign-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .campaign-status.active {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .campaign-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .campaign-id {
+            font-size: 13px;
+            color: var(--gray-400);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .campaign-dates {
+            display: flex;
+            gap: 24px;
+        }
+
+        .date-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            background: var(--gray-50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .date-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--gray-500);
+        }
+
+        .date-icon.warning {
+            background: var(--warning-bg);
+        }
+
+        .date-icon.warning svg {
+            color: var(--warning);
+        }
+
+        .date-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .date-label {
+            font-size: 11px;
+            color: var(--gray-400);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .date-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .date-value.urgent {
+            color: var(--warning);
+        }
+
+        /* Applications Overview Card */
+        .overview-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .view-all-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .view-all-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Applicants Preview */
+        .applicants-preview {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .avatar-stack {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-left: -12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .avatar.more {
+            background: var(--gray-800);
+            font-size: 12px;
+        }
+
+        .total-applicants {
+            text-align: right;
+        }
+
+        .total-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gray-900);
+            line-height: 1;
+        }
+
+        .total-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .stat-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .stat-chip.accepted {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .stat-chip.pending {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .stat-chip.rejected {
+            background: var(--error-bg);
+            color: var(--error);
+        }
+
+        .stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* Pool Progress Card */
+        .pool-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .pool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .pool-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .pool-count {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .pool-count span {
+            color: var(--gray-400);
+            font-weight: 500;
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-full);
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .pool-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pool-percentage {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .pool-message {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .pool-message strong {
+            color: var(--gray-700);
+            font-weight: 700;
+        }
+
+        /* Budget Card */
+        .budget-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .budget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .budget-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .budget-total {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-500);
+        }
+
+        .budget-total strong {
+            font-size: 18px;
+            color: var(--gray-900);
+            font-weight: 800;
+        }
+
+        .budget-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .budget-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+        }
+
+        .budget-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .budget-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .budget-dot.committed { background: var(--primary); }
+        .budget-dot.pending { background: var(--warning); }
+        .budget-dot.available { background: var(--success); }
+
+        .budget-item-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .budget-item-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* Tabs Section */
+        .tabs-container {
+            background: white;
+            padding: 16px 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-500);
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab:hover {
+            color: var(--gray-700);
+        }
+
+        .tab.active {
+            color: var(--primary);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tab-badge {
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            background: var(--gray-100);
+            color: var(--gray-600);
+        }
+
+        .tab.active .tab-badge {
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+
+        /* Bottom Safe Area */
+        .bottom-safe-area {
+            height: 34px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time" id="current-time">9:41</span>
+            <div class="icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <path d="M1 4.5C1 3.11929 2.11929 2 3.5 2H4.5C5.88071 2 7 3.11929 7 4.5V10.5C7 10.7761 6.77614 11 6.5 11H2C1.17157 11 0.5 10.3284 0.5 9.5V5C0.5 4.72386 0.723858 4.5 1 4.5Z" fill="#1F2937"/>
+                    <path d="M8 3.5C8 2.67157 8.67157 2 9.5 2H10.5C11.3284 2 12 2.67157 12 3.5V10.5C12 10.7761 11.7761 11 11.5 11H8.5C8.22386 11 8 10.7761 8 10.5V3.5Z" fill="#1F2937"/>
+                    <path d="M13 1.5C13 0.671573 13.6716 0 14.5 0H15.5C16.3284 0 17 0.671573 17 1.5V10.5C17 10.7761 16.7761 11 16.5 11H13.5C13.2239 11 13 10.7761 13 10.5V1.5Z" fill="#1F2937"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.4C14.4 5.7 14.4 6.1 14.1 6.4L8.4 11.6C8.2 11.8 7.8 11.8 7.6 11.6L1.9 6.4C1.6 6.1 1.6 5.7 1.8 5.4C3.3 3.6 5.5 2.5 8 2.5Z" fill="#1F2937"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="#1F2937"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1" fill="#1F2937"/>
+                    <path d="M23 4V8C23.8 7.6 24.5 6.9 24.5 6C24.5 5.1 23.8 4.4 23 4Z" fill="#1F2937"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.history.back()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h1 class="header-title">Campaign Details</h1>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"/>
+                        <circle cx="19" cy="12" r="1"/>
+                        <circle cx="5" cy="12" r="1"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Campaign Hero Section -->
+        <section class="campaign-hero fade-in">
+            <div class="campaign-badge-row">
+                <div class="campaign-type-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Mass Campaign
+                </div>
+                <div class="campaign-status active">
+                    <span class="status-dot"></span>
+                    Active
+                </div>
+            </div>
+
+            <h2 class="campaign-name" id="campaign-name">Ramadan Food Products Campaign</h2>
+            <p class="campaign-id" id="campaign-id">#MASS-2025-00089</p>
+
+            <div class="campaign-dates">
+                <div class="date-item">
+                    <div class="date-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="date-content">
+                        <span class="date-label">Publish Date</span>
+                        <span class="date-value" id="publish-date">1 Ramadan 1446</span>
+                    </div>
+                </div>
+
+                <div class="date-item">
+                    <div class="date-icon warning">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="date-content">
+                        <span class="date-label">Closes In</span>
+                        <span class="date-value urgent" id="days-left">3 days left</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications Overview Card -->
+        <section class="overview-card fade-in delay-1">
+            <div class="card-header">
+                <h3 class="card-title">Influencer Applications</h3>
+                <a href="pages/applications.html" class="view-all-link">
+                    View All
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="applicants-preview">
+                <div class="avatar-stack" id="avatar-stack">
+                    <!-- Avatars will be inserted here -->
+                </div>
+                <div class="total-applicants">
+                    <div class="total-number" id="total-applicants">45</div>
+                    <div class="total-label">Total Applicants</div>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-chip accepted">
+                    <span class="stat-dot"></span>
+                    <span id="accepted-count">12</span> Accepted
+                </div>
+                <div class="stat-chip pending">
+                    <span class="stat-dot"></span>
+                    <span id="pending-count">6</span> Pending
+                </div>
+                <div class="stat-chip rejected">
+                    <span class="stat-dot"></span>
+                    <span id="rejected-count">3</span> Rejected
+                </div>
+            </div>
+        </section>
+
+        <!-- Pool Progress Card -->
+        <section class="pool-card fade-in delay-2">
+            <div class="pool-header">
+                <h3 class="pool-title">Pool Completion</h3>
+                <div class="pool-count"><span id="pool-current">18</span> <span>/ <span id="pool-required">25</span> required</span></div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar" style="width: 72%"></div>
+            </div>
+
+            <div class="pool-info">
+                <div class="pool-percentage" id="pool-percentage">72%</div>
+                <div class="pool-message">Need <strong id="pool-needed">7 more</strong> influencers</div>
+            </div>
+        </section>
+
+        <!-- Budget Card -->
+        <section class="budget-card fade-in delay-3">
+            <div class="budget-header">
+                <h3 class="budget-title">Budget Summary</h3>
+                <div class="budget-total">Total: <strong id="budget-total">125,000 SAR</strong></div>
+            </div>
+
+            <div class="budget-breakdown">
+                <div class="budget-item">
+                    <div class="budget-item-left">
+                        <span class="budget-dot committed"></span>
+                        <span class="budget-item-label">Committed</span>
+                    </div>
+                    <span class="budget-item-value" id="budget-committed">90,000 SAR</span>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-left">
+                        <span class="budget-dot pending"></span>
+                        <span class="budget-item-label">Pending Offers</span>
+                    </div>
+                    <span class="budget-item-value" id="budget-pending">15,000 SAR</span>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-item-left">
+                        <span class="budget-dot available"></span>
+                        <span class="budget-item-label">Available</span>
+                    </div>
+                    <span class="budget-item-value" id="budget-available">20,000 SAR</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab" onclick="window.location.href='pages/applications.html'">
+                    Applications
+                    <span class="tab-badge" id="applications-badge">33</span>
+                </button>
+                <button class="tab" onclick="window.location.href='pages/accepted-pool.html'">
+                    Accepted Pool
+                    <span class="tab-badge" id="pool-badge">12</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Safe Area -->
+        <div class="bottom-safe-area"></div>
+    </div>
+
+    <script src="data/campaign-data.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Load campaign data
+        window.addEventListener('DOMContentLoaded', function() {
+            const data = JSON.parse(localStorage.getItem('jisorCampaignData'));
+            if (data) {
+                loadCampaignOverview(data);
+            }
+        });
+
+        function loadCampaignOverview(data) {
+            const campaign = data.campaign;
+            const applications = data.applications;
+            const acceptedPool = data.acceptedPool;
+
+            // Update campaign info
+            document.getElementById('campaign-name').textContent = campaign.name;
+            document.getElementById('campaign-id').textContent = '#' + campaign.id;
+            document.getElementById('publish-date').textContent = campaign.publishDate;
+            document.getElementById('days-left').textContent = campaign.daysLeft + ' days left';
+
+            // Count stats
+            const pendingCount = applications.filter(a => a.status === 'pending').length;
+            const rejectedCount = applications.filter(a => a.status === 'rejected').length;
+            const acceptedCount = acceptedPool.length;
+
+            document.getElementById('total-applicants').textContent = applications.length;
+            document.getElementById('accepted-count').textContent = acceptedCount;
+            document.getElementById('pending-count').textContent = pendingCount;
+            document.getElementById('rejected-count').textContent = rejectedCount;
+
+            // Avatar stack
+            const avatarStack = document.getElementById('avatar-stack');
+            const sampleApplicants = applications.slice(0, 3);
+            sampleApplicants.forEach(app => {
+                const avatar = document.createElement('div');
+                avatar.className = 'avatar';
+                avatar.style.background = app.gradient;
+                avatar.textContent = app.avatar;
+                avatarStack.appendChild(avatar);
+            });
+            if (applications.length > 3) {
+                const moreAvatar = document.createElement('div');
+                moreAvatar.className = 'avatar more';
+                moreAvatar.textContent = '+' + (applications.length - 3);
+                avatarStack.appendChild(moreAvatar);
+            }
+
+            // Pool progress
+            const poolCurrent = acceptedCount;
+            const poolRequired = campaign.requiredInfluencers;
+            const poolPercentage = Math.round((poolCurrent / poolRequired) * 100);
+            const poolNeeded = poolRequired - poolCurrent;
+
+            document.getElementById('pool-current').textContent = poolCurrent;
+            document.getElementById('pool-required').textContent = poolRequired;
+            document.getElementById('pool-percentage').textContent = poolPercentage + '%';
+            document.getElementById('pool-needed').textContent = poolNeeded + ' more';
+            document.getElementById('progress-bar').style.width = poolPercentage + '%';
+
+            // Budget
+            document.getElementById('budget-total').textContent = campaign.totalBudget.toLocaleString() + ' SAR';
+            document.getElementById('budget-committed').textContent = campaign.budgetCommitted.toLocaleString() + ' SAR';
+            document.getElementById('budget-pending').textContent = campaign.budgetPending.toLocaleString() + ' SAR';
+            document.getElementById('budget-available').textContent = campaign.budgetAvailable.toLocaleString() + ' SAR';
+
+            // Badges
+            document.getElementById('applications-badge').textContent = applications.length;
+            document.getElementById('pool-badge').textContent = acceptedCount;
+        }
+    </script>
+</body>
+</html>

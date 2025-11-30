@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Influencer Details - JISOR</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/proposal-details.css">
+    <style>
+        .timeline-container {
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 28px;
+            width: 2px;
+            height: calc(100% - 28px);
+            background: var(--gray-200);
+        }
+
+        .timeline-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .timeline-dot.completed {
+            background: var(--success);
+        }
+
+        .timeline-dot.current {
+            background: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-dot.pending {
+            background: var(--gray-200);
+        }
+
+        .timeline-dot svg {
+            width: 12px;
+            height: 12px;
+            color: white;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 2px;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-card {
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time" id="current-time">9:41</span>
+            <div class="icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <path d="M1 4.5C1 3.11929 2.11929 2 3.5 2H4.5C5.88071 2 7 3.11929 7 4.5V10.5C7 10.7761 6.77614 11 6.5 11H2C1.17157 11 0.5 10.3284 0.5 9.5V5C0.5 4.72386 0.723858 4.5 1 4.5Z" fill="#1F2937"/>
+                    <path d="M8 3.5C8 2.67157 8.67157 2 9.5 2H10.5C11.3284 2 12 2.67157 12 3.5V10.5C12 10.7761 11.7761 11 11.5 11H8.5C8.22386 11 8 10.7761 8 10.5V3.5Z" fill="#1F2937"/>
+                    <path d="M13 1.5C13 0.671573 13.6716 0 14.5 0H15.5C16.3284 0 17 0.671573 17 1.5V10.5C17 10.7761 16.7761 11 16.5 11H13.5C13.2239 11 13 10.7761 13 10.5V1.5Z" fill="#1F2937"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.4C14.4 5.7 14.4 6.1 14.1 6.4L8.4 11.6C8.2 11.8 7.8 11.8 7.6 11.6L1.9 6.4C1.6 6.1 1.6 5.7 1.8 5.4C3.3 3.6 5.5 2.5 8 2.5Z" fill="#1F2937"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="#1F2937"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1" fill="#1F2937"/>
+                    <path d="M23 4V8C23.8 7.6 24.5 6.9 24.5 6C24.5 5.1 23.8 4.4 23 4Z" fill="#1F2937"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.location.href='accepted-pool.html'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h1 class="header-title">Influencer Details</h1>
+            </div>
+            <button class="message-btn" onclick="alert('Opening chat...')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Details Content -->
+        <div class="proposal-container" id="details-container">
+            <!-- Content will be loaded here -->
+        </div>
+
+        <!-- Sticky Actions -->
+        <div class="sticky-actions" id="sticky-actions" style="display: none;">
+            <!-- Actions will be loaded here -->
+        </div>
+    </div>
+
+    <script src="../data/campaign-data.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Get influencer ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const infId = parseInt(urlParams.get('id'));
+
+        // Load details
+        window.addEventListener('DOMContentLoaded', function() {
+            const data = JSON.parse(localStorage.getItem('jisorCampaignData'));
+            if (data && infId) {
+                const influencer = data.acceptedPool.find(i => i.id === infId);
+                if (influencer) {
+                    loadDetails(influencer);
+                }
+            }
+        });
+
+        function loadDetails(inf) {
+            const container = document.getElementById('details-container');
+
+            // Create default timeline if not exists
+            const timeline = inf.timeline || [
+                { step: 'Proposal Accepted', completed: true, date: inf.acceptedDate },
+                { step: 'Contract Signed', completed: inf.status !== 'awaiting-signature', date: inf.signedDate || 'Pending' },
+                { step: 'Payment Completed', completed: inf.paid, date: inf.paidDate || 'Pending' },
+                { step: 'Content Creation', completed: inf.status === 'content-submitted' || inf.status === 'approved', date: inf.submittedDate || (inf.dueDate ? `Due by ${inf.dueDate}` : 'Pending'), current: inf.status === 'paid' },
+                { step: 'Content Review', completed: inf.status === 'approved', date: inf.status === 'approved' ? inf.approvedDate : 'Pending' },
+                { step: 'Completed', completed: inf.status === 'approved', date: inf.status === 'approved' ? inf.approvedDate : 'Pending' }
+            ];
+
+            container.innerHTML = `
+                <div class="influencer-header fade-in">
+                    <div class="influencer-avatar-xl" style="background: ${inf.gradient}">
+                        ${inf.avatar}
+                    </div>
+                    <div class="influencer-header-info">
+                        <div class="influencer-header-top">
+                            <span class="influencer-name-large">${inf.name}</span>
+                            ${inf.verified ? `
+                                <svg class="verified-badge-large" viewBox="0 0 24 24" fill="#3B82F6">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" stroke-width="2"/>
+                                </svg>
+                            ` : ''}
+                        </div>
+                        <div class="influencer-header-stats">
+                            ${inf.followers} Followers • ${inf.engagementRate} ER
+                            ${inf.rating ? ` • ⭐ ${inf.rating}` : ''}
+                        </div>
+                        <a href="#" class="view-profile-link">
+                            View Full Profile
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="proposal-section fade-in delay-1">
+                    <h3 class="section-title">💳 Payment Status</h3>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-label">Amount</div>
+                            <div class="info-value">${formatPrice(inf.price)}</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Status</div>
+                            <div class="info-value" style="color: ${inf.paid ? 'var(--success)' : 'var(--warning)'};">
+                                ${inf.paid ? '✅ Paid' : '⏳ Unpaid'}
+                            </div>
+                        </div>
+                    </div>
+                    ${inf.paid ? `
+                        <div class="section-content" style="margin-top: 12px;">
+                            🔒 Money secured in escrow until content is approved
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="proposal-section fade-in delay-2">
+                    <h3 class="section-title">📈 Progress Timeline</h3>
+                    <div class="timeline-container">
+                        ${timeline.map(item => `
+                            <div class="timeline-item">
+                                <div class="timeline-dot ${item.completed ? 'completed' : (item.current ? 'current' : 'pending')}">
+                                    ${item.completed ? `
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                            <polyline points="20 6 9 17 4 12"/>
+                                        </svg>
+                                    ` : ''}
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">${item.step}</div>
+                                    <div class="timeline-date">${item.date}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                ${inf.deliverables && inf.deliverables.length > 0 ? `
+                    <div class="proposal-section fade-in delay-3">
+                        <h3 class="section-title">📦 Deliverables</h3>
+                        <div class="deliverables-list">
+                            ${inf.deliverables.map(d => `
+                                <div class="deliverable-item">
+                                    <div class="deliverable-text">
+                                        <div class="deliverable-title">${d.count}x ${d.type}</div>
+                                        <div class="deliverable-desc">Status: ${d.status || 'Pending'}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div class="proposal-section fade-in delay-4">
+                    <h3 class="section-title">⚡ Quick Actions</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <button onclick="alert('Opening chat...')" style="padding: 12px; background: var(--gray-100); border: none; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer;">
+                            💬 Send Message
+                        </button>
+                        <button onclick="alert('Opening contract...')" style="padding: 12px; background: var(--gray-100); border: none; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer;">
+                            📄 View Contract
+                        </button>
+                        <button onclick="alert('Sending reminder...')" style="padding: 12px; background: var(--gray-100); border: none; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer;">
+                            🔔 Send Reminder
+                        </button>
+                        <button onclick="if(confirm('Cancel deal with ${inf.name}?')) cancelDeal(${inf.id})" style="padding: 12px; background: var(--error-bg); color: var(--error); border: none; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer;">
+                            ⚠️ Cancel Deal
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Show/hide sticky actions based on status
+            const stickyActions = document.getElementById('sticky-actions');
+            if (inf.status === 'content-submitted') {
+                stickyActions.style.display = 'flex';
+                stickyActions.innerHTML = `
+                    <button class="sticky-btn reject" onclick="requestRevision(${inf.id})">
+                        Request Revision
+                    </button>
+                    <button class="sticky-btn accept" onclick="approveContent(${inf.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Approve Content
+                    </button>
+                `;
+            } else if (inf.status === 'contract-signed' && !inf.paid) {
+                stickyActions.style.display = 'flex';
+                stickyActions.innerHTML = `
+                    <button class="sticky-btn accept" onclick="payInfluencer(${inf.id})">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                            <line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                        Pay Now (${formatPrice(inf.price)})
+                    </button>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
