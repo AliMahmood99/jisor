@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Create Campaign - Step 2 | JISOR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Reuse styles from step 1 */
+        .progress-container {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-step {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        .progress-title {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .progress-bars {
+            display: flex;
+            gap: 6px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--gray-200);
+        }
+
+        .progress-bar.active {
+            background: var(--gradient-primary);
+        }
+
+        .progress-bar.partial {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--error) 100%);
+        }
+
+        .form-container {
+            padding: 24px 20px 120px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+
+        .form-label .required {
+            color: var(--error);
+        }
+
+        /* Selection Chips */
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Range Slider */
+        .range-container {
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+        }
+
+        .range-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .range-label-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .range-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--gray-200);
+            outline: none;
+            margin-bottom: 8px;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .range-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+        }
+
+        .range-markers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            background: white;
+            border-top: 1px solid var(--gray-100);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-back {
+            flex: 1;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--gray-700);
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: -0.3px;
+        }
+
+        .btn-back:hover {
+            border-color: var(--gray-300);
+            background: var(--gray-50);
+            transform: translateY(-2px);
+        }
+
+        .btn-back:active {
+            transform: translateY(0);
+        }
+
+        .btn-next {
+            flex: 2;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            color: white;
+            background: var(--primary);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+            letter-spacing: -0.3px;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.45);
+            background: linear-gradient(135deg, #5558E3 0%, #7C3AED 100%);
+        }
+
+        .btn-next:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-next:disabled {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time" id="current-time">9:41</span>
+            <div class="status-icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <path d="M1 4.5C1 3.11929 2.11929 2 3.5 2H4.5C5.88071 2 7 3.11929 7 4.5V10.5C7 10.7761 6.77614 11 6.5 11H2C1.17157 11 0.5 10.3284 0.5 9.5V5C0.5 4.72386 0.723858 4.5 1 4.5Z" fill="currentColor"/>
+                    <path d="M8 3.5C8 2.67157 8.67157 2 9.5 2H10.5C11.3284 2 12 2.67157 12 3.5V10.5C12 10.7761 11.7761 11 11.5 11H8.5C8.22386 11 8 10.7761 8 10.5V3.5Z" fill="currentColor"/>
+                    <path d="M13 1.5C13 0.671573 13.6716 0 14.5 0H15.5C16.3284 0 17 0.671573 17 1.5V10.5C17 10.7761 16.7761 11 16.5 11H13.5C13.2239 11 13 10.7761 13 10.5V1.5Z" fill="currentColor"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.4C14.4 5.7 14.4 6.1 14.1 6.4L8.4 11.6C8.2 11.8 7.8 11.8 7.6 11.6L1.9 6.4C1.6 6.1 1.6 5.7 1.8 5.4C3.3 3.6 5.5 2.5 8 2.5Z" fill="currentColor"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1" fill="currentColor"/>
+                    <path d="M23 4V8C23.8 7.6 24.5 6.9 24.5 6C24.5 5.1 23.8 4.4 23 4Z" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.history.back()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h1 class="header-title">Create Campaign</h1>
+            </div>
+            <div style="width: 40px;"></div>
+        </header>
+
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-step">Step 2 of 4</span>
+                <span class="progress-title">Target Audience</span>
+            </div>
+            <div class="progress-bars">
+                <div class="progress-bar active"></div>
+                <div class="progress-bar partial"></div>
+                <div class="progress-bar"></div>
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Form Content -->
+        <div class="form-container">
+            <!-- Age Range -->
+            <div class="form-group">
+                <label class="form-label">
+                    Target Age Range <span class="required">*</span>
+                </label>
+                <div class="range-container">
+                    <div class="range-label">
+                        <span class="range-label-text">Minimum Age</span>
+                        <span class="range-value" id="min-age-value">18</span>
+                    </div>
+                    <input type="range" class="range-slider" id="min-age" min="13" max="65" value="18" step="1">
+                    <div class="range-markers">
+                        <span>13</span>
+                        <span>25</span>
+                        <span>35</span>
+                        <span>45</span>
+                        <span>55</span>
+                        <span>65+</span>
+                    </div>
+                </div>
+
+                <div class="range-container" style="margin-top: 12px;">
+                    <div class="range-label">
+                        <span class="range-label-text">Maximum Age</span>
+                        <span class="range-value" id="max-age-value">35</span>
+                    </div>
+                    <input type="range" class="range-slider" id="max-age" min="13" max="65" value="35" step="1">
+                    <div class="range-markers">
+                        <span>13</span>
+                        <span>25</span>
+                        <span>35</span>
+                        <span>45</span>
+                        <span>55</span>
+                        <span>65+</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label class="form-label">
+                    Gender <span class="required">*</span>
+                </label>
+                <div class="chips-container" id="gender-chips">
+                    <div class="chip" data-value="all">All</div>
+                    <div class="chip" data-value="male">Male</div>
+                    <div class="chip" data-value="female">Female</div>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label class="form-label">
+                    Target Location <span class="required">*</span>
+                </label>
+                <div class="chips-container" id="location-chips">
+                    <div class="chip" data-value="saudi-arabia">Saudi Arabia</div>
+                    <div class="chip" data-value="uae">UAE</div>
+                    <div class="chip" data-value="kuwait">Kuwait</div>
+                    <div class="chip" data-value="qatar">Qatar</div>
+                    <div class="chip" data-value="bahrain">Bahrain</div>
+                    <div class="chip" data-value="oman">Oman</div>
+                    <div class="chip" data-value="egypt">Egypt</div>
+                    <div class="chip" data-value="jordan">Jordan</div>
+                </div>
+            </div>
+
+            <!-- Interests -->
+            <div class="form-group">
+                <label class="form-label">
+                    Audience Interests
+                </label>
+                <div class="chips-container" id="interests-chips">
+                    <div class="chip" data-value="fashion">Fashion</div>
+                    <div class="chip" data-value="beauty">Beauty</div>
+                    <div class="chip" data-value="lifestyle">Lifestyle</div>
+                    <div class="chip" data-value="tech">Tech</div>
+                    <div class="chip" data-value="food">Food</div>
+                    <div class="chip" data-value="travel">Travel</div>
+                    <div class="chip" data-value="fitness">Fitness</div>
+                    <div class="chip" data-value="gaming">Gaming</div>
+                    <div class="chip" data-value="education">Education</div>
+                    <div class="chip" data-value="entertainment">Entertainment</div>
+                </div>
+            </div>
+
+            <!-- Language -->
+            <div class="form-group">
+                <label class="form-label">
+                    Content Language <span class="required">*</span>
+                </label>
+                <div class="chips-container" id="language-chips">
+                    <div class="chip" data-value="arabic">العربية</div>
+                    <div class="chip" data-value="english">English</div>
+                    <div class="chip" data-value="both">Both</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-buttons">
+                <button class="btn-back" onclick="window.history.back()">Back</button>
+                <button class="btn-next" id="next-btn" onclick="goToNextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bottom Safe Area -->
+        <div class="bottom-safe-area"></div>
+    </div>
+
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Age range sliders
+        const minAgeSlider = document.getElementById('min-age');
+        const maxAgeSlider = document.getElementById('max-age');
+        const minAgeValue = document.getElementById('min-age-value');
+        const maxAgeValue = document.getElementById('max-age-value');
+
+        minAgeSlider.addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            minAgeValue.textContent = value === 65 ? '65+' : value;
+            if (value >= parseInt(maxAgeSlider.value)) {
+                maxAgeSlider.value = Math.min(value + 1, 65);
+                maxAgeValue.textContent = maxAgeSlider.value === '65' ? '65+' : maxAgeSlider.value;
+            }
+        });
+
+        maxAgeSlider.addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            maxAgeValue.textContent = value === 65 ? '65+' : value;
+            if (value <= parseInt(minAgeSlider.value)) {
+                minAgeSlider.value = Math.max(value - 1, 13);
+                minAgeValue.textContent = minAgeSlider.value;
+            }
+        });
+
+        // Chip selection handling
+        const formData = {
+            gender: null,
+            locations: [],
+            interests: [],
+            language: null
+        };
+
+        // Single select chips (gender, language)
+        function setupSingleSelectChips(containerId, dataKey) {
+            const container = document.getElementById(containerId);
+            const chips = container.querySelectorAll('.chip');
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chips.forEach(c => c.classList.remove('selected'));
+                    chip.classList.add('selected');
+                    formData[dataKey] = chip.dataset.value;
+                    validateForm();
+                });
+            });
+        }
+
+        // Multi select chips (locations, interests)
+        function setupMultiSelectChips(containerId, dataKey) {
+            const container = document.getElementById(containerId);
+            const chips = container.querySelectorAll('.chip');
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const value = chip.dataset.value;
+
+                    if (chip.classList.contains('selected')) {
+                        chip.classList.remove('selected');
+                        formData[dataKey] = formData[dataKey].filter(v => v !== value);
+                    } else {
+                        chip.classList.add('selected');
+                        formData[dataKey].push(value);
+                    }
+                    validateForm();
+                });
+            });
+        }
+
+        setupSingleSelectChips('gender-chips', 'gender');
+        setupMultiSelectChips('location-chips', 'locations');
+        setupMultiSelectChips('interests-chips', 'interests');
+        setupSingleSelectChips('language-chips', 'language');
+
+        // Form validation
+        function validateForm() {
+            const isValid = formData.gender &&
+                           formData.locations.length > 0 &&
+                           formData.language;
+
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = !isValid;
+
+            if (isValid) {
+                nextBtn.style.opacity = '1';
+            } else {
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        // Save and navigate
+        function goToNextStep() {
+            const stepData = {
+                ageRange: {
+                    min: parseInt(minAgeSlider.value),
+                    max: parseInt(maxAgeSlider.value)
+                },
+                gender: formData.gender,
+                locations: formData.locations,
+                interests: formData.interests,
+                language: formData.language
+            };
+
+            sessionStorage.setItem('campaignData_step2', JSON.stringify(stepData));
+            window.location.href = 'create-campaign-step3.html';
+        }
+
+        // Load saved data
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = sessionStorage.getItem('campaignData_step2');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+
+                // Restore age range
+                if (data.ageRange) {
+                    minAgeSlider.value = data.ageRange.min;
+                    maxAgeSlider.value = data.ageRange.max;
+                    minAgeValue.textContent = data.ageRange.min === 65 ? '65+' : data.ageRange.min;
+                    maxAgeValue.textContent = data.ageRange.max === 65 ? '65+' : data.ageRange.max;
+                }
+
+                // Restore gender
+                if (data.gender) {
+                    const genderChip = document.querySelector(`#gender-chips .chip[data-value="${data.gender}"]`);
+                    if (genderChip) {
+                        genderChip.classList.add('selected');
+                        formData.gender = data.gender;
+                    }
+                }
+
+                // Restore locations
+                if (data.locations) {
+                    data.locations.forEach(loc => {
+                        const chip = document.querySelector(`#location-chips .chip[data-value="${loc}"]`);
+                        if (chip) {
+                            chip.classList.add('selected');
+                            formData.locations.push(loc);
+                        }
+                    });
+                }
+
+                // Restore interests
+                if (data.interests) {
+                    data.interests.forEach(int => {
+                        const chip = document.querySelector(`#interests-chips .chip[data-value="${int}"]`);
+                        if (chip) {
+                            chip.classList.add('selected');
+                            formData.interests.push(int);
+                        }
+                    });
+                }
+
+                // Restore language
+                if (data.language) {
+                    const langChip = document.querySelector(`#language-chips .chip[data-value="${data.language}"]`);
+                    if (langChip) {
+                        langChip.classList.add('selected');
+                        formData.language = data.language;
+                    }
+                }
+
+                validateForm();
+            }
+        });
+
+        // Initial state
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = '0.5';
+    </script>
+</body>
+</html>
