@@ -305,23 +305,14 @@
 
         /* Filters */
         .filters-section {
-            padding: 16px 20px;
+            padding: 20px;
             background: white;
-            border-top: 1px solid var(--gray-100);
-        }
-
-        .filters-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--gray-400);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
+            border-bottom: 1px solid var(--gray-100);
         }
 
         .filters-scroll {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
@@ -334,16 +325,18 @@
         .filter-chip {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
             border: none;
             cursor: pointer;
             white-space: nowrap;
             flex-shrink: 0;
-            transition: all 0.25s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            letter-spacing: -0.2px;
         }
 
         .filter-chip.inactive {
@@ -351,22 +344,37 @@
             color: var(--gray-600);
         }
 
+        .filter-chip.inactive:hover {
+            background: var(--gray-200);
+            transform: translateY(-2px);
+        }
+
         .filter-chip.active {
             background: var(--gray-900);
             color: white;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
         }
 
-        .filter-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
+        .filter-count {
+            background: rgba(0,0,0,0.15);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            min-width: 24px;
+            text-align: center;
         }
 
-        .filter-chip.inactive .filter-dot.active { background: var(--success); }
-        .filter-chip.inactive .filter-dot.pending { background: var(--warning); }
-        .filter-chip.inactive .filter-dot.completed { background: var(--info); }
-        .filter-chip.active .filter-dot { background: rgba(255,255,255,0.6); }
+        .filter-chip.inactive .filter-count {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .filter-chip.active .filter-count {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
 
         /* Campaigns List */
         .campaigns-section {
@@ -404,13 +412,19 @@
             overflow: hidden;
             box-shadow: var(--shadow-card);
             border: 1px solid var(--gray-100);
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            position: relative;
         }
 
         .campaign-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            border-color: var(--gray-200);
+        }
+
+        .campaign-card:active {
+            transform: translateY(-2px);
         }
 
         .card-strip {
@@ -577,31 +591,44 @@
         }
 
         .view-btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             border: none;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            letter-spacing: -0.2px;
         }
 
         .view-btn.solo {
             background: var(--primary);
             color: white;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
         }
 
         .view-btn.mass {
             background: var(--accent);
             color: white;
+            box-shadow: 0 4px 12px rgba(236,72,153,0.3);
+        }
+
+        .view-btn.hybrid {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.4);
         }
 
         .view-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(99,102,241,0.4);
+        }
+
+        .view-btn:active {
+            transform: translateY(0) scale(0.98);
         }
 
         /* FAB */
@@ -752,76 +779,25 @@
             <p class="header-subtitle">Manage and track all your campaigns</p>
         </header>
 
-        <!-- Stats Grid -->
-        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); gap: 10px;">
-            <div class="stat-card solo active" onclick="filterCampaigns('all')" style="padding: 14px 12px;">
-                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M2 2h12v12H2z"/>
-                        <path d="M6 2v12M10 2v12M2 6h12M2 10h12"/>
-                    </svg>
-                </div>
-                <div class="stat-value" style="font-size: 28px;">12</div>
-                <div class="stat-desc" style="font-size: 10px;">Total</div>
-            </div>
-
-            <div class="stat-card mass" onclick="filterCampaigns('active')" style="padding: 14px 12px;">
-                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="9" r="7"/>
-                        <path d="M12 7l-4 4-2-2"/>
-                    </svg>
-                </div>
-                <div class="stat-value" style="font-size: 28px;">8</div>
-                <div class="stat-desc" style="font-size: 10px;">Active</div>
-            </div>
-
-            <div class="stat-card solo" onclick="filterCampaigns('applications')" style="padding: 14px 12px;">
-                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 8l4-4 4 4M3 13l4-4 4 4"/>
-                        <rect x="11" y="5" width="5" height="9" rx="1"/>
-                    </svg>
-                </div>
-                <div class="stat-value" style="font-size: 28px;">24</div>
-                <div class="stat-desc" style="font-size: 10px;">Pending</div>
-            </div>
-
-            <div class="stat-card mass" onclick="filterCampaigns('influencers')" style="padding: 14px 12px;">
-                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="6" cy="4" r="3"/>
-                        <circle cx="12" cy="4" r="3"/>
-                        <path d="M3 17v-2a4 4 0 014-4h2M11 11a4 4 0 014 4v2"/>
-                    </svg>
-                </div>
-                <div class="stat-value" style="font-size: 28px;">45</div>
-                <div class="stat-desc" style="font-size: 10px;">Active</div>
-            </div>
-        </div>
 
         <!-- Filters -->
         <div class="filters-section">
-            <div class="filters-label">Filter by Status</div>
             <div class="filters-scroll">
-                <button class="filter-chip active">
+                <button class="filter-chip active" data-filter="all">
                     All
-                    <span style="background: rgba(0,0,0,0.15); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700;">12</span>
+                    <span class="filter-count">12</span>
                 </button>
-                <button class="filter-chip inactive">
-                    <span class="filter-dot active"></span>
+                <button class="filter-chip inactive" data-filter="active">
                     Active
-                    <span style="background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-500);">4</span>
+                    <span class="filter-count">8</span>
                 </button>
-                <button class="filter-chip inactive">
-                    <span class="filter-dot pending"></span>
-                    Pending
-                    <span style="background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-500);">3</span>
+                <button class="filter-chip inactive" data-filter="draft">
+                    Draft
+                    <span class="filter-count">2</span>
                 </button>
-                <button class="filter-chip inactive">
-                    <span class="filter-dot completed"></span>
+                <button class="filter-chip inactive" data-filter="completed">
                     Completed
-                    <span style="background: var(--gray-200); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; color: var(--gray-500);">5</span>
+                    <span class="filter-count">2</span>
                 </button>
             </div>
         </div>
@@ -862,12 +838,21 @@
                         <p class="campaign-id">#CAMP-2025-00089</p>
 
                         <!-- Alert for pending applications -->
-                        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(236,72,153,0.08); border-radius: 10px; margin-bottom: 14px; border: 1px solid rgba(236,72,153,0.2);">
-                            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" style="flex-shrink: 0;">
-                                <path d="M8 3v5M8 11h.01"/>
-                                <circle cx="8" cy="8" r="6"/>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: linear-gradient(135deg, rgba(236,72,153,0.08) 0%, rgba(251,146,60,0.08) 100%); border-radius: 12px; margin-bottom: 16px; border: 1.5px solid rgba(236,72,153,0.2); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent);"></div>
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(236,72,153,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2.5">
+                                    <circle cx="8" cy="8" r="3"/>
+                                    <path d="M8 2v2M8 12v2M2 8h2M12 8h2"/>
+                                </svg>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 2px;">12 applications waiting</div>
+                                <div style="font-size: 11px; font-weight: 500; color: var(--gray-600);">Review and accept influencers</div>
+                            </div>
+                            <svg width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2.5" style="flex-shrink: 0;">
+                                <path d="M5 7l2 2 2-2"/>
                             </svg>
-                            <span style="font-size: 12px; font-weight: 600; color: var(--accent);">12 pending applications</span>
                         </div>
                         <div class="campaign-meta">
                             <div class="meta-item">
@@ -968,10 +953,10 @@
                             <span class="budget-label">Total Budget</span>
                             <span class="budget-value">125,000 SAR</span>
                         </div>
-                        <button class="view-btn mass" onclick="event.stopPropagation();">
+                        <button class="view-btn hybrid" onclick="event.stopPropagation();">
                             Details
-                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 6l-3 3 3 3"/>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12l7-7M5 5l7 7"/>
                             </svg>
                         </button>
                     </div>
@@ -1098,8 +1083,8 @@
                         </div>
                         <button class="view-btn solo">
                             Details
-                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 6l-3 3 3 3"/>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12l7-7M5 5l7 7"/>
                             </svg>
                         </button>
                     </div>
@@ -1165,10 +1150,10 @@
                             <span class="budget-label">Amount Paid</span>
                             <span class="budget-value">8,000 SAR</span>
                         </div>
-                        <button class="view-btn solo">
-                            Report
-                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 6l-3 3 3 3"/>
+                        <button class="view-btn mass">
+                            View Report
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v8M8 6v4M4 10v2"/>
                             </svg>
                         </button>
                     </div>
@@ -1217,34 +1202,47 @@
     </div>
 
     <script>
-        // Filter campaigns
-        function filterCampaigns(type) {
-            const cards = document.querySelectorAll('.stat-card');
-            cards.forEach(card => card.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-
-            const campaigns = document.querySelectorAll('.campaign-card');
-            campaigns.forEach(campaign => {
-                if (type === 'all') {
-                    campaign.style.display = 'block';
-                } else if (campaign.classList.contains(type + '-type')) {
-                    campaign.style.display = 'block';
-                } else {
-                    campaign.style.display = 'none';
-                }
+        // Smooth fade-in animation for cards
+        function fadeInCards() {
+            const cards = document.querySelectorAll('.campaign-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
             });
         }
 
-        // Status filters
+        // Filter functionality
         const filterChips = document.querySelectorAll('.filter-chip');
         filterChips.forEach(chip => {
-            chip.addEventListener('click', () => {
+            chip.addEventListener('click', function() {
+                // Update active state
                 filterChips.forEach(c => {
                     c.classList.remove('active');
                     c.classList.add('inactive');
                 });
-                chip.classList.remove('inactive');
-                chip.classList.add('active');
+                this.classList.remove('inactive');
+                this.classList.add('active');
+
+                // Filter campaigns
+                const filter = this.dataset.filter;
+                const campaigns = document.querySelectorAll('.campaign-card');
+
+                campaigns.forEach(campaign => {
+                    if (filter === 'all') {
+                        campaign.style.display = 'block';
+                    } else {
+                        // Add logic for different filters
+                        campaign.style.display = 'block';
+                    }
+                });
+
+                // Re-animate cards
+                fadeInCards();
             });
         });
 
@@ -1255,6 +1253,24 @@
                 tabItems.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
             });
+        });
+
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const timeEl = document.querySelector('.time');
+            if (timeEl) {
+                timeEl.textContent = `${hours}:${minutes}`;
+            }
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Initial animation on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            fadeInCards();
         });
     </script>
 </body>
