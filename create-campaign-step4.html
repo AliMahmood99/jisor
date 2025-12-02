@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Create Campaign - Step 4 | JISOR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .progress-container {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-step {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        .progress-title {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .progress-bars {
+            display: flex;
+            gap: 6px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--gray-200);
+        }
+
+        .progress-bar.active {
+            background: var(--gradient-primary);
+        }
+
+        .progress-bar.partial {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--error) 100%);
+        }
+
+        .form-container {
+            padding: 24px 20px 140px;
+        }
+
+        .section-intro {
+            margin-bottom: 24px;
+        }
+
+        .section-intro h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin: 0 0 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-intro p {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin: 0;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Toggle Cards */
+        .toggle-card {
+            padding: 20px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+
+        .toggle-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+        }
+
+        .toggle-card.active {
+            background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%);
+            border-color: var(--primary);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25);
+        }
+
+        .toggle-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .toggle-left {
+            display: flex;
+            gap: 14px;
+            flex: 1;
+        }
+
+        .toggle-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-lg);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-card.active .toggle-icon {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .toggle-info h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin: 0 0 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .toggle-info p {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin: 0;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            width: 56px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--gray-200);
+            position: relative;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .toggle-card.active .toggle-switch {
+            background: var(--primary);
+        }
+
+        .toggle-knob {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-card.active .toggle-knob {
+            left: 26px;
+        }
+
+        /* Application Settings */
+        .application-settings {
+            margin-top: 20px;
+            padding: 24px;
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+            display: none;
+        }
+
+        .application-settings.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .settings-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            background: var(--warning-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--warning);
+        }
+
+        .settings-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .form-label .required {
+            color: var(--error);
+        }
+
+        /* Selection Chips */
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            padding: 12px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gray-700);
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .chip.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .chip-more {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            font-weight: 700;
+        }
+
+        /* Number Input */
+        .number-input-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .number-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            border: 1.5px solid var(--gray-200);
+            background: white;
+            font-size: 22px;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .number-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .number-btn.plus {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .number-btn.plus:hover {
+            background: linear-gradient(135deg, #5558E3 0%, #7C3AED 100%);
+        }
+
+        .number-display {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--gray-900);
+            min-width: 50px;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        /* Budget Input */
+        .budget-input-wrapper {
+            position: relative;
+        }
+
+        .budget-input {
+            width: 100%;
+            padding: 16px 70px 16px 16px;
+            font-size: 18px;
+            font-weight: 700;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            background: white;
+            outline: none;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .budget-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+        }
+
+        .budget-currency {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-500);
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 8px;
+            display: block;
+            font-weight: 500;
+        }
+
+        /* Hybrid Mode Banner */
+        .hybrid-banner {
+            display: none;
+            margin-top: 24px;
+            padding: 18px;
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--primary-light);
+        }
+
+        .hybrid-banner.show {
+            display: flex;
+            animation: slideDown 0.3s ease;
+        }
+
+        .hybrid-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 14px;
+        }
+
+        .hybrid-icon svg {
+            width: 16px;
+            height: 16px;
+            color: white;
+        }
+
+        .hybrid-content h4 {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0 0 6px;
+        }
+
+        .hybrid-content p {
+            font-size: 13px;
+            color: #4338CA;
+            margin: 0;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            background: white;
+            border-top: 1px solid var(--gray-100);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-back {
+            flex: 1;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--gray-700);
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: -0.3px;
+        }
+
+        .btn-back:hover {
+            border-color: var(--gray-300);
+            background: var(--gray-50);
+            transform: translateY(-2px);
+        }
+
+        .btn-create {
+            flex: 2;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            color: white;
+            background: linear-gradient(135deg, var(--success) 0%, #34D399 100%);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            letter-spacing: -0.3px;
+        }
+
+        .btn-create:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.45);
+        }
+
+        .btn-create:disabled {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time" id="current-time">9:41</span>
+            <div class="status-icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <path d="M1 4.5C1 3.11929 2.11929 2 3.5 2H4.5C5.88071 2 7 3.11929 7 4.5V10.5C7 10.7761 6.77614 11 6.5 11H2C1.17157 11 0.5 10.3284 0.5 9.5V5C0.5 4.72386 0.723858 4.5 1 4.5Z" fill="currentColor"/>
+                    <path d="M8 3.5C8 2.67157 8.67157 2 9.5 2H10.5C11.3284 2 12 2.67157 12 3.5V10.5C12 10.7761 11.7761 11 11.5 11H8.5C8.22386 11 8 10.7761 8 10.5V3.5Z" fill="currentColor"/>
+                    <path d="M13 1.5C13 0.671573 13.6716 0 14.5 0H15.5C16.3284 0 17 0.671573 17 1.5V10.5C17 10.7761 16.7761 11 16.5 11H13.5C13.2239 11 13 10.7761 13 10.5V1.5Z" fill="currentColor"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.4C14.4 5.7 14.4 6.1 14.1 6.4L8.4 11.6C8.2 11.8 7.8 11.8 7.6 11.6L1.9 6.4C1.6 6.1 1.6 5.7 1.8 5.4C3.3 3.6 5.5 2.5 8 2.5Z" fill="currentColor"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1" fill="currentColor"/>
+                    <path d="M23 4V8C23.8 7.6 24.5 6.9 24.5 6C24.5 5.1 23.8 4.4 23 4Z" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.history.back()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h1 class="header-title">Create Campaign</h1>
+            </div>
+            <div style="width: 40px;"></div>
+        </header>
+
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-step">Step 4 of 4</span>
+                <span class="progress-title">Influencer Strategy</span>
+            </div>
+            <div class="progress-bars">
+                <div class="progress-bar active"></div>
+                <div class="progress-bar active"></div>
+                <div class="progress-bar active"></div>
+                <div class="progress-bar partial"></div>
+            </div>
+        </div>
+
+        <!-- Form Content -->
+        <div class="form-container">
+            <!-- Section Intro -->
+            <div class="section-intro">
+                <h2>How do you want to find influencers?</h2>
+                <p>You can use one or both methods for maximum flexibility.</p>
+            </div>
+
+            <!-- Toggle 1: Manual Selection -->
+            <div class="toggle-card" id="manual-toggle">
+                <div class="toggle-header">
+                    <div class="toggle-left">
+                        <div class="toggle-icon">🔍</div>
+                        <div class="toggle-info">
+                            <h3>I'll Select Influencers</h3>
+                            <p>Browse and add specific influencers you already know or discover new ones.</p>
+                        </div>
+                    </div>
+                    <div class="toggle-switch">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toggle 2: Open for Applications -->
+            <div class="toggle-card" id="applications-toggle">
+                <div class="toggle-header">
+                    <div class="toggle-left">
+                        <div class="toggle-icon">📢</div>
+                        <div class="toggle-info">
+                            <h3>Open for Applications</h3>
+                            <p>Publish your campaign and let qualified influencers apply to work with you.</p>
+                        </div>
+                    </div>
+                    <div class="toggle-switch">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Settings (Conditional) -->
+            <div class="application-settings" id="application-settings">
+                <div class="settings-header">
+                    <div class="settings-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="settings-title">Application Settings</h3>
+                </div>
+
+                <!-- Influencer Tier -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Influencer Tier <span class="required">*</span>
+                    </label>
+                    <div class="chips-container" id="tier-chips">
+                        <div class="chip" data-value="10k-50k">10K-50K</div>
+                        <div class="chip" data-value="50k-200k">50K-200K</div>
+                        <div class="chip" data-value="200k-500k">200K-500K</div>
+                        <div class="chip" data-value="500k-1m">500K-1M</div>
+                        <div class="chip" data-value="1m+">1M+</div>
+                    </div>
+                </div>
+
+                <!-- Influencer Niche -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Influencer Niche <span class="required">*</span>
+                    </label>
+                    <div class="chips-container" id="niche-chips">
+                        <div class="chip" data-value="fashion">Fashion</div>
+                        <div class="chip" data-value="beauty">Beauty</div>
+                        <div class="chip" data-value="lifestyle">Lifestyle</div>
+                        <div class="chip" data-value="tech">Tech</div>
+                        <div class="chip" data-value="food">Food</div>
+                        <div class="chip" data-value="travel">Travel</div>
+                        <div class="chip chip-more">See All →</div>
+                    </div>
+                </div>
+
+                <!-- Max Budget -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Max Budget per Influencer <span class="required">*</span>
+                    </label>
+                    <div class="budget-input-wrapper">
+                        <input
+                            type="number"
+                            class="budget-input"
+                            id="max-budget"
+                            placeholder="50,000"
+                            min="0"
+                        >
+                        <span class="budget-currency">SAR</span>
+                    </div>
+                    <span class="form-hint">
+                        Influencers can only apply if their rate is within this budget
+                    </span>
+                </div>
+
+                <!-- Number of Influencers -->
+                <div class="form-group">
+                    <label class="form-label">
+                        How many influencers needed? <span class="required">*</span>
+                    </label>
+                    <div class="number-input-group">
+                        <button class="number-btn minus" onclick="changeInfluencerCount(-1)">−</button>
+                        <span class="number-display" id="influencer-count">5</span>
+                        <button class="number-btn plus" onclick="changeInfluencerCount(1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hybrid Mode Banner -->
+            <div class="hybrid-banner" id="hybrid-banner">
+                <div class="hybrid-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <div class="hybrid-content">
+                    <h4>Hybrid Mode Enabled</h4>
+                    <p>You can add specific influencers manually AND receive applications from others. Best of both worlds!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-buttons">
+                <button class="btn-back" onclick="window.history.back()">Back</button>
+                <button class="btn-create" id="create-btn" onclick="createCampaign()">
+                    Review & Create
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Safe Area -->
+        <div class="bottom-safe-area"></div>
+    </div>
+
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Form data
+        const formData = {
+            manualSelection: false,
+            openForApplications: false,
+            applicationSettings: {
+                tiers: [],
+                niches: [],
+                maxBudget: null,
+                influencerCount: 5
+            }
+        };
+
+        // Toggle handlers
+        const manualToggle = document.getElementById('manual-toggle');
+        const applicationsToggle = document.getElementById('applications-toggle');
+        const applicationSettings = document.getElementById('application-settings');
+        const hybridBanner = document.getElementById('hybrid-banner');
+
+        manualToggle.addEventListener('click', () => {
+            manualToggle.classList.toggle('active');
+            formData.manualSelection = manualToggle.classList.contains('active');
+            updateHybridMode();
+            validateForm();
+        });
+
+        applicationsToggle.addEventListener('click', () => {
+            applicationsToggle.classList.toggle('active');
+            formData.openForApplications = applicationsToggle.classList.contains('active');
+
+            if (formData.openForApplications) {
+                applicationSettings.classList.add('show');
+            } else {
+                applicationSettings.classList.remove('show');
+            }
+
+            updateHybridMode();
+            validateForm();
+        });
+
+        function updateHybridMode() {
+            if (formData.manualSelection && formData.openForApplications) {
+                hybridBanner.classList.add('show');
+            } else {
+                hybridBanner.classList.remove('show');
+            }
+        }
+
+        // Multi-select chips
+        function setupMultiSelectChips(containerId, dataKey) {
+            const container = document.getElementById(containerId);
+            const chips = container.querySelectorAll('.chip:not(.chip-more)');
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const value = chip.dataset.value;
+
+                    if (chip.classList.contains('selected')) {
+                        chip.classList.remove('selected');
+                        formData.applicationSettings[dataKey] = formData.applicationSettings[dataKey].filter(v => v !== value);
+                    } else {
+                        chip.classList.add('selected');
+                        formData.applicationSettings[dataKey].push(value);
+                    }
+                    validateForm();
+                });
+            });
+        }
+
+        setupMultiSelectChips('tier-chips', 'tiers');
+        setupMultiSelectChips('niche-chips', 'niches');
+
+        // Budget input
+        const budgetInput = document.getElementById('max-budget');
+        budgetInput.addEventListener('input', (e) => {
+            formData.applicationSettings.maxBudget = parseInt(e.target.value) || null;
+            validateForm();
+        });
+
+        // Influencer count
+        function changeInfluencerCount(delta) {
+            const current = formData.applicationSettings.influencerCount;
+            const newValue = Math.max(1, current + delta);
+            formData.applicationSettings.influencerCount = newValue;
+            document.getElementById('influencer-count').textContent = newValue;
+        }
+
+        // Validation
+        function validateForm() {
+            let isValid = formData.manualSelection || formData.openForApplications;
+
+            // If applications is on, validate settings
+            if (formData.openForApplications && isValid) {
+                isValid = formData.applicationSettings.tiers.length > 0 &&
+                         formData.applicationSettings.niches.length > 0 &&
+                         formData.applicationSettings.maxBudget > 0;
+            }
+
+            const createBtn = document.getElementById('create-btn');
+            createBtn.disabled = !isValid;
+            createBtn.style.opacity = isValid ? '1' : '0.5';
+        }
+
+        // Create campaign
+        function createCampaign() {
+            const stepData = {
+                manualSelection: formData.manualSelection,
+                openForApplications: formData.openForApplications,
+                applicationSettings: formData.openForApplications ? formData.applicationSettings : null
+            };
+
+            sessionStorage.setItem('campaignData_step4', JSON.stringify(stepData));
+
+            // Show success and redirect
+            alert('Campaign created successfully! 🎉');
+            window.location.href = 'index.html';
+        }
+
+        // Load saved data
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = sessionStorage.getItem('campaignData_step4');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+
+                if (data.manualSelection) {
+                    manualToggle.classList.add('active');
+                    formData.manualSelection = true;
+                }
+
+                if (data.openForApplications) {
+                    applicationsToggle.classList.add('active');
+                    formData.openForApplications = true;
+                    applicationSettings.classList.add('show');
+
+                    if (data.applicationSettings) {
+                        // Restore tiers
+                        data.applicationSettings.tiers.forEach(tier => {
+                            const chip = document.querySelector(`#tier-chips .chip[data-value="${tier}"]`);
+                            if (chip) {
+                                chip.classList.add('selected');
+                                formData.applicationSettings.tiers.push(tier);
+                            }
+                        });
+
+                        // Restore niches
+                        data.applicationSettings.niches.forEach(niche => {
+                            const chip = document.querySelector(`#niche-chips .chip[data-value="${niche}"]`);
+                            if (chip) {
+                                chip.classList.add('selected');
+                                formData.applicationSettings.niches.push(niche);
+                            }
+                        });
+
+                        // Restore budget
+                        if (data.applicationSettings.maxBudget) {
+                            budgetInput.value = data.applicationSettings.maxBudget;
+                            formData.applicationSettings.maxBudget = data.applicationSettings.maxBudget;
+                        }
+
+                        // Restore count
+                        if (data.applicationSettings.influencerCount) {
+                            formData.applicationSettings.influencerCount = data.applicationSettings.influencerCount;
+                            document.getElementById('influencer-count').textContent = data.applicationSettings.influencerCount;
+                        }
+                    }
+                }
+
+                updateHybridMode();
+                validateForm();
+            }
+        });
+
+        // Initial state
+        document.getElementById('create-btn').disabled = true;
+        document.getElementById('create-btn').style.opacity = '0.5';
+    </script>
+</body>
+</html>

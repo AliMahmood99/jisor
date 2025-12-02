@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Create Campaign - Step 3 | JISOR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .progress-container {
+            background: white;
+            padding: 20px;
+            margin-bottom: 8px;
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .progress-step {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        .progress-title {
+            font-size: 13px;
+            color: var(--gray-500);
+            font-weight: 500;
+        }
+
+        .progress-bars {
+            display: flex;
+            gap: 6px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--gray-200);
+        }
+
+        .progress-bar.active {
+            background: var(--gradient-primary);
+        }
+
+        .progress-bar.partial {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--error) 100%);
+        }
+
+        .form-container {
+            padding: 24px 20px 120px;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .form-label .required {
+            color: var(--error);
+        }
+
+        /* Platform Cards */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .platform-card {
+            padding: 20px 16px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .platform-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+            transform: translateY(-2px);
+        }
+
+        .platform-card.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+
+        .platform-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .platform-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .platform-card.selected .platform-name {
+            color: white;
+        }
+
+        /* Content Type Checkboxes */
+        .content-types {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .content-type-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: white;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .content-type-item:hover {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .content-type-item.selected {
+            border-color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .content-type-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .content-type-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .content-type-item.selected .content-type-icon {
+            background: var(--primary);
+            color: white;
+        }
+
+        .content-type-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0 0 2px;
+        }
+
+        .content-type-info p {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .content-type-item.selected .checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .content-type-item.selected .checkbox svg {
+            opacity: 1;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            background: white;
+            border-top: 1px solid var(--gray-100);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-back {
+            flex: 1;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--gray-700);
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: -0.3px;
+        }
+
+        .btn-back:hover {
+            border-color: var(--gray-300);
+            background: var(--gray-50);
+            transform: translateY(-2px);
+        }
+
+        .btn-next {
+            flex: 2;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 800;
+            color: white;
+            background: var(--primary);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+            letter-spacing: -0.3px;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.45);
+            background: linear-gradient(135deg, #5558E3 0%, #7C3AED 100%);
+        }
+
+        .btn-next:disabled {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time" id="current-time">9:41</span>
+            <div class="status-icons">
+                <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+                    <path d="M1 4.5C1 3.11929 2.11929 2 3.5 2H4.5C5.88071 2 7 3.11929 7 4.5V10.5C7 10.7761 6.77614 11 6.5 11H2C1.17157 11 0.5 10.3284 0.5 9.5V5C0.5 4.72386 0.723858 4.5 1 4.5Z" fill="currentColor"/>
+                    <path d="M8 3.5C8 2.67157 8.67157 2 9.5 2H10.5C11.3284 2 12 2.67157 12 3.5V10.5C12 10.7761 11.7761 11 11.5 11H8.5C8.22386 11 8 10.7761 8 10.5V3.5Z" fill="currentColor"/>
+                    <path d="M13 1.5C13 0.671573 13.6716 0 14.5 0H15.5C16.3284 0 17 0.671573 17 1.5V10.5C17 10.7761 16.7761 11 16.5 11H13.5C13.2239 11 13 10.7761 13 10.5V1.5Z" fill="currentColor"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M8 2.5C10.5 2.5 12.7 3.6 14.2 5.4C14.4 5.7 14.4 6.1 14.1 6.4L8.4 11.6C8.2 11.8 7.8 11.8 7.6 11.6L1.9 6.4C1.6 6.1 1.6 5.7 1.8 5.4C3.3 3.6 5.5 2.5 8 2.5Z" fill="currentColor"/>
+                </svg>
+                <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
+                    <rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor"/>
+                    <rect x="2" y="2" width="18" height="8" rx="1" fill="currentColor"/>
+                    <path d="M23 4V8C23.8 7.6 24.5 6.9 24.5 6C24.5 5.1 23.8 4.4 23 4Z" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.history.back()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h1 class="header-title">Create Campaign</h1>
+            </div>
+            <div style="width: 40px;"></div>
+        </header>
+
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-step">Step 3 of 4</span>
+                <span class="progress-title">Platforms & Content</span>
+            </div>
+            <div class="progress-bars">
+                <div class="progress-bar active"></div>
+                <div class="progress-bar active"></div>
+                <div class="progress-bar partial"></div>
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Form Content -->
+        <div class="form-container">
+            <!-- Platforms -->
+            <div class="form-group">
+                <label class="form-label">
+                    Select Platforms <span class="required">*</span>
+                </label>
+                <div class="platforms-grid" id="platforms-grid">
+                    <div class="platform-card" data-platform="instagram">
+                        <span class="platform-icon">📷</span>
+                        <div class="platform-name">Instagram</div>
+                    </div>
+                    <div class="platform-card" data-platform="tiktok">
+                        <span class="platform-icon">🎵</span>
+                        <div class="platform-name">TikTok</div>
+                    </div>
+                    <div class="platform-card" data-platform="youtube">
+                        <span class="platform-icon">▶️</span>
+                        <div class="platform-name">YouTube</div>
+                    </div>
+                    <div class="platform-card" data-platform="twitter">
+                        <span class="platform-icon">𝕏</span>
+                        <div class="platform-name">Twitter</div>
+                    </div>
+                    <div class="platform-card" data-platform="snapchat">
+                        <span class="platform-icon">👻</span>
+                        <div class="platform-name">Snapchat</div>
+                    </div>
+                    <div class="platform-card" data-platform="facebook">
+                        <span class="platform-icon">👍</span>
+                        <div class="platform-name">Facebook</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Types for Instagram -->
+            <div class="form-group" id="instagram-content" style="display: none;">
+                <label class="form-label">
+                    Instagram Content Types <span class="required">*</span>
+                </label>
+                <div class="content-types">
+                    <div class="content-type-item" data-type="reel">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">🎬</div>
+                            <div class="content-type-info">
+                                <h4>Reels</h4>
+                                <p>15-90 seconds video content</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="content-type-item" data-type="story">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">📱</div>
+                            <div class="content-type-info">
+                                <h4>Stories</h4>
+                                <p>24-hour temporary content</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="content-type-item" data-type="post">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">🖼️</div>
+                            <div class="content-type-info">
+                                <h4>Feed Posts</h4>
+                                <p>Permanent grid post</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Types for TikTok -->
+            <div class="form-group" id="tiktok-content" style="display: none;">
+                <label class="form-label">
+                    TikTok Content Types <span class="required">*</span>
+                </label>
+                <div class="content-types">
+                    <div class="content-type-item" data-type="video">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">📹</div>
+                            <div class="content-type-info">
+                                <h4>Video</h4>
+                                <p>Up to 10 minutes</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="content-type-item" data-type="story">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">📱</div>
+                            <div class="content-type-info">
+                                <h4>Story</h4>
+                                <p>24-hour content</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Types for YouTube -->
+            <div class="form-group" id="youtube-content" style="display: none;">
+                <label class="form-label">
+                    YouTube Content Types <span class="required">*</span>
+                </label>
+                <div class="content-types">
+                    <div class="content-type-item" data-type="video">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">🎥</div>
+                            <div class="content-type-info">
+                                <h4>Video</h4>
+                                <p>Long-form content</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="content-type-item" data-type="short">
+                        <div class="content-type-left">
+                            <div class="content-type-icon">⚡</div>
+                            <div class="content-type-info">
+                                <h4>Shorts</h4>
+                                <p>Up to 60 seconds</p>
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-buttons">
+                <button class="btn-back" onclick="window.history.back()">Back</button>
+                <button class="btn-next" id="next-btn" onclick="goToNextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Bottom Safe Area -->
+        <div class="bottom-safe-area"></div>
+    </div>
+
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Form data
+        const formData = {
+            platforms: [],
+            contentTypes: {
+                instagram: [],
+                tiktok: [],
+                youtube: []
+            }
+        };
+
+        // Platform selection
+        const platformCards = document.querySelectorAll('.platform-card');
+        platformCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const platform = card.dataset.platform;
+
+                if (card.classList.contains('selected')) {
+                    card.classList.remove('selected');
+                    formData.platforms = formData.platforms.filter(p => p !== platform);
+                    hideContentSection(platform);
+                } else {
+                    card.classList.add('selected');
+                    formData.platforms.push(platform);
+                    showContentSection(platform);
+                }
+
+                validateForm();
+            });
+        });
+
+        // Show/hide content sections
+        function showContentSection(platform) {
+            const section = document.getElementById(`${platform}-content`);
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+
+        function hideContentSection(platform) {
+            const section = document.getElementById(`${platform}-content`);
+            if (section) {
+                section.style.display = 'none';
+                // Clear selections
+                const items = section.querySelectorAll('.content-type-item');
+                items.forEach(item => item.classList.remove('selected'));
+                formData.contentTypes[platform] = [];
+            }
+        }
+
+        // Content type selection
+        const contentTypeItems = document.querySelectorAll('.content-type-item');
+        contentTypeItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const platform = item.closest('[id$="-content"]').id.replace('-content', '');
+                const type = item.dataset.type;
+
+                if (item.classList.contains('selected')) {
+                    item.classList.remove('selected');
+                    formData.contentTypes[platform] = formData.contentTypes[platform].filter(t => t !== type);
+                } else {
+                    item.classList.add('selected');
+                    formData.contentTypes[platform].push(type);
+                }
+
+                validateForm();
+            });
+        });
+
+        // Validation
+        function validateForm() {
+            let isValid = formData.platforms.length > 0;
+
+            // Check that each selected platform has at least one content type
+            if (isValid) {
+                for (const platform of formData.platforms) {
+                    if (formData.contentTypes[platform] && formData.contentTypes[platform].length === 0) {
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = !isValid;
+            nextBtn.style.opacity = isValid ? '1' : '0.5';
+        }
+
+        // Save and navigate
+        function goToNextStep() {
+            const stepData = {
+                platforms: formData.platforms,
+                contentTypes: formData.contentTypes
+            };
+
+            sessionStorage.setItem('campaignData_step3', JSON.stringify(stepData));
+            window.location.href = 'create-campaign-step4.html';
+        }
+
+        // Load saved data
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = sessionStorage.getItem('campaignData_step3');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+
+                // Restore platforms
+                if (data.platforms) {
+                    data.platforms.forEach(platform => {
+                        const card = document.querySelector(`.platform-card[data-platform="${platform}"]`);
+                        if (card) {
+                            card.classList.add('selected');
+                            formData.platforms.push(platform);
+                            showContentSection(platform);
+                        }
+                    });
+                }
+
+                // Restore content types
+                if (data.contentTypes) {
+                    Object.keys(data.contentTypes).forEach(platform => {
+                        data.contentTypes[platform].forEach(type => {
+                            const section = document.getElementById(`${platform}-content`);
+                            if (section) {
+                                const item = section.querySelector(`.content-type-item[data-type="${type}"]`);
+                                if (item) {
+                                    item.classList.add('selected');
+                                    formData.contentTypes[platform].push(type);
+                                }
+                            }
+                        });
+                    });
+                }
+
+                validateForm();
+            }
+        });
+
+        // Initial state
+        document.getElementById('next-btn').disabled = true;
+        document.getElementById('next-btn').style.opacity = '0.5';
+    </script>
+</body>
+</html>
