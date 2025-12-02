@@ -782,383 +782,62 @@
 
         <!-- Filters -->
         <div class="filters-section">
-            <div class="filters-scroll">
-                <button class="filter-chip active" data-filter="all">
-                    All
-                    <span class="filter-count">12</span>
-                </button>
-                <button class="filter-chip inactive" data-filter="active">
-                    Active
-                    <span class="filter-count">8</span>
-                </button>
-                <button class="filter-chip inactive" data-filter="draft">
-                    Draft
-                    <span class="filter-count">2</span>
-                </button>
-                <button class="filter-chip inactive" data-filter="completed">
-                    Completed
-                    <span class="filter-count">2</span>
-                </button>
+            <!-- Status Filters -->
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">Status</div>
+                <div class="filters-scroll">
+                    <button class="filter-chip active status-filter" data-status="all">
+                        All
+                        <span class="filter-count" id="count-all">0</span>
+                    </button>
+                    <button class="filter-chip inactive status-filter" data-status="active">
+                        Active
+                        <span class="filter-count" id="count-active">0</span>
+                    </button>
+                    <button class="filter-chip inactive status-filter" data-status="draft">
+                        Draft
+                        <span class="filter-count" id="count-draft">0</span>
+                    </button>
+                    <button class="filter-chip inactive status-filter" data-status="completed">
+                        Completed
+                        <span class="filter-count" id="count-completed">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Type Filters -->
+            <div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">Campaign Type</div>
+                <div class="filters-scroll">
+                    <button class="filter-chip active type-filter" data-type="all">
+                        All Types
+                        <span class="filter-count" id="count-type-all">0</span>
+                    </button>
+                    <button class="filter-chip inactive type-filter" data-type="hybrid">
+                        🔀 Hybrid
+                        <span class="filter-count" id="count-hybrid">0</span>
+                    </button>
+                    <button class="filter-chip inactive type-filter" data-type="invite-only">
+                        👥 Invite Only
+                        <span class="filter-count" id="count-invite">0</span>
+                    </button>
+                    <button class="filter-chip inactive type-filter" data-type="public">
+                        🌍 Public
+                        <span class="filter-count" id="count-public">0</span>
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Campaigns List -->
         <section class="campaigns-section">
             <div class="section-header">
-                <h2 class="section-title">All Campaigns</h2>
-                <span class="section-count">12 campaigns</span>
+                <h2 class="section-title" id="campaigns-title">All Campaigns</h2>
+                <span class="section-count" id="campaigns-count">0 campaigns</span>
             </div>
 
-            <div class="campaigns-list">
-
-                <!-- Hybrid Campaign Card -->
-                <div class="campaign-card hybrid-type" onclick="window.location.href='index.html'">
-                    <div class="card-strip" style="background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);"></div>
-                    <div class="card-header">
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span class="type-badge" style="background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(236,72,153,0.15) 100%); color: var(--primary); padding: 5px 9px; font-size: 9px;">
-                                <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="3" cy="3" r="1.5"/>
-                                    <path d="M6 3h2M8 2v2"/>
-                                </svg>
-                                HYBRID
-                            </span>
-                            <div style="display: flex; gap: 3px;">
-                                <span style="font-size: 16px;">📷</span>
-                                <span style="font-size: 16px;">🎵</span>
-                            </div>
-                        </div>
-                        <span class="status-badge active">
-                            <span class="status-dot"></span>
-                            Active
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="campaign-name">Ramadan Food Products Campaign</h3>
-                        <p class="campaign-id">#CAMP-2025-00089</p>
-
-                        <!-- Alert for pending applications -->
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: linear-gradient(135deg, rgba(236,72,153,0.08) 0%, rgba(251,146,60,0.08) 100%); border-radius: 12px; margin-bottom: 16px; border: 1.5px solid rgba(236,72,153,0.2); position: relative; overflow: hidden;">
-                            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent);"></div>
-                            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(236,72,153,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2.5">
-                                    <circle cx="8" cy="8" r="3"/>
-                                    <path d="M8 2v2M8 12v2M2 8h2M12 8h2"/>
-                                </svg>
-                            </div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 2px;">12 applications waiting</div>
-                                <div style="font-size: 11px; font-weight: 500; color: var(--gray-600);">Review and accept influencers</div>
-                            </div>
-                            <svg width="14" height="14" fill="none" stroke="var(--accent)" stroke-width="2.5" style="flex-shrink: 0;">
-                                <path d="M5 7l2 2 2-2"/>
-                            </svg>
-                        </div>
-                        <div class="campaign-meta">
-                            <div class="meta-item">
-                                <div class="meta-icon">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="2" width="12" height="12" rx="2"/>
-                                        <path d="M5 1v2M11 1v2M2 6h12"/>
-                                    </svg>
-                                </div>
-                                <div class="meta-content">
-                                    <span class="meta-label">Publish Date</span>
-                                    <span class="meta-value">1 Ramadan 1446</span>
-                                </div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-icon">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="8" cy="8" r="6"/>
-                                        <path d="M8 4v4l3 2"/>
-                                    </svg>
-                                </div>
-                                <div class="meta-content">
-                                    <span class="meta-label">Closes In</span>
-                                    <span class="meta-value" style="color: var(--warning);">3 days left</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Influencers Section -->
-                    <div style="padding: 14px 20px; border-top: 1px solid var(--gray-100); background: linear-gradient(180deg, transparent 0%, rgba(249,250,251,0.8) 100%);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span style="font-size: 12px; font-weight: 600; color: var(--gray-600);">Applicants</span>
-                            <span style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(236,72,153,0.1); color: var(--accent);">8 / 25 needed</span>
-                        </div>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
-                                    A
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Abdullah</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
-                                    R
-                                    <div style="position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--info); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
-                                        <svg width="8" height="8" fill="white" viewBox="0 0 20 20">
-                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Reem</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    F
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Fahd</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--gray-900); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    +15
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">More</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 16px; padding: 8px 0;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></span>
-                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">5</strong> Signed/Active</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--warning);"></span>
-                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">2</strong> Awaiting</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--error);"></span>
-                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">1</strong> Expired</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Progress -->
-                    <div style="padding: 0 20px 14px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <span style="font-size: 11px; color: var(--gray-500); font-weight: 500;">Pool Completion</span>
-                            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; color: var(--accent);">32%</span>
-                        </div>
-                        <div style="height: 5px; background: var(--gray-200); border-radius: 10px; overflow: hidden;">
-                            <div style="height: 100%; width: 32%; background: var(--gradient-accent); border-radius: 10px; transition: width 0.5s ease;"></div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="budget-info">
-                            <span class="budget-label">Total Budget</span>
-                            <span class="budget-value">125,000 SAR</span>
-                        </div>
-                        <button class="view-btn hybrid" onclick="event.stopPropagation();">
-                            Details
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12l7-7M5 5l7 7"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Manual Campaign Card -->
-                <div class="campaign-card manual-type">
-                    <div class="card-strip solo"></div>
-                    <div class="card-header">
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span class="type-badge solo" style="padding: 5px 9px; font-size: 9px;">
-                                <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="4.5" cy="3" r="2"/>
-                                    <path d="M2 8v-1a2.5 2.5 0 015 0v1"/>
-                                </svg>
-                                MANUAL
-                            </span>
-                            <div style="display: flex; gap: 3px;">
-                                <span style="font-size: 16px;">📷</span>
-                            </div>
-                        </div>
-                        <span class="status-badge active">
-                            <span class="status-dot"></span>
-                            Active
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="campaign-name">Skincare Product Launch</h3>
-                        <p class="campaign-id">#CAMP-2025-00125</p>
-                        <div class="campaign-meta">
-                            <div class="meta-item">
-                                <div class="meta-icon">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="2" width="12" height="12" rx="2"/>
-                                        <path d="M5 1v2M11 1v2M2 6h12"/>
-                                    </svg>
-                                </div>
-                                <div class="meta-content">
-                                    <span class="meta-label">Publish Date</span>
-                                    <span class="meta-value">20 March 2025</span>
-                                </div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-icon">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="2" width="12" height="12" rx="3"/>
-                                        <circle cx="8" cy="8" r="2"/>
-                                    </svg>
-                                </div>
-                                <div class="meta-content">
-                                    <span class="meta-label">Platform</span>
-                                    <span class="meta-value">Instagram</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Selected Influencers -->
-                    <div style="padding: 14px 20px; border-top: 1px solid var(--gray-100); background: linear-gradient(180deg, transparent 0%, rgba(249,250,251,0.8) 100%);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                            <span style="font-size: 12px; font-weight: 600; color: var(--gray-600);">Selected Influencers</span>
-                            <span style="font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgba(99,102,241,0.1); color: var(--primary);">3 influencers</span>
-                        </div>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
-                                    S
-                                    <div style="position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--info); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
-                                        <svg width="8" height="8" fill="white" viewBox="0 0 20 20">
-                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Sarah</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--success);"></span>
-                                    N
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Nora</span>
-                            </div>
-                            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 52px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; position: relative; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                    <span style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--warning);"></span>
-                                    M
-                                    <div style="position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--info); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center;">
-                                        <svg width="8" height="8" fill="white" viewBox="0 0 20 20">
-                                            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <span style="font-size: 9px; color: var(--gray-400); text-align: center;">Maryam</span>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 16px; padding: 8px 0;">
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></span>
-                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">2</strong> Accepted</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 6px;">
-                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--warning);"></span>
-                                <span style="font-size: 12px; color: var(--gray-600);"><strong style="font-weight: 700; color: var(--gray-900);">1</strong> Awaiting</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Progress -->
-                    <div style="padding: 0 20px 14px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <span style="font-size: 11px; color: var(--gray-500); font-weight: 500;">Campaign Progress</span>
-                            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; color: var(--primary);">67%</span>
-                        </div>
-                        <div style="height: 5px; background: var(--gray-200); border-radius: 10px; overflow: hidden;">
-                            <div style="height: 100%; width: 67%; background: var(--gradient-primary); border-radius: 10px; transition: width 0.5s ease;"></div>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="budget-info">
-                            <span class="budget-label">Total Budget</span>
-                            <span class="budget-value">45,000 SAR</span>
-                        </div>
-                        <button class="view-btn solo">
-                            Details
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M5 12l7-7M5 5l7 7"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Open Call Campaign (Completed) -->
-                <div class="campaign-card opencall-type">
-                    <div class="card-strip mass"></div>
-                    <div class="card-header">
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span class="type-badge mass" style="padding: 5px 9px; font-size: 9px;">
-                                <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="2.5" cy="2.5" r="1.5"/>
-                                    <circle cx="6.5" cy="2.5" r="1.5"/>
-                                    <circle cx="4.5" cy="6.5" r="1.5"/>
-                                </svg>
-                                OPEN CALL
-                            </span>
-                            <div style="display: flex; gap: 3px;">
-                                <span style="font-size: 16px;">📷</span>
-                                <span style="font-size: 16px;">🎵</span>
-                            </div>
-                        </div>
-                        <span class="status-badge completed">
-                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M8 3L4 7l-2-2"/>
-                            </svg>
-                            Completed
-                        </span>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="campaign-name">Seafood Restaurant Ad</h3>
-                        <p class="campaign-id">#CAMP-2025-00098</p>
-                        <div class="campaign-meta">
-                            <div class="meta-item">
-                                <div class="meta-icon">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="2" y="2" width="12" height="12" rx="2"/>
-                                        <path d="M5 1v2M11 1v2M2 6h12"/>
-                                    </svg>
-                                </div>
-                                <div class="meta-content">
-                                    <span class="meta-label">Completed</span>
-                                    <span class="meta-value">10 Feb 2025</span>
-                                </div>
-                            </div>
-                            <div class="meta-item">
-                                <div class="meta-icon">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M8 2v4l3 2"/>
-                                        <circle cx="8" cy="8" r="6"/>
-                                    </svg>
-                                </div>
-                                <div class="meta-content">
-                                    <span class="meta-label">Reach</span>
-                                    <span class="meta-value">1.2M views</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="budget-info">
-                            <span class="budget-label">Amount Paid</span>
-                            <span class="budget-value">8,000 SAR</span>
-                        </div>
-                        <button class="view-btn mass">
-                            View Report
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2v8M8 6v4M4 10v2"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
+            <div class="campaigns-list" id="campaigns-container">
+                <!-- Campaigns will be rendered here by JavaScript -->
             </div>
         </section>
 
@@ -1201,8 +880,29 @@
         </nav>
     </div>
 
+    <!-- Load Data -->
+    <script src="data/campaigns-data.js"></script>
+
     <script>
-        // Smooth fade-in animation for cards
+        // ============================================
+        // VARIABLES & STATE
+        // ============================================
+        let currentStatusFilter = 'all';
+        let currentTypeFilter = 'all';
+        let allCampaigns = [];
+
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const timeEl = document.querySelector('.time');
+            if (timeEl) timeEl.textContent = `${hours}:${minutes}`;
+        }
+
         function fadeInCards() {
             const cards = document.querySelectorAll('.campaign-card');
             cards.forEach((card, index) => {
@@ -1212,65 +912,366 @@
                     card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
-                }, index * 100);
+                }, index * 80);
             });
         }
 
-        // Filter functionality
-        const filterChips = document.querySelectorAll('.filter-chip');
-        filterChips.forEach(chip => {
-            chip.addEventListener('click', function() {
-                // Update active state
-                filterChips.forEach(c => {
-                    c.classList.remove('active');
-                    c.classList.add('inactive');
+        // ============================================
+        // CAMPAIGN RENDERING
+        // ============================================
+
+        function renderCampaigns() {
+            const container = document.getElementById('campaigns-container');
+            const filtered = filterCampaigns();
+
+            container.innerHTML = '';
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📭</div>
+                        <div style="font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No campaigns found</div>
+                        <div style="font-size: 14px; color: var(--gray-500);">Try adjusting your filters</div>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(campaign => {
+                const card = createCampaignCard(campaign);
+                container.innerHTML += card;
+            });
+
+            fadeInCards();
+        }
+
+        function createCampaignCard(campaign) {
+            const state = window.getCampaignState(campaign);
+            const badge = window.getTypeBadge(campaign.type);
+
+            let content = '';
+
+            // Card header
+            content += `
+                <div class="campaign-card" onclick="window.location.href='index.html?id=${campaign.id}'">
+                    <div class="card-strip" style="background: ${getStripGradient(campaign.type)};"></div>
+                    <div class="card-header">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <span class="type-badge" style="background: ${badge.gradient}; color: ${badge.color}; padding: 6px 11px; font-size: 10px; font-weight: 800;">
+                                ${badge.icon} ${badge.text}
+                            </span>
+                            ${renderPlatformIcons(campaign)}
+                        </div>
+                        ${renderStatusBadge(campaign.status, campaign.daysLeft)}
+                    </div>
+                    <div class="card-body">
+                        <h3 class="campaign-name">${campaign.name}</h3>
+                        <p class="campaign-id">#${campaign.id}</p>
+
+                        ${renderAlert(campaign, state)}
+                        ${renderStats(campaign, state)}
+                    </div>
+
+                    ${renderFooter(campaign)}
+                </div>
+            `;
+
+            return content;
+        }
+
+        function getStripGradient(type) {
+            if (type === 'hybrid') return 'linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%)';
+            if (type === 'invite-only') return 'var(--gradient-primary)';
+            return 'var(--gradient-accent)';
+        }
+
+        function renderPlatformIcons(campaign) {
+            const platforms = window.getPlatforms(campaign.invited || []);
+            const keys = Object.keys(platforms);
+
+            if (keys.length === 0 && campaign.settings && campaign.settings.platforms) {
+                return campaign.settings.platforms.slice(0, 3).map(p =>
+                    `<span style="font-size: 16px;">${window.getPlatformIcon(p)}</span>`
+                ).join('');
+            }
+
+            if (keys.length === 0) return '';
+
+            return keys.slice(0, 3).map(platform =>
+                `<span style="font-size: 16px;">${window.getPlatformIcon(platform)}</span>`
+            ).join('');
+        }
+
+        function renderStatusBadge(status, daysLeft) {
+            if (status === 'active') {
+                const urgency = daysLeft <= 3 ? 'color: var(--error);' : '';
+                return `
+                    <span class="status-badge active">
+                        <span class="status-dot"></span>
+                        Active ${daysLeft > 0 ? `• ${daysLeft}d left` : ''}
+                    </span>
+                `;
+            }
+            if (status === 'draft') {
+                return `<span class="status-badge" style="background: var(--gray-100); color: var(--gray-600);">Draft</span>`;
+            }
+            if (status === 'completed') {
+                return `<span class="status-badge completed">✓ Completed</span>`;
+            }
+            return '';
+        }
+
+        function renderAlert(campaign, state) {
+            // HYBRID - Has applications pending
+            if (state === 'hybrid-both' && campaign.applications.pending > 0) {
+                return `
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: linear-gradient(135deg, rgba(236,72,153,0.08) 0%, rgba(251,146,60,0.08) 100%); border-radius: 12px; margin-bottom: 16px; border: 1.5px solid rgba(236,72,153,0.2); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent);"></div>
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(236,72,153,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2.5">
+                                <circle cx="8" cy="8" r="3"/>
+                                <path d="M8 2v2M8 12v2M2 8h2M12 8h2"/>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 2px;">${campaign.applications.pending} applications waiting</div>
+                            <div style="font-size: 11px; font-weight: 500; color: var(--gray-600);">Review and accept influencers</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // HYBRID - Applications only
+            if (state === 'hybrid-apps-only' && campaign.applications.pending > 0) {
+                return `
+                    <div style="padding: 14px; background: rgba(99,102,241,0.06); border-radius: 10px; margin-bottom: 14px; border: 1px solid rgba(99,102,241,0.15);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 6px;">💡 Add influencers manually</div>
+                        <div style="font-size: 11px; color: var(--gray-600);">Browse and invite specific creators</div>
+                    </div>
+                    <div style="padding: 14px; background: rgba(236,72,153,0.06); border-radius: 10px; margin-bottom: 14px; border: 1px solid rgba(236,72,153,0.15);">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">⚠️ ${campaign.applications.pending} applications waiting</div>
+                        <div style="font-size: 11px; color: var(--gray-600);">Review pending applications</div>
+                    </div>
+                `;
+            }
+
+            // HYBRID - Manual only
+            if (state === 'hybrid-manual-only') {
+                return `
+                    <div style="padding: 14px; background: rgba(99,102,241,0.06); border-radius: 10px; margin-bottom: 14px; border: 1px solid rgba(99,102,241,0.15);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--primary);">📢 Open for applications</div>
+                        <div style="font-size: 11px; color: var(--gray-600); margin-top: 4px;">No applications received yet</div>
+                    </div>
+                `;
+            }
+
+            // HYBRID - Empty
+            if (state === 'hybrid-empty') {
+                return `
+                    <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--gray-200);">
+                        <div style="font-size: 12px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">🎯 Get started:</div>
+                        <div style="font-size: 11px; color: var(--gray-600); line-height: 1.6;">
+                            • Browse and invite influencers<br>
+                            • Wait for applications to arrive
+                        </div>
+                    </div>
+                `;
+            }
+
+            // INVITE ONLY - Empty
+            if (state === 'invite-empty') {
+                return `
+                    <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--gray-200);">
+                        <div style="font-size: 12px; font-weight: 700; color: var(--gray-900); margin-bottom: 6px;">🔍 Add influencers to start</div>
+                        <div style="font-size: 11px; color: var(--gray-600);">Browse creators and send invitations</div>
+                    </div>
+                `;
+            }
+
+            // PUBLIC - No apps
+            if (state === 'public-no-apps') {
+                return `
+                    <div style="padding: 14px; background: rgba(236,72,153,0.06); border-radius: 10px; margin-bottom: 14px; border: 1px solid rgba(236,72,153,0.15);">
+                        <div style="font-size: 12px; font-weight: 600; color: var(--accent);">📢 Campaign published</div>
+                        <div style="font-size: 11px; color: var(--gray-600); margin-top: 4px;">Waiting for influencer applications</div>
+                    </div>
+                `;
+            }
+
+            // PUBLIC - Has apps
+            if (state === 'public-has-apps' && campaign.applications.pending > 0) {
+                return `
+                    <div style="padding: 14px 16px; background: linear-gradient(135deg, rgba(236,72,153,0.08) 0%, rgba(251,146,60,0.08) 100%); border-radius: 12px; margin-bottom: 14px; border: 1.5px solid rgba(236,72,153,0.2);">
+                        <div style="font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 2px;">⚠️ ${campaign.applications.pending} applications waiting</div>
+                        <div style="font-size: 11px; color: var(--gray-600);">Review and accept influencers</div>
+                    </div>
+                `;
+            }
+
+            return '';
+        }
+
+        function renderStats(campaign, state) {
+            let stats = '';
+
+            // Show invited influencers for HYBRID-both and INVITE-ONLY
+            if ((state === 'hybrid-both' || state === 'hybrid-manual-only' || state === 'invite-has-influencers') && campaign.invited && campaign.invited.length > 0) {
+                const platforms = window.getPlatforms(campaign.invited);
+                const platformTags = Object.keys(platforms).map(p =>
+                    `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: var(--gray-100); border-radius: 8px; font-size: 11px; font-weight: 700; color: var(--gray-700);">
+                        ${window.getPlatformIcon(p)} ${platforms[p]}
+                    </span>`
+                ).join(' ');
+
+                stats += `
+                    <div style="padding: 12px; background: var(--gray-50); border-radius: 10px; margin-bottom: 12px;">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px;">Invited Influencers (${campaign.invited.length})</div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;">
+                            ${campaign.invited.slice(0, 4).map(inf => `
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: ${inf.gradient}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                                    ${inf.avatar}
+                                </div>
+                            `).join('')}
+                            ${campaign.invited.length > 4 ? `<div style="width: 36px; height: 36px; border-radius: 50%; background: var(--gray-900); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white;">+${campaign.invited.length - 4}</div>` : ''}
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            ${platformTags}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Show progress
+            if (campaign.progress !== undefined && campaign.progress > 0) {
+                const color = campaign.progress < 30 ? 'var(--error)' : campaign.progress < 70 ? 'var(--warning)' : 'var(--success)';
+                stats += `
+                    <div style="margin-bottom: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 600; color: var(--gray-600);">Progress</span>
+                            <span style="font-size: 12px; font-weight: 800; color: ${color};">${campaign.progress}%</span>
+                        </div>
+                        <div style="height: 6px; background: var(--gray-200); border-radius: 10px; overflow: hidden;">
+                            <div style="height: 100%; width: ${campaign.progress}%; background: ${color}; border-radius: 10px; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return stats;
+        }
+
+        function renderFooter(campaign) {
+            const budget = campaign.budget || campaign.settings?.budget || 0;
+            const btnClass = campaign.type === 'hybrid' ? 'hybrid' : campaign.type === 'invite-only' ? 'solo' : 'mass';
+
+            return `
+                <div class="card-footer">
+                    <div class="budget-info">
+                        <span class="budget-label">Budget</span>
+                        <span class="budget-value">${(budget / 1000).toFixed(0)}K SAR</span>
+                    </div>
+                    <button class="view-btn ${btnClass}" onclick="event.stopPropagation();">
+                        Details
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12l7-7M5 5l7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // FILTERING
+        // ============================================
+
+        function filterCampaigns() {
+            return allCampaigns.filter(campaign => {
+                const statusMatch = currentStatusFilter === 'all' || campaign.status === currentStatusFilter;
+                const typeMatch = currentTypeFilter === 'all' || campaign.type === currentTypeFilter;
+                return statusMatch && typeMatch;
+            });
+        }
+
+        function updateFilterCounts() {
+            // Status counts
+            document.getElementById('count-all').textContent = allCampaigns.length;
+            document.getElementById('count-active').textContent = allCampaigns.filter(c => c.status === 'active').length;
+            document.getElementById('count-draft').textContent = allCampaigns.filter(c => c.status === 'draft').length;
+            document.getElementById('count-completed').textContent = allCampaigns.filter(c => c.status === 'completed').length;
+
+            // Type counts
+            document.getElementById('count-type-all').textContent = allCampaigns.length;
+            document.getElementById('count-hybrid').textContent = allCampaigns.filter(c => c.type === 'hybrid').length;
+            document.getElementById('count-invite').textContent = allCampaigns.filter(c => c.type === 'invite-only').length;
+            document.getElementById('count-public').textContent = allCampaigns.filter(c => c.type === 'public').length;
+        }
+
+        function updateCampaignsCount() {
+            const filtered = filterCampaigns();
+            document.getElementById('campaigns-count').textContent = `${filtered.length} campaign${filtered.length !== 1 ? 's' : ''}`;
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        document.querySelectorAll('.status-filter').forEach(filter => {
+            filter.addEventListener('click', function() {
+                document.querySelectorAll('.status-filter').forEach(f => {
+                    f.classList.remove('active');
+                    f.classList.add('inactive');
                 });
                 this.classList.remove('inactive');
                 this.classList.add('active');
 
-                // Filter campaigns
-                const filter = this.dataset.filter;
-                const campaigns = document.querySelectorAll('.campaign-card');
+                currentStatusFilter = this.dataset.status;
+                renderCampaigns();
+                updateCampaignsCount();
+            });
+        });
 
-                campaigns.forEach(campaign => {
-                    if (filter === 'all') {
-                        campaign.style.display = 'block';
-                    } else {
-                        // Add logic for different filters
-                        campaign.style.display = 'block';
-                    }
+        document.querySelectorAll('.type-filter').forEach(filter => {
+            filter.addEventListener('click', function() {
+                document.querySelectorAll('.type-filter').forEach(f => {
+                    f.classList.remove('active');
+                    f.classList.add('inactive');
                 });
+                this.classList.remove('inactive');
+                this.classList.add('active');
 
-                // Re-animate cards
-                fadeInCards();
+                currentTypeFilter = this.dataset.type;
+                renderCampaigns();
+                updateCampaignsCount();
             });
         });
 
         // Tab navigation
-        const tabItems = document.querySelectorAll('.tab-item');
-        tabItems.forEach(tab => {
+        document.querySelectorAll('.tab-item').forEach(tab => {
             tab.addEventListener('click', () => {
-                tabItems.forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
             });
         });
 
-        // Update time
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const timeEl = document.querySelector('.time');
-            if (timeEl) {
-                timeEl.textContent = `${hours}:${minutes}`;
-            }
-        }
-        updateTime();
-        setInterval(updateTime, 60000);
+        // ============================================
+        // INITIALIZATION
+        // ============================================
 
-        // Initial animation on page load
         window.addEventListener('DOMContentLoaded', () => {
-            fadeInCards();
+            // Load data
+            allCampaigns = window.campaignsData || [];
+            console.log('Loaded campaigns:', allCampaigns.length);
+
+            // Update counts
+            updateFilterCounts();
+            updateCampaignsCount();
+
+            // Render
+            renderCampaigns();
+
+            // Start time updates
+            updateTime();
+            setInterval(updateTime, 60000);
         });
     </script>
 </body>
