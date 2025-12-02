@@ -753,33 +753,50 @@
         </header>
 
         <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card solo active" onclick="filterCampaigns('solo')">
-                <span class="stat-badge">You Choose</span>
-                <div class="stat-icon">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="10" cy="6" r="4"/>
-                        <path d="M4 18v-2a6 6 0 0112 0v2"/>
+        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); gap: 10px;">
+            <div class="stat-card solo active" onclick="filterCampaigns('all')" style="padding: 14px 12px;">
+                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 2h12v12H2z"/>
+                        <path d="M6 2v12M10 2v12M2 6h12M2 10h12"/>
                     </svg>
                 </div>
-                <div class="stat-label">Solo Campaigns</div>
-                <div class="stat-value">7</div>
-                <div class="stat-desc">Direct influencer selection</div>
+                <div class="stat-value" style="font-size: 28px;">12</div>
+                <div class="stat-desc" style="font-size: 10px;">Total</div>
             </div>
 
-            <div class="stat-card mass" onclick="filterCampaigns('mass')">
-                <span class="stat-badge">Open Call</span>
-                <div class="stat-icon">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="5" cy="5" r="3"/>
-                        <circle cx="15" cy="5" r="3"/>
-                        <circle cx="10" cy="14" r="3"/>
-                        <path d="M8 6l2 6M12 6l-2 6"/>
+            <div class="stat-card mass" onclick="filterCampaigns('active')" style="padding: 14px 12px;">
+                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="9" r="7"/>
+                        <path d="M12 7l-4 4-2-2"/>
                     </svg>
                 </div>
-                <div class="stat-label">Mass Campaigns</div>
-                <div class="stat-value">5</div>
-                <div class="stat-desc">Influencers apply to campaign</div>
+                <div class="stat-value" style="font-size: 28px;">8</div>
+                <div class="stat-desc" style="font-size: 10px;">Active</div>
+            </div>
+
+            <div class="stat-card solo" onclick="filterCampaigns('applications')" style="padding: 14px 12px;">
+                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 8l4-4 4 4M3 13l4-4 4 4"/>
+                        <rect x="11" y="5" width="5" height="9" rx="1"/>
+                    </svg>
+                </div>
+                <div class="stat-value" style="font-size: 28px;">24</div>
+                <div class="stat-desc" style="font-size: 10px;">Pending</div>
+            </div>
+
+            <div class="stat-card mass" onclick="filterCampaigns('influencers')" style="padding: 14px 12px;">
+                <div class="stat-icon" style="width: 36px; height: 36px; margin-bottom: 10px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="6" cy="4" r="3"/>
+                        <circle cx="12" cy="4" r="3"/>
+                        <path d="M3 17v-2a4 4 0 014-4h2M11 11a4 4 0 014 4v2"/>
+                    </svg>
+                </div>
+                <div class="stat-value" style="font-size: 28px;">45</div>
+                <div class="stat-desc" style="font-size: 10px;">Active</div>
             </div>
         </div>
 
@@ -818,18 +835,23 @@
 
             <div class="campaigns-list">
 
-                <!-- Mass Campaign Card -->
-                <div class="campaign-card mass-type" onclick="window.location.href='index.html'">
-                    <div class="card-strip mass"></div>
+                <!-- Hybrid Campaign Card -->
+                <div class="campaign-card hybrid-type" onclick="window.location.href='index.html'">
+                    <div class="card-strip" style="background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);"></div>
                     <div class="card-header">
-                        <span class="type-badge mass">
-                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="3" cy="3" r="1.5"/>
-                                <circle cx="7" cy="3" r="1.5"/>
-                                <circle cx="5" cy="7" r="1.5"/>
-                            </svg>
-                            Mass
-                        </span>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span class="type-badge" style="background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(236,72,153,0.15) 100%); color: var(--primary); padding: 5px 9px; font-size: 9px;">
+                                <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="3" cy="3" r="1.5"/>
+                                    <path d="M6 3h2M8 2v2"/>
+                                </svg>
+                                HYBRID
+                            </span>
+                            <div style="display: flex; gap: 3px;">
+                                <span style="font-size: 16px;">📷</span>
+                                <span style="font-size: 16px;">🎵</span>
+                            </div>
+                        </div>
                         <span class="status-badge active">
                             <span class="status-dot"></span>
                             Active
@@ -837,7 +859,16 @@
                     </div>
                     <div class="card-body">
                         <h3 class="campaign-name">Ramadan Food Products Campaign</h3>
-                        <p class="campaign-id">#MASS-2025-00089</p>
+                        <p class="campaign-id">#CAMP-2025-00089</p>
+
+                        <!-- Alert for pending applications -->
+                        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(236,72,153,0.08); border-radius: 10px; margin-bottom: 14px; border: 1px solid rgba(236,72,153,0.2);">
+                            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" style="flex-shrink: 0;">
+                                <path d="M8 3v5M8 11h.01"/>
+                                <circle cx="8" cy="8" r="6"/>
+                            </svg>
+                            <span style="font-size: 12px; font-weight: 600; color: var(--accent);">12 pending applications</span>
+                        </div>
                         <div class="campaign-meta">
                             <div class="meta-item">
                                 <div class="meta-icon">
@@ -946,17 +977,22 @@
                     </div>
                 </div>
 
-                <!-- Solo Campaign Card -->
-                <div class="campaign-card solo-type">
+                <!-- Manual Campaign Card -->
+                <div class="campaign-card manual-type">
                     <div class="card-strip solo"></div>
                     <div class="card-header">
-                        <span class="type-badge solo">
-                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="5" cy="3" r="2"/>
-                                <path d="M2 9v-1a3 3 0 016 0v1"/>
-                            </svg>
-                            Solo
-                        </span>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span class="type-badge solo" style="padding: 5px 9px; font-size: 9px;">
+                                <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="4.5" cy="3" r="2"/>
+                                    <path d="M2 8v-1a2.5 2.5 0 015 0v1"/>
+                                </svg>
+                                MANUAL
+                            </span>
+                            <div style="display: flex; gap: 3px;">
+                                <span style="font-size: 16px;">📷</span>
+                            </div>
+                        </div>
                         <span class="status-badge active">
                             <span class="status-dot"></span>
                             Active
@@ -964,7 +1000,7 @@
                     </div>
                     <div class="card-body">
                         <h3 class="campaign-name">Skincare Product Launch</h3>
-                        <p class="campaign-id">#SOLO-2025-00125</p>
+                        <p class="campaign-id">#CAMP-2025-00125</p>
                         <div class="campaign-meta">
                             <div class="meta-item">
                                 <div class="meta-icon">
@@ -1069,17 +1105,24 @@
                     </div>
                 </div>
 
-                <!-- Completed Campaign -->
-                <div class="campaign-card solo-type">
-                    <div class="card-strip solo"></div>
+                <!-- Open Call Campaign (Completed) -->
+                <div class="campaign-card opencall-type">
+                    <div class="card-strip mass"></div>
                     <div class="card-header">
-                        <span class="type-badge solo">
-                            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="5" cy="3" r="2"/>
-                                <path d="M2 9v-1a3 3 0 016 0v1"/>
-                            </svg>
-                            Solo
-                        </span>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span class="type-badge mass" style="padding: 5px 9px; font-size: 9px;">
+                                <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="2.5" cy="2.5" r="1.5"/>
+                                    <circle cx="6.5" cy="2.5" r="1.5"/>
+                                    <circle cx="4.5" cy="6.5" r="1.5"/>
+                                </svg>
+                                OPEN CALL
+                            </span>
+                            <div style="display: flex; gap: 3px;">
+                                <span style="font-size: 16px;">📷</span>
+                                <span style="font-size: 16px;">🎵</span>
+                            </div>
+                        </div>
                         <span class="status-badge completed">
                             <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M8 3L4 7l-2-2"/>
@@ -1089,7 +1132,7 @@
                     </div>
                     <div class="card-body">
                         <h3 class="campaign-name">Seafood Restaurant Ad</h3>
-                        <p class="campaign-id">#SOLO-2025-00098</p>
+                        <p class="campaign-id">#CAMP-2025-00098</p>
                         <div class="campaign-meta">
                             <div class="meta-item">
                                 <div class="meta-icon">
@@ -1135,7 +1178,7 @@
         </section>
 
         <!-- FAB Button -->
-        <button class="fab">
+        <button class="fab" onclick="window.location.href='create-campaign-step1.html'">
             <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="3">
                 <path d="M14 6v16M6 14h16"/>
             </svg>
