@@ -217,8 +217,8 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 20px;
-            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+            padding: 16px 24px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
             background: white;
             border-top: 1px solid var(--gray-100);
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
@@ -228,6 +228,8 @@
         .nav-buttons {
             display: flex;
             gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
         }
 
         .btn-back {
