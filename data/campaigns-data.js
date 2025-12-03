@@ -18,44 +18,157 @@ window.campaignsData = [
 
     invited: [
       {
+        id: 'INF-001',
         name: 'Sarah Ahmed',
         avatar: 'S',
         platform: 'instagram',
         followers: 95000,
         status: 'accepted',
-        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+
+        // Contract & Payment
+        contractAmount: 60000,
+        contractStatus: 'completed',
+        paymentStatus: 'paid',
+        brandSignedAt: '2025-11-18T10:30:00',
+        influencerSignedAt: '2025-11-19T14:20:00',
+
+        // Content
+        contentStatus: 'submitted',
+        contentDueDate: '2025-12-15',
+        contentSubmittedAt: '2025-12-03T09:15:00',
+        submittedHoursAgo: 2,
+        deliverables: ['Instagram Reel ×1', 'Story ×3']
       },
       {
+        id: 'INF-002',
         name: 'Ahmed Ali',
         avatar: 'A',
         platform: 'tiktok',
         followers: 45000,
         status: 'pending',
-        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+
+        // Contract & Payment - Awaiting Payment
+        contractAmount: 60000,
+        contractStatus: 'awaiting-payment',
+        paymentStatus: 'pending',
+        deliverables: ['TikTok Video ×1', 'Story ×2']
       },
       {
+        id: 'INF-003',
         name: 'Nora Hassan',
         avatar: 'N',
         platform: 'youtube',
         followers: 120000,
         status: 'accepted',
-        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+
+        // Contract & Payment - Awaiting Brand Signature
+        contractAmount: 60000,
+        contractStatus: 'awaiting-brand-signature',
+        paymentStatus: 'paid',
+        paidAt: '2025-12-02T16:45:00',
+        deliverables: ['YouTube Video ×1']
       },
       {
-        name: 'Mohammed',
+        id: 'INF-004',
+        name: 'Mohammed Khalid',
         avatar: 'M',
         platform: 'instagram',
         followers: 67000,
         status: 'accepted',
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+
+        // Contract & Payment - Awaiting Influencer Signature
+        contractAmount: 60000,
+        contractStatus: 'awaiting-influencer-signature',
+        paymentStatus: 'paid',
+        paidAt: '2025-12-01T12:00:00',
+        brandSignedAt: '2025-12-01T14:30:00',
+        influencerSignatureDeadline: '2025-12-15T14:30:00',
+        hoursLeftToSign: 48,
+        deliverables: ['Instagram Reel ×2', 'Story ×5']
       },
       {
-        name: 'Layla',
+        id: 'INF-005',
+        name: 'Layla Mohammed',
         avatar: 'L',
         platform: 'tiktok',
         followers: 82000,
-        status: 'pending',
-        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+
+        // Contract & Payment - Creating Content
+        contractAmount: 60000,
+        contractStatus: 'signed',
+        paymentStatus: 'paid',
+        brandSignedAt: '2025-11-20T10:00:00',
+        influencerSignedAt: '2025-11-21T09:30:00',
+        contentStatus: 'creating',
+        contentDueDate: '2025-12-15',
+        deliverables: ['TikTok Video ×1', 'Story ×3']
+      },
+      {
+        id: 'INF-006',
+        name: 'Fatima Ali',
+        avatar: 'F',
+        platform: 'instagram',
+        followers: 110000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+
+        // Contract & Payment - Content Revision
+        contractAmount: 60000,
+        contractStatus: 'signed',
+        paymentStatus: 'paid',
+        contentStatus: 'revision',
+        contentDueDate: '2025-12-18',
+        lastRevisionAt: '2025-12-02T15:30:00',
+        revisionRequestedAgo: '1d ago',
+        revisionReason: 'Please adjust product placement in first 3 seconds',
+        deliverables: ['Instagram Reel ×1', 'Story ×2']
+      },
+      {
+        id: 'INF-007',
+        name: 'Omar Hassan',
+        avatar: 'O',
+        platform: 'youtube',
+        followers: 95000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+
+        // Signature Expired
+        contractAmount: 60000,
+        contractStatus: 'signature-expired',
+        paymentStatus: 'paid',
+        brandSignedAt: '2025-11-25T10:00:00',
+        influencerSignatureDeadline: '2025-11-27T10:00:00',
+        hoursPassedDeadline: 48,
+        deliverables: ['YouTube Video ×1']
+      },
+      {
+        id: 'INF-008',
+        name: 'Rania Khaled',
+        avatar: 'R',
+        platform: 'instagram',
+        followers: 78000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+
+        // Campaign Completed
+        contractAmount: 60000,
+        contractStatus: 'completed',
+        paymentStatus: 'paid',
+        contentStatus: 'approved',
+        completedAt: '2025-11-28T16:00:00',
+        contentUrl: '#',
+        deliverables: ['Instagram Reel ×1', 'Story ×3'],
+        performance: {
+          reach: 125000,
+          engagement: 8500,
+          views: 98000
+        }
       }
     ],
 
@@ -622,6 +735,86 @@ window.getTypeBadge = function(type) {
     'public': { icon: '🌍', text: 'PUBLIC', gradient: 'rgba(236,72,153,0.1)', color: 'var(--accent)' }
   };
   return badges[type] || badges['hybrid'];
+};
+
+// Helper function to get influencer flow state
+window.getInfluencerFlowState = function(influencer) {
+  // Completed
+  if (influencer.contractStatus === 'completed') {
+    return 'completed';
+  }
+
+  // Signature Expired
+  if (influencer.contractStatus === 'signature-expired') {
+    return 'signature-expired';
+  }
+
+  // Content states
+  if (influencer.contentStatus === 'submitted') {
+    return 'content-submitted';
+  }
+  if (influencer.contentStatus === 'revision') {
+    return 'content-revision';
+  }
+  if (influencer.contentStatus === 'creating') {
+    return 'creating-content';
+  }
+
+  // Contract states
+  if (influencer.contractStatus === 'awaiting-payment') {
+    return 'awaiting-payment';
+  }
+  if (influencer.contractStatus === 'awaiting-brand-signature') {
+    return 'awaiting-brand-signature';
+  }
+  if (influencer.contractStatus === 'awaiting-influencer-signature') {
+    return 'awaiting-influencer-signature';
+  }
+
+  // Default: invitation sent but not accepted
+  if (influencer.status === 'pending') {
+    return 'invitation-pending';
+  }
+
+  return 'unknown';
+};
+
+// Helper function to get progress steps
+window.getInfluencerProgressSteps = function(influencer) {
+  const steps = [
+    { key: 'payment', label: 'They Pay', icon: '💳' },
+    { key: 'brand-sign', label: 'You Sign', icon: '📝' },
+    { key: 'influencer-sign', label: 'They Sign', icon: '✍️' }
+  ];
+
+  const state = window.getInfluencerFlowState(influencer);
+
+  // Determine completion status for each step
+  const payment = influencer.paymentStatus === 'paid';
+  const brandSigned = influencer.brandSignedAt !== undefined;
+  const influencerSigned = influencer.influencerSignedAt !== undefined;
+
+  return steps.map((step, index) => {
+    let status = 'pending';
+
+    if (step.key === 'payment') {
+      status = payment ? 'completed' : 'active';
+    } else if (step.key === 'brand-sign') {
+      if (brandSigned) status = 'completed';
+      else if (payment) status = 'active';
+      else status = 'pending';
+    } else if (step.key === 'influencer-sign') {
+      if (influencerSigned) status = 'completed';
+      else if (brandSigned) status = 'active';
+      else status = 'pending';
+    }
+
+    return {
+      ...step,
+      status,
+      isLast: index === steps.length - 1
+    };
+  });
 };
 
 console.log('✅ Campaigns data loaded:', window.campaignsData.length, 'campaigns');
