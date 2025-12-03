@@ -305,7 +305,234 @@ window.campaignsData = [
     progress: 0
   },
 
-  // Completed campaign
+  // ============================================
+  // EXPIRED CAMPAIGNS - Deadline passed
+  // ============================================
+
+  // HYBRID - Expired (deadline passed, still active)
+  {
+    id: 'CAMP-2025-00098',
+    name: 'Seafood Restaurant Opening',
+    type: 'hybrid',
+    status: 'active',
+    createdDate: '2025-10-15',
+    deadline: '2025-11-30',
+    daysLeft: -3, // Expired
+
+    invited: [
+      {
+        name: 'Fatima',
+        avatar: 'F',
+        platform: 'instagram',
+        followers: 156000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+      },
+      {
+        name: 'Omar',
+        avatar: 'O',
+        platform: 'tiktok',
+        followers: 89000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+      }
+    ],
+
+    applications: {
+      pending: 24,
+      reviewed: 15,
+      accepted: 8,
+      rejected: 7,
+      total: 47
+    },
+
+    settings: {
+      targetInfluencers: 30,
+      budget: 150000,
+      maxBudgetPerInfluencer: 6000
+    },
+
+    progress: 33
+  },
+
+  // PUBLIC - Expired
+  {
+    id: 'CAMP-2025-00187',
+    name: 'Winter Sports Gear Campaign',
+    type: 'public',
+    status: 'active',
+    createdDate: '2025-10-20',
+    deadline: '2025-11-28',
+    daysLeft: -5,
+
+    applications: {
+      pending: 8,
+      reviewed: 12,
+      accepted: 4,
+      rejected: 8,
+      total: 24
+    },
+
+    settings: {
+      targetInfluencers: 15,
+      budget: 60000,
+      maxBudgetPerInfluencer: 5000,
+      platforms: ['instagram', 'tiktok'],
+      tiers: ['10k-50k'],
+      niches: ['sports', 'lifestyle']
+    },
+
+    progress: 27
+  },
+
+  // ============================================
+  // PAUSED CAMPAIGNS
+  // ============================================
+
+  {
+    id: 'CAMP-2025-00165',
+    name: 'Gaming Accessories Launch',
+    type: 'invite-only',
+    status: 'paused',
+    createdDate: '2025-11-05',
+    deadline: '2025-12-20',
+    daysLeft: 17,
+    pausedDate: '2025-11-28',
+    pausedReason: 'Budget revision needed',
+
+    invited: [
+      {
+        name: 'Ahmad',
+        avatar: 'A',
+        platform: 'youtube',
+        followers: 320000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      },
+      {
+        name: 'Lina',
+        avatar: 'L',
+        platform: 'tiktok',
+        followers: 180000,
+        status: 'pending',
+        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+      }
+    ],
+
+    budget: 55000,
+    progress: 40
+  },
+
+  // ============================================
+  // COMPLETED CAMPAIGNS
+  // ============================================
+
+  // HYBRID - Completed
+  {
+    id: 'CAMP-2025-00045',
+    name: 'Ramadan Home Decor Campaign',
+    type: 'hybrid',
+    status: 'completed',
+    createdDate: '2025-08-15',
+    deadline: '2025-09-30',
+    completedDate: '2025-09-28',
+
+    invited: [
+      {
+        name: 'Nour',
+        avatar: 'N',
+        platform: 'instagram',
+        followers: 145000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+      },
+      {
+        name: 'Youssef',
+        avatar: 'Y',
+        platform: 'youtube',
+        followers: 280000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      },
+      {
+        name: 'Hala',
+        avatar: 'H',
+        platform: 'instagram',
+        followers: 98000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+      }
+    ],
+
+    applications: {
+      accepted: 5,
+      total: 32
+    },
+
+    results: {
+      totalReach: 2100000,
+      totalEngagement: 156000,
+      totalPosts: 24,
+      avgRating: 4.9,
+      spent: 95000
+    },
+
+    settings: {
+      targetInfluencers: 8,
+      budget: 100000,
+      platforms: ['instagram', 'youtube']
+    }
+  },
+
+  // INVITE ONLY - Completed
+  {
+    id: 'CAMP-2025-00032',
+    name: 'Luxury Watch Collection',
+    type: 'invite-only',
+    status: 'completed',
+    createdDate: '2025-07-10',
+    deadline: '2025-08-25',
+    completedDate: '2025-08-23',
+
+    invited: [
+      {
+        name: 'Rania',
+        avatar: 'R',
+        platform: 'instagram',
+        followers: 450000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+      },
+      {
+        name: 'Tariq',
+        avatar: 'T',
+        platform: 'instagram',
+        followers: 380000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+      },
+      {
+        name: 'Salma',
+        avatar: 'S',
+        platform: 'youtube',
+        followers: 520000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      }
+    ],
+
+    results: {
+      totalReach: 3500000,
+      totalEngagement: 280000,
+      totalPosts: 15,
+      avgRating: 4.95,
+      spent: 145000
+    },
+
+    budget: 150000
+  },
+
+  // PUBLIC - Completed
   {
     id: 'CAMP-2025-00067',
     name: 'Eid Collection Launch',

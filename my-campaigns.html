@@ -798,6 +798,10 @@
                         Draft
                         <span class="filter-count" id="count-draft">0</span>
                     </button>
+                    <button class="filter-chip inactive status-filter" data-status="paused">
+                        Paused
+                        <span class="filter-count" id="count-paused">0</span>
+                    </button>
                     <button class="filter-chip inactive status-filter" data-status="completed">
                         Completed
                         <span class="filter-count" id="count-completed">0</span>
@@ -1003,21 +1007,56 @@
         }
 
         function renderStatusBadge(status, daysLeft) {
+            // Expired (deadline passed but still active)
+            if (status === 'active' && daysLeft < 0) {
+                return `
+                    <span class="status-badge" style="background: linear-gradient(135deg, rgba(220,38,38,0.12) 0%, rgba(239,68,68,0.12) 100%); color: var(--error); border: 1.5px solid rgba(220,38,38,0.3); font-weight: 700;">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="6" cy="6" r="5"/>
+                            <path d="M6 3v3M6 8v.5"/>
+                        </svg>
+                        Expired
+                    </span>
+                `;
+            }
+
             if (status === 'active') {
                 const urgency = daysLeft <= 3 ? 'color: var(--error);' : '';
                 return `
-                    <span class="status-badge active">
+                    <span class="status-badge active" style="${urgency}">
                         <span class="status-dot"></span>
                         Active ${daysLeft > 0 ? `• ${daysLeft}d left` : ''}
                     </span>
                 `;
             }
+
+            if (status === 'paused') {
+                return `
+                    <span class="status-badge" style="background: linear-gradient(135deg, rgba(251,146,60,0.12) 0%, rgba(245,158,11,0.12) 100%); color: var(--warning); border: 1.5px solid rgba(251,146,60,0.3); font-weight: 700;">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <rect x="2" y="2" width="3" height="8" rx="1"/>
+                            <rect x="7" y="2" width="3" height="8" rx="1"/>
+                        </svg>
+                        Paused
+                    </span>
+                `;
+            }
+
             if (status === 'draft') {
                 return `<span class="status-badge" style="background: var(--gray-100); color: var(--gray-600);">Draft</span>`;
             }
+
             if (status === 'completed') {
-                return `<span class="status-badge completed">✓ Completed</span>`;
+                return `
+                    <span class="status-badge" style="background: linear-gradient(135deg, rgba(34,197,94,0.12) 0%, rgba(22,163,74,0.12) 100%); color: var(--success); border: 1.5px solid rgba(34,197,94,0.3); font-weight: 700;">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M10 3L4.5 8.5L2 6"/>
+                        </svg>
+                        Completed
+                    </span>
+                `;
             }
+
             return '';
         }
 
@@ -1108,13 +1147,104 @@
                 `;
             }
 
+            // EXPIRED - Deadline passed
+            if (campaign.status === 'active' && campaign.daysLeft < 0) {
+                return `
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: linear-gradient(135deg, rgba(220,38,38,0.08) 0%, rgba(239,68,68,0.08) 100%); border-radius: 12px; margin-bottom: 16px; border: 1.5px solid rgba(220,38,38,0.25); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--error);"></div>
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(220,38,38,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="16" height="16" fill="none" stroke="var(--error)" stroke-width="2.5">
+                                <circle cx="8" cy="8" r="6"/>
+                                <path d="M8 4v4M8 10v.5"/>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 13px; font-weight: 800; color: var(--error); margin-bottom: 2px;">⚠️ Deadline passed ${Math.abs(campaign.daysLeft)} days ago</div>
+                            <div style="font-size: 11px; font-weight: 500; color: var(--gray-600);">Extend deadline or complete campaign</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // PAUSED
+            if (campaign.status === 'paused') {
+                return `
+                    <div style="padding: 14px 16px; background: linear-gradient(135deg, rgba(251,146,60,0.08) 0%, rgba(245,158,11,0.08) 100%); border-radius: 12px; margin-bottom: 14px; border: 1.5px solid rgba(251,146,60,0.25);">
+                        <div style="font-size: 13px; font-weight: 800; color: var(--warning); margin-bottom: 4px;">⏸️ Campaign paused</div>
+                        <div style="font-size: 11px; color: var(--gray-600); margin-bottom: 8px;">${campaign.pausedReason || 'This campaign is temporarily paused'}</div>
+                        <div style="font-size: 10px; color: var(--gray-500);">Paused on ${new Date(campaign.pausedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                    </div>
+                `;
+            }
+
             return '';
         }
 
         function renderStats(campaign, state) {
             let stats = '';
 
-            // Show invited influencers for HYBRID-both and INVITE-ONLY
+            // COMPLETED CAMPAIGNS - Show results
+            if (campaign.status === 'completed' && campaign.results) {
+                const r = campaign.results;
+                stats += `
+                    <div style="padding: 16px; background: linear-gradient(135deg, rgba(34,197,94,0.05) 0%, rgba(22,163,74,0.05) 100%); border-radius: 12px; margin-bottom: 12px; border: 1px solid rgba(34,197,94,0.2);">
+                        <div style="font-size: 11px; font-weight: 700; color: var(--success); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Campaign Results</div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                            <div>
+                                <div style="font-size: 10px; color: var(--gray-500); margin-bottom: 4px;">Total Reach</div>
+                                <div style="font-size: 16px; font-weight: 800; color: var(--gray-900);">${(r.totalReach / 1000000).toFixed(1)}M</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 10px; color: var(--gray-500); margin-bottom: 4px;">Engagement</div>
+                                <div style="font-size: 16px; font-weight: 800; color: var(--gray-900);">${(r.totalEngagement / 1000).toFixed(0)}K</div>
+                            </div>
+                            ${r.totalPosts ? `
+                                <div>
+                                    <div style="font-size: 10px; color: var(--gray-500); margin-bottom: 4px;">Posts</div>
+                                    <div style="font-size: 16px; font-weight: 800; color: var(--gray-900);">${r.totalPosts}</div>
+                                </div>
+                            ` : ''}
+                            <div>
+                                <div style="font-size: 10px; color: var(--gray-500); margin-bottom: 4px;">Avg Rating</div>
+                                <div style="font-size: 16px; font-weight: 800; color: var(--gray-900);">
+                                    <span style="color: #FBBF24;">★</span> ${r.avgRating}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Show invited influencers for completed HYBRID and INVITE-ONLY
+                if (campaign.invited && campaign.invited.length > 0) {
+                    const platforms = window.getPlatforms(campaign.invited);
+                    const platformTags = Object.keys(platforms).map(p =>
+                        `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: var(--gray-100); border-radius: 8px; font-size: 11px; font-weight: 700; color: var(--gray-700);">
+                            ${window.getPlatformIcon(p)} ${platforms[p]}
+                        </span>`
+                    ).join(' ');
+
+                    stats += `
+                        <div style="padding: 12px; background: var(--gray-50); border-radius: 10px; margin-bottom: 12px;">
+                            <div style="font-size: 11px; font-weight: 600; color: var(--gray-600); margin-bottom: 8px;">Influencers (${campaign.invited.length})</div>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;">
+                                ${campaign.invited.slice(0, 6).map(inf => `
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background: ${inf.gradient}; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        ${inf.avatar}
+                                    </div>
+                                `).join('')}
+                                ${campaign.invited.length > 6 ? `<div style="width: 32px; height: 32px; border-radius: 50%; background: var(--gray-900); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: white;">+${campaign.invited.length - 6}</div>` : ''}
+                            </div>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                ${platformTags}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return stats;
+            }
+
+            // Show invited influencers for HYBRID-both and INVITE-ONLY (active campaigns)
             if ((state === 'hybrid-both' || state === 'hybrid-manual-only' || state === 'invite-has-influencers') && campaign.invited && campaign.invited.length > 0) {
                 const platforms = window.getPlatforms(campaign.invited);
                 const platformTags = Object.keys(platforms).map(p =>
@@ -1164,6 +1294,63 @@
             const budget = campaign.budget || campaign.settings?.budget || 0;
             const btnClass = campaign.type === 'hybrid' ? 'hybrid' : campaign.type === 'invite-only' ? 'solo' : 'mass';
 
+            // COMPLETED - Show spent amount and report button
+            if (campaign.status === 'completed') {
+                const spent = campaign.results?.spent || 0;
+                return `
+                    <div class="card-footer">
+                        <div class="budget-info">
+                            <span class="budget-label">Amount Spent</span>
+                            <span class="budget-value" style="color: var(--success);">${(spent / 1000).toFixed(0)}K SAR</span>
+                        </div>
+                        <button class="view-btn" style="background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%); color: white;" onclick="event.stopPropagation();">
+                            View Report
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v8M8 6v4M4 10v2"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+            }
+
+            // EXPIRED - Show extend deadline button
+            if (campaign.status === 'active' && campaign.daysLeft < 0) {
+                return `
+                    <div class="card-footer">
+                        <div class="budget-info">
+                            <span class="budget-label">Budget</span>
+                            <span class="budget-value">${(budget / 1000).toFixed(0)}K SAR</span>
+                        </div>
+                        <button class="view-btn" style="background: var(--error); color: white;" onclick="event.stopPropagation();">
+                            Extend Deadline
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="8" cy="8" r="6"/>
+                                <path d="M8 4v4l3 2"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+            }
+
+            // PAUSED - Show resume button
+            if (campaign.status === 'paused') {
+                return `
+                    <div class="card-footer">
+                        <div class="budget-info">
+                            <span class="budget-label">Budget</span>
+                            <span class="budget-value">${(budget / 1000).toFixed(0)}K SAR</span>
+                        </div>
+                        <button class="view-btn" style="background: var(--warning); color: white;" onclick="event.stopPropagation();">
+                            Resume Campaign
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 3l6 5-6 5V3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+            }
+
+            // ACTIVE/DRAFT - Normal button
             return `
                 <div class="card-footer">
                     <div class="budget-info">
@@ -1197,6 +1384,7 @@
             document.getElementById('count-all').textContent = allCampaigns.length;
             document.getElementById('count-active').textContent = allCampaigns.filter(c => c.status === 'active').length;
             document.getElementById('count-draft').textContent = allCampaigns.filter(c => c.status === 'draft').length;
+            document.getElementById('count-paused').textContent = allCampaigns.filter(c => c.status === 'paused').length;
             document.getElementById('count-completed').textContent = allCampaigns.filter(c => c.status === 'completed').length;
 
             // Type counts
