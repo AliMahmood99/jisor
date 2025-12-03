@@ -563,6 +563,188 @@
             color: var(--gray-700);
         }
 
+        /* Section Headers */
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+
+        .section-title h3 {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--gray-900);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-count {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray-500);
+        }
+
+        .section-divider {
+            height: 12px;
+            background: transparent;
+        }
+
+        /* Application Card (different from Team Card) */
+        .application-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1.5px solid var(--gray-200);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .application-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.1);
+        }
+
+        /* New Application Indicator */
+        .application-card.new::before {
+            content: 'NEW';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+        }
+
+        .app-stats-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 10px;
+        }
+
+        .app-stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .app-stat-label {
+            font-size: 10px;
+            color: var(--gray-500);
+            margin-bottom: 4px;
+        }
+
+        .app-stat-value {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .proposed-amount-box {
+            padding: 14px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(236,72,153,0.06) 100%);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 1.5px solid rgba(99,102,241,0.15);
+        }
+
+        .proposed-label {
+            font-size: 11px;
+            color: var(--gray-600);
+            margin-bottom: 6px;
+        }
+
+        .proposed-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .proposed-currency {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .accept-reject-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .accept-reject-buttons .btn {
+            flex: 1;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+            color: white;
+        }
+
+        .btn-reject {
+            background: white;
+            color: var(--error);
+            border: 1.5px solid rgba(239,68,68,0.3);
+        }
+
+        .btn-reject:hover {
+            background: rgba(239,68,68,0.05);
+        }
+
+        .applied-time {
+            font-size: 11px;
+            color: var(--gray-500);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* FAB Button */
+        .fab {
+            position: fixed;
+            bottom: 90px;
+            right: calc(50% - 215px + 20px);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(99,102,241,0.5);
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        .fab svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 3;
+        }
+
         /* Loading */
         .loading {
             text-align: center;
@@ -583,6 +765,59 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            border: 2px solid;
+            font-size: 14px;
+            font-weight: 600;
+            max-width: 90%;
+        }
+
+        .toast.success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .toast.error {
+            border-color: var(--error);
+            color: var(--error);
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
         /* Fade In Animation */
         @keyframes fadeIn {
             from {
@@ -597,6 +832,43 @@
 
         .fade-in {
             animation: fadeIn 0.4s ease forwards;
+        }
+
+        /* Slide Out Animation */
+        @keyframes slideOut {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+                height: 0;
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        .slide-out {
+            animation: slideOut 0.4s ease forwards;
+        }
+
+        /* Button Loading State */
+        .btn.loading {
+            position: relative;
+            color: transparent !important;
+            pointer-events: none;
+        }
+
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
         }
     </style>
 </head>
@@ -723,35 +995,286 @@
             return '';
         }
 
-        // Render influencers list
+        // Render influencers list (with sections for HYBRID)
         function renderInfluencers() {
-            if (!campaign.invited || campaign.invited.length === 0) {
-                document.getElementById('content-area').innerHTML = `
+            let html = '';
+
+            // Section 1: Your Team (invited influencers)
+            if (campaign.invited && campaign.invited.length > 0) {
+                html += renderTeamSection();
+            }
+
+            // Section 2: Applications (for HYBRID and PUBLIC campaigns)
+            if ((campaign.type === 'hybrid' || campaign.type === 'public') &&
+                campaign.applicationsData && campaign.applicationsData.length > 0) {
+                html += renderApplicationsSection();
+            }
+
+            // Empty state for invite-only campaigns with no team
+            if (html === '' && campaign.type === 'invite-only') {
+                html = `
                     <div style="text-align: center; padding: 60px 20px;">
                         <div style="font-size: 48px; margin-bottom: 16px;">👥</div>
                         <div style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No influencers yet</div>
                         <div style="font-size: 14px; color: var(--gray-500);">Start by inviting influencers to your campaign</div>
                     </div>
                 `;
-                return;
             }
 
-            let html = '<div class="section-header">Invited Influencers (' + campaign.invited.length + ')</div>';
+            // Empty state for public campaigns with no applications
+            if (html === '' && campaign.type === 'public') {
+                html = `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📬</div>
+                        <div style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No applications yet</div>
+                        <div style="font-size: 14px; color: var(--gray-500);">Waiting for influencers to apply to your campaign</div>
+                    </div>
+                `;
+            }
 
-            campaign.invited.forEach(influencer => {
-                html += renderInfluencerCard(influencer);
-            });
+            // Add FAB button for HYBRID and INVITE_ONLY campaigns
+            if (campaign.type === 'hybrid' || campaign.type === 'invite-only') {
+                html += renderFAB();
+            }
 
             document.getElementById('content-area').innerHTML = html;
 
             // Add fade-in animation
             setTimeout(() => {
-                document.querySelectorAll('.influencer-card').forEach((card, index) => {
+                document.querySelectorAll('.influencer-card, .application-card').forEach((card, index) => {
                     setTimeout(() => {
                         card.classList.add('fade-in');
                     }, index * 50);
                 });
             }, 100);
+
+            // Attach event listeners for Accept/Reject buttons
+            attachApplicationHandlers();
+        }
+
+        // Render Team Section (invited influencers)
+        function renderTeamSection() {
+            let html = `
+                <div class="section-title">
+                    <h3>👥 Your Team</h3>
+                    <span class="section-count">${campaign.invited.length}</span>
+                </div>
+            `;
+
+            campaign.invited.forEach(influencer => {
+                html += renderInfluencerCard(influencer);
+            });
+
+            return html;
+        }
+
+        // Render Applications Section
+        function renderApplicationsSection() {
+            const pendingApps = campaign.applicationsData.filter(app => app.status === 'pending');
+
+            let html = `
+                <div class="section-divider"></div>
+                <div class="section-title">
+                    <h3>📬 Applications</h3>
+                    <span class="section-count">${pendingApps.length} Pending</span>
+                </div>
+            `;
+
+            pendingApps.forEach(application => {
+                html += renderApplicationCard(application);
+            });
+
+            return html;
+        }
+
+        // Render Application Card
+        function renderApplicationCard(application) {
+            const isNew = application.hoursAgo <= 6;
+            return `
+                <div class="application-card ${isNew ? 'new' : ''}" style="opacity: 0;" data-app-id="${application.id}">
+                    <!-- Header -->
+                    <div class="influencer-header">
+                        <div class="influencer-avatar" style="background: ${application.gradient};">
+                            ${application.avatar}
+                        </div>
+                        <div class="influencer-info">
+                            <div class="influencer-name">${application.name}</div>
+                            <div class="influencer-stats">
+                                <span class="stat-item">
+                                    ${window.getPlatformIcon(application.platform)}
+                                    ${(application.followers / 1000).toFixed(0)}k
+                                </span>
+                            </div>
+                        </div>
+                        <div class="applied-time" style="margin-top: 0; text-align: right; font-size: 11px; color: var(--gray-500);">
+                            ${application.hoursAgo}h ago
+                        </div>
+                    </div>
+
+                    <!-- Performance Stats -->
+                    <div class="app-stats-row">
+                        <div class="app-stat">
+                            <div class="app-stat-label">Rating</div>
+                            <div class="app-stat-value">⭐ ${application.rating}</div>
+                        </div>
+                        <div class="app-stat">
+                            <div class="app-stat-label">Campaigns</div>
+                            <div class="app-stat-value">${application.completedCampaigns}</div>
+                        </div>
+                        <div class="app-stat">
+                            <div class="app-stat-label">Avg Reach</div>
+                            <div class="app-stat-value">${(application.avgReach / 1000).toFixed(0)}k</div>
+                        </div>
+                        <div class="app-stat">
+                            <div class="app-stat-label">Engagement</div>
+                            <div class="app-stat-value">${application.avgEngagement}%</div>
+                        </div>
+                    </div>
+
+                    <!-- Proposed Amount -->
+                    <div class="proposed-amount-box">
+                        <div class="proposed-label">Proposed Amount</div>
+                        <div>
+                            <span class="proposed-value">${(application.proposedAmount / 1000).toFixed(0)}K</span>
+                            <span class="proposed-currency">SAR</span>
+                        </div>
+                    </div>
+
+                    <!-- Deliverables -->
+                    <div class="deliverables">
+                        ${application.deliverables.map(d => `
+                            <span class="deliverable-tag">${d}</span>
+                        `).join('')}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="accept-reject-buttons">
+                        <button class="btn btn-secondary" onclick="viewApplicationDetails('${application.id}')">
+                            View Details
+                        </button>
+                        <button class="btn btn-reject" onclick="rejectApplication('${application.id}')">
+                            ✕ Reject
+                        </button>
+                        <button class="btn btn-accept" onclick="acceptApplication('${application.id}')">
+                            ✓ Accept
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render FAB Button
+        function renderFAB() {
+            return `
+                <button class="fab" onclick="addInfluencer()">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                </button>
+            `;
+        }
+
+        // Show Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icon = type === 'success' ? '✓' : '✕';
+            toast.innerHTML = `
+                <div class="toast-icon">${icon}</div>
+                <div>${message}</div>
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Accept Application Handler
+        function acceptApplication(appId) {
+            const app = campaign.applicationsData.find(a => a.id === appId);
+            if (!app) return;
+
+            // Find the card element
+            const cardElement = document.querySelector(`[data-app-id="${appId}"]`);
+            if (!cardElement) return;
+
+            // Add slide-out animation
+            cardElement.classList.add('slide-out');
+
+            // Wait for animation, then update data
+            setTimeout(() => {
+                // Update application status
+                app.status = 'accepted';
+
+                // Move to invited list with proper structure
+                if (!campaign.invited) campaign.invited = [];
+
+                campaign.invited.push({
+                    id: 'INF-' + String(campaign.invited.length + 1).padStart(3, '0'),
+                    name: app.name,
+                    avatar: app.avatar,
+                    platform: app.platform,
+                    followers: app.followers,
+                    gradient: app.gradient,
+                    contractAmount: app.proposedAmount,
+                    contractStatus: 'awaiting-payment',
+                    paymentStatus: 'pending',
+                    deliverables: app.deliverables
+                });
+
+                // Show success toast
+                showToast(`${app.name} accepted for ${(app.proposedAmount / 1000).toFixed(0)}K SAR`, 'success');
+
+                // Re-render
+                renderInfluencers();
+            }, 400);
+        }
+
+        // Reject Application Handler
+        function rejectApplication(appId) {
+            const app = campaign.applicationsData.find(a => a.id === appId);
+            if (!app) return;
+
+            // Find the card element
+            const cardElement = document.querySelector(`[data-app-id="${appId}"]`);
+            if (!cardElement) return;
+
+            // Add slide-out animation
+            cardElement.classList.add('slide-out');
+
+            // Wait for animation, then update data
+            setTimeout(() => {
+                // Update application status
+                app.status = 'rejected';
+
+                // Show error toast
+                showToast(`${app.name}'s application rejected`, 'error');
+
+                // Re-render
+                renderInfluencers();
+            }, 400);
+        }
+
+        // View Application Details
+        function viewApplicationDetails(appId) {
+            const app = campaign.applicationsData.find(a => a.id === appId);
+            if (!app) return;
+
+            alert(`Application Details:\n\nName: ${app.name}\nFollowers: ${app.followers.toLocaleString()}\nRating: ${app.rating}\nCompleted Campaigns: ${app.completedCampaigns}\nAvg Reach: ${app.avgReach.toLocaleString()}\nAvg Engagement: ${app.avgEngagement}%\n\nProposed: ${app.proposedAmount.toLocaleString()} SAR\nDeliverables: ${app.deliverables.join(', ')}`);
+        }
+
+        // Add Influencer (FAB Action)
+        function addInfluencer() {
+            alert('Add Influencer functionality - Coming soon!\n\nYou will be able to:\n• Search for influencers\n• Send invitations\n• Set contract terms');
+        }
+
+        // Attach event listeners (for dynamic content)
+        function attachApplicationHandlers() {
+            // Event listeners are inline in the HTML, so this is a placeholder
+            // for future enhancements like dynamic filtering, etc.
         }
 
         // Render individual influencer card

@@ -172,12 +172,156 @@ window.campaignsData = [
       }
     ],
 
+    // Applications (detailed)
+    applicationsData: [
+      {
+        id: 'APP-001',
+        name: 'Fatima Hassan',
+        avatar: 'F',
+        platform: 'tiktok',
+        followers: 125000,
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+
+        proposedAmount: 45000,
+        deliverables: ['TikTok Video ×1', 'Story ×2'],
+
+        rating: 4.8,
+        completedCampaigns: 23,
+        avgReach: 250000,
+        avgEngagement: 8.2,
+
+        appliedAt: '2025-12-02T10:30:00',
+        hoursAgo: 5,
+        status: 'pending'
+      },
+      {
+        id: 'APP-002',
+        name: 'Abdullah Omar',
+        avatar: 'A',
+        platform: 'instagram',
+        followers: 89000,
+        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+
+        proposedAmount: 38000,
+        deliverables: ['Instagram Reel ×1', 'Story ×3'],
+
+        rating: 4.6,
+        completedCampaigns: 15,
+        avgReach: 180000,
+        avgEngagement: 7.5,
+
+        appliedAt: '2025-12-01T15:20:00',
+        hoursAgo: 1,
+        status: 'pending'
+      },
+      {
+        id: 'APP-003',
+        name: 'Noura Al-Rashid',
+        avatar: 'N',
+        platform: 'tiktok',
+        followers: 156000,
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+
+        proposedAmount: 52000,
+        deliverables: ['TikTok Video ×2', 'Instagram Reel ×1'],
+
+        rating: 4.9,
+        completedCampaigns: 47,
+        avgReach: 320000,
+        avgEngagement: 9.1,
+
+        appliedAt: '2025-11-30T09:45:00',
+        hoursAgo: 2,
+        status: 'pending'
+      },
+      {
+        id: 'APP-004',
+        name: 'Khalid Mohammed',
+        avatar: 'K',
+        platform: 'youtube',
+        followers: 210000,
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+
+        proposedAmount: 65000,
+        deliverables: ['YouTube Video ×1'],
+
+        rating: 4.7,
+        completedCampaigns: 31,
+        avgReach: 450000,
+        avgEngagement: 6.8,
+
+        appliedAt: '2025-11-29T14:15:00',
+        hoursAgo: 3,
+        status: 'pending'
+      },
+      {
+        id: 'APP-005',
+        name: 'Mona Saeed',
+        avatar: 'M',
+        platform: 'instagram',
+        followers: 95000,
+        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+
+        proposedAmount: 42000,
+        deliverables: ['Instagram Reel ×1', 'Story ×5'],
+
+        rating: 4.5,
+        completedCampaigns: 19,
+        avgReach: 195000,
+        avgEngagement: 7.9,
+
+        appliedAt: '2025-11-28T11:00:00',
+        hoursAgo: 6,
+        status: 'pending'
+      },
+      {
+        id: 'APP-006',
+        name: 'Youssef Ibrahim',
+        avatar: 'Y',
+        platform: 'tiktok',
+        followers: 178000,
+        gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+
+        proposedAmount: 58000,
+        deliverables: ['TikTok Video ×2', 'Story ×3'],
+
+        rating: 4.8,
+        completedCampaigns: 38,
+        avgReach: 380000,
+        avgEngagement: 8.7,
+
+        appliedAt: '2025-11-27T16:30:00',
+        hoursAgo: 8,
+        status: 'pending'
+      },
+      {
+        id: 'APP-007',
+        name: 'Hala Mustafa',
+        avatar: 'H',
+        platform: 'instagram',
+        followers: 112000,
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+
+        proposedAmount: 48000,
+        deliverables: ['Instagram Reel ×2', 'Story ×4'],
+
+        rating: 4.6,
+        completedCampaigns: 26,
+        avgReach: 235000,
+        avgEngagement: 7.3,
+
+        appliedAt: '2025-11-26T09:20:00',
+        hoursAgo: 12,
+        status: 'pending'
+      }
+    ],
+
     applications: {
-      pending: 12,
+      pending: 7,
       reviewed: 5,
       accepted: 3,
       rejected: 2,
-      total: 20
+      total: 17
     },
 
     settings: {
@@ -300,7 +444,7 @@ window.campaignsData = [
   // INVITE ONLY CAMPAIGNS - 2 States
   // ============================================
 
-  // State 1: Has influencers
+  // State 1: Has influencers with detailed tracking
   {
     id: 'CAMP-2025-00125',
     name: 'Skincare Product Launch',
@@ -312,28 +456,60 @@ window.campaignsData = [
 
     invited: [
       {
+        id: 'INF-101',
         name: 'Sarah Khalid',
         avatar: 'S',
         platform: 'instagram',
         followers: 245000,
         status: 'accepted',
-        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+
+        // Contract & Payment - Creating Content
+        contractAmount: 75000,
+        contractStatus: 'completed',
+        paymentStatus: 'paid',
+        brandSignedAt: '2025-11-12T10:30:00',
+        influencerSignedAt: '2025-11-13T14:20:00',
+
+        // Content - Creating
+        contentStatus: 'creating',
+        contentDueDate: '2025-12-18',
+        deliverables: ['Instagram Reel ×2', 'Story ×5', 'Post ×1']
       },
       {
+        id: 'INF-102',
         name: 'Maya Ahmed',
         avatar: 'M',
         platform: 'instagram',
         followers: 198000,
         status: 'accepted',
-        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+
+        // Contract & Payment - Awaiting Influencer Signature
+        contractAmount: 65000,
+        contractStatus: 'awaiting-influencer-signature',
+        paymentStatus: 'paid',
+        paidAt: '2025-11-28T12:00:00',
+        brandSignedAt: '2025-11-28T14:30:00',
+        influencerSignatureDeadline: '2025-12-10T14:30:00',
+        hoursLeftToSign: 36,
+        deliverables: ['Instagram Reel ×1', 'Story ×3']
       },
       {
-        name: 'Khalid',
+        id: 'INF-103',
+        name: 'Khalid Omar',
         avatar: 'K',
         platform: 'tiktok',
         followers: 156000,
         status: 'pending',
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+
+        // Contract & Payment - Awaiting Brand Signature
+        contractAmount: 55000,
+        contractStatus: 'awaiting-brand-signature',
+        paymentStatus: 'paid',
+        paidAt: '2025-12-01T16:45:00',
+        deliverables: ['TikTok Video ×2', 'Story ×4']
       }
     ],
 
@@ -361,22 +537,129 @@ window.campaignsData = [
   // PUBLIC CAMPAIGNS - 2 States
   // ============================================
 
-  // State 1: Has applications
+  // State 1: Has applications (detailed)
   {
     id: 'CAMP-2025-00098',
     name: 'Seafood Restaurant Opening',
     type: 'public',
     status: 'active',
     createdDate: '2025-10-15',
-    deadline: '2025-11-30',
-    daysLeft: -3, // Expired
+    deadline: '2025-12-22',
+    daysLeft: 2,
+
+    // Public campaigns don't have manual invites - only applications
+    invited: [],
+
+    // Detailed Applications Data
+    applicationsData: [
+      {
+        id: 'APP-P001',
+        name: 'Rania Abdullah',
+        avatar: 'R',
+        platform: 'instagram',
+        followers: 89000,
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+
+        proposedAmount: 35000,
+        deliverables: ['Instagram Reel ×1', 'Story ×5', 'Post ×1'],
+
+        rating: 4.9,
+        completedCampaigns: 31,
+        avgReach: 180000,
+        avgEngagement: 9.1,
+
+        appliedAt: '2025-12-01T09:30:00',
+        hoursAgo: 4,
+        status: 'pending'
+      },
+      {
+        id: 'APP-P002',
+        name: 'Tareq Saeed',
+        avatar: 'T',
+        platform: 'tiktok',
+        followers: 156000,
+        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+
+        proposedAmount: 48000,
+        deliverables: ['TikTok Video ×2', 'Story ×3'],
+
+        rating: 4.7,
+        completedCampaigns: 25,
+        avgReach: 320000,
+        avgEngagement: 8.3,
+
+        appliedAt: '2025-12-01T11:15:00',
+        hoursAgo: 6,
+        status: 'pending'
+      },
+      {
+        id: 'APP-P003',
+        name: 'Lina Hassan',
+        avatar: 'L',
+        platform: 'instagram',
+        followers: 112000,
+        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+
+        proposedAmount: 42000,
+        deliverables: ['Instagram Reel ×2', 'Story ×4'],
+
+        rating: 4.8,
+        completedCampaigns: 28,
+        avgReach: 230000,
+        avgEngagement: 7.9,
+
+        appliedAt: '2025-11-30T16:20:00',
+        hoursAgo: 8,
+        status: 'pending'
+      },
+      {
+        id: 'APP-P004',
+        name: 'Omar Khalid',
+        avatar: 'O',
+        platform: 'snapchat',
+        followers: 78000,
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+
+        proposedAmount: 32000,
+        deliverables: ['Snapchat Story ×10', 'Post ×2'],
+
+        rating: 4.6,
+        completedCampaigns: 19,
+        avgReach: 165000,
+        avgEngagement: 8.5,
+
+        appliedAt: '2025-11-30T14:45:00',
+        hoursAgo: 10,
+        status: 'pending'
+      },
+      {
+        id: 'APP-P005',
+        name: 'Noor Ibrahim',
+        avatar: 'N',
+        platform: 'instagram',
+        followers: 134000,
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+
+        proposedAmount: 45000,
+        deliverables: ['Instagram Reel ×1', 'Story ×6'],
+
+        rating: 4.9,
+        completedCampaigns: 34,
+        avgReach: 280000,
+        avgEngagement: 9.3,
+
+        appliedAt: '2025-11-29T10:30:00',
+        hoursAgo: 15,
+        status: 'pending'
+      }
+    ],
 
     applications: {
-      pending: 24,
+      pending: 5,
       reviewed: 15,
       accepted: 8,
       rejected: 7,
-      total: 47
+      total: 35
     },
 
     settings: {
