@@ -25,6 +25,7 @@ window.campaignsData = [
         followers: 95000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        source: 'application', // ← Applied & accepted
 
         // Contract & Payment
         contractAmount: 60000,
@@ -48,6 +49,7 @@ window.campaignsData = [
         followers: 45000,
         status: 'pending',
         gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+        source: 'manual', // ← Invited by you
 
         // Contract & Payment - Awaiting Payment
         contractAmount: 60000,
@@ -63,6 +65,7 @@ window.campaignsData = [
         followers: 120000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        source: 'application', // ← Applied & accepted
 
         // Contract & Payment - Awaiting Brand Signature
         contractAmount: 60000,
@@ -79,6 +82,7 @@ window.campaignsData = [
         followers: 67000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        source: 'application', // ← Applied & accepted
 
         // Contract & Payment - Awaiting Influencer Signature
         contractAmount: 60000,
@@ -98,6 +102,7 @@ window.campaignsData = [
         followers: 82000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+        source: 'manual', // ← Invited by you
 
         // Contract & Payment - Creating Content
         contractAmount: 60000,
@@ -117,6 +122,7 @@ window.campaignsData = [
         followers: 110000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+        source: 'application', // ← Applied & accepted
 
         // Contract & Payment - Content Revision
         contractAmount: 60000,
@@ -137,6 +143,7 @@ window.campaignsData = [
         followers: 95000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        source: 'manual', // ← Invited by you
 
         // Signature Expired
         contractAmount: 60000,
@@ -155,6 +162,7 @@ window.campaignsData = [
         followers: 78000,
         status: 'accepted',
         gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        source: 'application', // ← Applied & accepted
 
         // Campaign Completed
         contractAmount: 60000,

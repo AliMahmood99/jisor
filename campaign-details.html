@@ -1435,6 +1435,7 @@
         // State for sorting and filtering
         let currentSort = 'best-match';
         let currentFilter = 'all';
+        let currentSourceFilter = 'all'; // all, application, manual
 
         // Render campaign header
         function renderCampaignHeader() {
@@ -1596,20 +1597,52 @@
             }, 100);
         }
 
-        // Render Team Section (invited influencers)
+        // Render Team Section (invited influencers) with SOURCE FILTERS
         function renderTeamSection() {
+            // Calculate counts
+            const allCount = campaign.invited.length;
+            const acceptedCount = campaign.invited.filter(i => i.source === 'application').length;
+            const invitedCount = campaign.invited.filter(i => i.source === 'manual').length;
+
+            // Filter based on currentSourceFilter
+            let filteredTeam = campaign.invited;
+            if (currentSourceFilter === 'application') {
+                filteredTeam = campaign.invited.filter(i => i.source === 'application');
+            } else if (currentSourceFilter === 'manual') {
+                filteredTeam = campaign.invited.filter(i => i.source === 'manual');
+            }
+
             let html = `
+                <!-- Quick Filters for Source -->
+                <div class="control-bar" style="margin-bottom: 16px;">
+                    <button class="control-chip ${currentSourceFilter === 'all' ? 'active' : ''}" onclick="changeSourceFilter('all')">
+                        All <span class="inbox-badge-count" style="margin-left: 4px;">${allCount}</span>
+                    </button>
+                    <button class="control-chip ${currentSourceFilter === 'application' ? 'active' : ''}" onclick="changeSourceFilter('application')">
+                        ✓ Accepted <span class="inbox-badge-count" style="margin-left: 4px; ${currentSourceFilter === 'application' ? 'background: white; color: var(--primary);' : ''}">${acceptedCount}</span>
+                    </button>
+                    <button class="control-chip ${currentSourceFilter === 'manual' ? 'active' : ''}" onclick="changeSourceFilter('manual')">
+                        ✋ Invited <span class="inbox-badge-count" style="margin-left: 4px; ${currentSourceFilter === 'manual' ? 'background: white; color: var(--primary);' : ''}">${invitedCount}</span>
+                    </button>
+                </div>
+
                 <div class="section-title">
                     <h3>👥 Your Team</h3>
-                    <span class="section-count">${campaign.invited.length}</span>
+                    <span class="section-count">${filteredTeam.length}</span>
                 </div>
             `;
 
-            campaign.invited.forEach(influencer => {
+            filteredTeam.forEach(influencer => {
                 html += renderInfluencerCard(influencer);
             });
 
             return html;
+        }
+
+        // Change Source Filter
+        function changeSourceFilter(filter) {
+            currentSourceFilter = filter;
+            renderInfluencers();
         }
 
         // Render Inbox Badge (Floating Button)
@@ -1893,6 +1926,7 @@
                     platform: app.platform,
                     followers: app.followers,
                     gradient: app.gradient,
+                    source: 'application', // ← Mark as from application!
                     contractAmount: app.proposedAmount,
                     contractStatus: 'awaiting-payment',
                     paymentStatus: 'pending',
@@ -2126,6 +2160,9 @@
         }
 
         function renderInfluencerHeader(influencer) {
+            // Source badge and text
+            const sourceData = getSourceInfo(influencer.source);
+
             return `
                 <div class="influencer-header">
                     <div class="influencer-avatar" style="background: ${influencer.gradient};">
@@ -2138,14 +2175,38 @@
                                 ${window.getPlatformIcon(influencer.platform)}
                                 ${(influencer.followers / 1000).toFixed(0)}k
                             </span>
+                            <span style="color: var(--gray-400);">•</span>
+                            <span class="stat-item" style="color: ${sourceData.color}; font-size: 11px; font-weight: 600;">
+                                ${sourceData.icon} ${sourceData.text}
+                            </span>
                         </div>
                     </div>
                     <div style="text-align: right;">
                         <div class="influencer-amount">${(influencer.contractAmount / 1000).toFixed(0)}K SAR</div>
                         <div class="amount-label">Contract</div>
+                        <div style="font-size: 18px; margin-top: 4px;">${sourceData.badgeIcon}</div>
                     </div>
                 </div>
             `;
+        }
+
+        // Get Source Info (badge, color, text)
+        function getSourceInfo(source) {
+            if (source === 'application') {
+                return {
+                    icon: '✓',
+                    badgeIcon: '✓',
+                    text: 'Applied & accepted',
+                    color: 'var(--success)'
+                };
+            } else {
+                return {
+                    icon: '✋',
+                    badgeIcon: '✋',
+                    text: 'Invited by you',
+                    color: 'var(--primary)'
+                };
+            }
         }
 
         function renderProgressSteps(steps) {
