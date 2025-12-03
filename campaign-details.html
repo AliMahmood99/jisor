@@ -209,6 +209,141 @@
             font-weight: 500;
         }
 
+        /* Dashboard Stats (Smart Overview) */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 14px;
+            padding: 16px;
+            border: 1.5px solid var(--gray-200);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--gray-900);
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .stat-unit {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-500);
+        }
+
+        .stat-progress {
+            margin-top: 10px;
+            height: 6px;
+            background: var(--gray-100);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .stat-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .stat-subtitle {
+            font-size: 11px;
+            color: var(--gray-500);
+            margin-top: 6px;
+        }
+
+        .stat-card.budget {
+            border-color: rgba(99,102,241,0.3);
+            background: linear-gradient(135deg, rgba(99,102,241,0.03) 0%, rgba(236,72,153,0.03) 100%);
+        }
+
+        .stat-card.applications {
+            border-color: rgba(16,185,129,0.3);
+            background: linear-gradient(135deg, rgba(16,185,129,0.03) 0%, rgba(34,197,94,0.03) 100%);
+        }
+
+        .stat-card.team {
+            border-color: rgba(245,158,11,0.3);
+            background: linear-gradient(135deg, rgba(245,158,11,0.03) 0%, rgba(251,146,60,0.03) 100%);
+        }
+
+        .stat-card.time {
+            border-color: rgba(239,68,68,0.3);
+            background: linear-gradient(135deg, rgba(239,68,68,0.03) 0%, rgba(220,38,38,0.03) 100%);
+        }
+
+        /* Control Bar (Filters & Sort) */
+        .control-bar {
+            padding: 16px 20px;
+            background: white;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .control-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .control-chip {
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1.5px solid var(--gray-300);
+            background: white;
+            color: var(--gray-700);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .control-chip:hover {
+            border-color: var(--primary);
+            background: rgba(99,102,241,0.05);
+        }
+
+        .control-chip.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .control-chip svg {
+            width: 14px;
+            height: 14px;
+        }
+
         /* Tabs */
         .tabs {
             display: flex;
@@ -594,20 +729,88 @@
             background: transparent;
         }
 
-        /* Application Card (different from Team Card) */
+        /* Application Card (different from Team Card) - WITH SWIPE! */
         .application-card {
             background: white;
             border-radius: 16px;
             padding: 18px;
             margin-bottom: 12px;
             border: 1.5px solid var(--gray-200);
-            transition: all 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             position: relative;
+            cursor: grab;
+            touch-action: pan-y;
+            user-select: none;
+        }
+
+        .application-card:active {
+            cursor: grabbing;
         }
 
         .application-card:hover {
             border-color: var(--primary);
             box-shadow: 0 4px 12px rgba(99,102,241,0.1);
+        }
+
+        /* Swipe Indicators */
+        .application-card.swiping-right {
+            border-color: var(--success);
+            box-shadow: 0 8px 24px rgba(16,185,129,0.3);
+        }
+
+        .application-card.swiping-left {
+            border-color: var(--error);
+            box-shadow: 0 8px 24px rgba(239,68,68,0.3);
+        }
+
+        .swipe-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 64px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .swipe-indicator.accept {
+            right: 20px;
+            color: var(--success);
+        }
+
+        .swipe-indicator.reject {
+            left: 20px;
+            color: var(--error);
+        }
+
+        .application-card.swiping-right .swipe-indicator.accept {
+            opacity: 1;
+        }
+
+        .application-card.swiping-left .swipe-indicator.reject {
+            opacity: 1;
+        }
+
+        /* Swipe Helper Hint */
+        .swipe-hint {
+            position: fixed;
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .swipe-hint.hidden {
+            display: none;
         }
 
         /* New Application Indicator */
@@ -624,6 +827,53 @@
             border-radius: 6px;
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+            z-index: 5;
+        }
+
+        /* Performance Score Badge */
+        .performance-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 5;
+        }
+
+        .performance-badge.excellent {
+            background: linear-gradient(135deg, #10b981 0%, #16a34a 100%);
+            color: white;
+        }
+
+        .performance-badge.good {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            color: white;
+        }
+
+        .performance-badge.average {
+            background: linear-gradient(135deg, #f59e0b 0%, #fb923c 100%);
+            color: white;
+        }
+
+        .performance-badge-score {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .performance-badge-label {
+            font-size: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
         }
 
         .app-stats-row {
@@ -921,6 +1171,12 @@
             <!-- Will be populated by JavaScript -->
         </div>
 
+        <!-- Dashboard Stats (Smart Overview) - Only for HYBRID campaigns -->
+        <div id="dashboard-stats"></div>
+
+        <!-- Control Bar (Filters & Sort) - Only for campaigns with applications -->
+        <div id="control-bar"></div>
+
         <!-- Tabs -->
         <div class="tabs">
             <button class="tab active" data-tab="influencers">Influencers</button>
@@ -963,9 +1219,15 @@
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 renderCampaignHeader();
+                renderDashboardStats();
+                renderControlBar();
                 renderInfluencers();
             }, 300);
         }
+
+        // State for sorting and filtering
+        let currentSort = 'best-match';
+        let currentFilter = 'all';
 
         // Render campaign header
         function renderCampaignHeader() {
@@ -993,6 +1255,112 @@
                 return `<span class="status-badge" style="background: rgba(59,130,246,0.1); color: var(--info);">✓ Completed</span>`;
             }
             return '';
+        }
+
+        // Render Dashboard Stats (Smart Overview)
+        function renderDashboardStats() {
+            // Only show for HYBRID and PUBLIC campaigns
+            if (campaign.type !== 'hybrid' && campaign.type !== 'public') {
+                document.getElementById('dashboard-stats').style.display = 'none';
+                return;
+            }
+
+            const teamSize = campaign.invited ? campaign.invited.length : 0;
+            const pendingApps = campaign.applicationsData ? campaign.applicationsData.filter(a => a.status === 'pending').length : 0;
+
+            // Calculate budget used
+            let budgetUsed = 0;
+            if (campaign.invited) {
+                budgetUsed = campaign.invited.reduce((sum, inf) => sum + (inf.contractAmount || 0), 0);
+            }
+            const totalBudget = campaign.settings?.budget || 200000;
+            const budgetPercent = Math.min((budgetUsed / totalBudget) * 100, 100);
+
+            // Time left
+            const daysLeft = campaign.daysLeft || 0;
+
+            const html = `
+                <div class="dashboard-stats">
+                    <div class="stat-card budget">
+                        <div class="stat-label">💰 Budget Used</div>
+                        <div class="stat-value">
+                            ${(budgetUsed / 1000).toFixed(0)}K
+                            <span class="stat-unit">/ ${(totalBudget / 1000).toFixed(0)}K SAR</span>
+                        </div>
+                        <div class="stat-progress">
+                            <div class="stat-progress-fill" style="width: ${budgetPercent}%;"></div>
+                        </div>
+                        <div class="stat-subtitle">${(100 - budgetPercent).toFixed(0)}% remaining</div>
+                    </div>
+
+                    <div class="stat-card applications">
+                        <div class="stat-label">📬 Applications</div>
+                        <div class="stat-value">
+                            ${pendingApps}
+                            <span class="stat-unit">Pending</span>
+                        </div>
+                        <div class="stat-subtitle">${campaign.applications?.total || 0} total received</div>
+                    </div>
+
+                    <div class="stat-card team">
+                        <div class="stat-label">👥 Team Size</div>
+                        <div class="stat-value">
+                            ${teamSize}
+                            <span class="stat-unit">Members</span>
+                        </div>
+                        <div class="stat-subtitle">Target: ${campaign.settings?.targetInfluencers || 20}</div>
+                    </div>
+
+                    <div class="stat-card time">
+                        <div class="stat-label">⏰ Time Left</div>
+                        <div class="stat-value">
+                            ${daysLeft}
+                            <span class="stat-unit">Days</span>
+                        </div>
+                        <div class="stat-subtitle">Until ${new Date(campaign.deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('dashboard-stats').innerHTML = html;
+        }
+
+        // Render Control Bar (Filters & Sort)
+        function renderControlBar() {
+            // Only show for campaigns with applications
+            if (!campaign.applicationsData || campaign.applicationsData.length === 0) {
+                document.getElementById('control-bar').style.display = 'none';
+                return;
+            }
+
+            const html = `
+                <div class="control-bar">
+                    <button class="control-chip ${currentSort === 'best-match' ? 'active' : ''}" onclick="changeSort('best-match')">
+                        ⭐ Best Match
+                    </button>
+                    <button class="control-chip ${currentSort === 'rating' ? 'active' : ''}" onclick="changeSort('rating')">
+                        📊 Top Rated
+                    </button>
+                    <button class="control-chip ${currentSort === 'price-low' ? 'active' : ''}" onclick="changeSort('price-low')">
+                        💵 Lowest Price
+                    </button>
+                    <button class="control-chip ${currentSort === 'reach' ? 'active' : ''}" onclick="changeSort('reach')">
+                        📈 Most Reach
+                    </button>
+                    <button class="control-chip ${currentSort === 'engagement' ? 'active' : ''}" onclick="changeSort('engagement')">
+                        🔥 Best Engagement
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('control-bar').innerHTML = html;
+        }
+
+        // Change Sort
+        function changeSort(sortType) {
+            currentSort = sortType;
+            renderControlBar();
+            renderInfluencers();
         }
 
         // Render influencers list (with sections for HYBRID)
@@ -1068,9 +1436,12 @@
             return html;
         }
 
-        // Render Applications Section
+        // Render Applications Section with Sorting
         function renderApplicationsSection() {
-            const pendingApps = campaign.applicationsData.filter(app => app.status === 'pending');
+            let pendingApps = campaign.applicationsData.filter(app => app.status === 'pending');
+
+            // Sort applications based on currentSort
+            pendingApps = sortApplications(pendingApps, currentSort);
 
             let html = `
                 <div class="section-divider"></div>
@@ -1080,6 +1451,11 @@
                 </div>
             `;
 
+            // Show swipe hint for first application
+            if (pendingApps.length > 0) {
+                html += `<div class="swipe-hint" id="swipe-hint">👆 Swipe cards: Right = Accept, Left = Reject</div>`;
+            }
+
             pendingApps.forEach(application => {
                 html += renderApplicationCard(application);
             });
@@ -1087,11 +1463,59 @@
             return html;
         }
 
+        // Sort Applications
+        function sortApplications(apps, sortType) {
+            const sorted = [...apps];
+
+            switch(sortType) {
+                case 'rating':
+                    return sorted.sort((a, b) => b.rating - a.rating);
+                case 'price-low':
+                    return sorted.sort((a, b) => a.proposedAmount - b.proposedAmount);
+                case 'reach':
+                    return sorted.sort((a, b) => b.avgReach - a.avgReach);
+                case 'engagement':
+                    return sorted.sort((a, b) => b.avgEngagement - a.avgEngagement);
+                case 'best-match':
+                default:
+                    // Best match: combination of rating, campaigns, and engagement
+                    return sorted.sort((a, b) => {
+                        const scoreA = (a.rating * 20) + (a.completedCampaigns * 2) + (a.avgEngagement * 5);
+                        const scoreB = (b.rating * 20) + (b.completedCampaigns * 2) + (b.avgEngagement * 5);
+                        return scoreB - scoreA;
+                    });
+            }
+        }
+
+        // Calculate Performance Score
+        function getPerformanceScore(application) {
+            const score = (application.rating * 20) + (application.avgEngagement * 5) + (application.completedCampaigns * 2);
+            const normalized = Math.min(Math.round(score / 2), 99);
+
+            let grade = 'average';
+            if (normalized >= 80) grade = 'excellent';
+            else if (normalized >= 65) grade = 'good';
+
+            return { score: normalized, grade };
+        }
+
         // Render Application Card
         function renderApplicationCard(application) {
             const isNew = application.hoursAgo <= 6;
+            const performance = getPerformanceScore(application);
+
             return `
                 <div class="application-card ${isNew ? 'new' : ''}" style="opacity: 0;" data-app-id="${application.id}">
+                    <!-- Swipe Indicators -->
+                    <div class="swipe-indicator accept">✓</div>
+                    <div class="swipe-indicator reject">✕</div>
+
+                    <!-- Performance Badge -->
+                    <div class="performance-badge ${performance.grade}">
+                        <div class="performance-badge-score">${performance.score}</div>
+                        <div class="performance-badge-label">SCORE</div>
+                    </div>
+
                     <!-- Header -->
                     <div class="influencer-header">
                         <div class="influencer-avatar" style="background: ${application.gradient};">
@@ -1228,7 +1652,9 @@
                 // Show success toast
                 showToast(`${app.name} accepted for ${(app.proposedAmount / 1000).toFixed(0)}K SAR`, 'success');
 
-                // Re-render
+                // Re-render everything to update stats
+                renderDashboardStats();
+                renderControlBar();
                 renderInfluencers();
             }, 400);
         }
@@ -1253,7 +1679,9 @@
                 // Show error toast
                 showToast(`${app.name}'s application rejected`, 'error');
 
-                // Re-render
+                // Re-render everything to update stats
+                renderDashboardStats();
+                renderControlBar();
                 renderInfluencers();
             }, 400);
         }
@@ -1271,10 +1699,122 @@
             alert('Add Influencer functionality - Coming soon!\n\nYou will be able to:\n• Search for influencers\n• Send invitations\n• Set contract terms');
         }
 
-        // Attach event listeners (for dynamic content)
+        // Attach event listeners (for swipeable cards)
         function attachApplicationHandlers() {
-            // Event listeners are inline in the HTML, so this is a placeholder
-            // for future enhancements like dynamic filtering, etc.
+            const cards = document.querySelectorAll('.application-card');
+
+            cards.forEach(card => {
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                // Mouse events
+                card.addEventListener('mousedown', (e) => {
+                    if (e.target.tagName === 'BUTTON') return;
+                    isDragging = true;
+                    startX = e.clientX;
+                    card.style.transition = 'none';
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.clientX - startX;
+                    card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.05}deg)`;
+
+                    if (currentX > 50) {
+                        card.classList.add('swiping-right');
+                        card.classList.remove('swiping-left');
+                    } else if (currentX < -50) {
+                        card.classList.add('swiping-left');
+                        card.classList.remove('swiping-right');
+                    } else {
+                        card.classList.remove('swiping-right', 'swiping-left');
+                    }
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    card.style.transition = 'transform 0.3s, box-shadow 0.3s, border-color 0.3s';
+
+                    // Accept if swiped right enough
+                    if (currentX > 100) {
+                        acceptApplication(card.dataset.appId);
+                    }
+                    // Reject if swiped left enough
+                    else if (currentX < -100) {
+                        rejectApplication(card.dataset.appId);
+                    }
+                    // Snap back
+                    else {
+                        card.style.transform = '';
+                        card.classList.remove('swiping-right', 'swiping-left');
+                    }
+
+                    currentX = 0;
+                });
+
+                // Touch events (for mobile)
+                card.addEventListener('touchstart', (e) => {
+                    if (e.target.tagName === 'BUTTON') return;
+                    isDragging = true;
+                    startX = e.touches[0].clientX;
+                    card.style.transition = 'none';
+
+                    // Hide swipe hint after first interaction
+                    const hint = document.getElementById('swipe-hint');
+                    if (hint) {
+                        setTimeout(() => hint.classList.add('hidden'), 2000);
+                    }
+                });
+
+                card.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX - startX;
+                    card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.05}deg)`;
+
+                    if (currentX > 50) {
+                        card.classList.add('swiping-right');
+                        card.classList.remove('swiping-left');
+                    } else if (currentX < -50) {
+                        card.classList.add('swiping-left');
+                        card.classList.remove('swiping-right');
+                    } else {
+                        card.classList.remove('swiping-right', 'swiping-left');
+                    }
+                });
+
+                card.addEventListener('touchend', () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    card.style.transition = 'transform 0.3s, box-shadow 0.3s, border-color 0.3s';
+
+                    // Accept if swiped right enough
+                    if (currentX > 100) {
+                        acceptApplication(card.dataset.appId);
+                    }
+                    // Reject if swiped left enough
+                    else if (currentX < -100) {
+                        rejectApplication(card.dataset.appId);
+                    }
+                    // Snap back
+                    else {
+                        card.style.transform = '';
+                        card.classList.remove('swiping-right', 'swiping-left');
+                    }
+
+                    currentX = 0;
+                });
+            });
+
+            // Hide swipe hint after 5 seconds
+            const hint = document.getElementById('swipe-hint');
+            if (hint) {
+                setTimeout(() => {
+                    hint.style.opacity = '0';
+                    setTimeout(() => hint.remove(), 300);
+                }, 5000);
+            }
         }
 
         // Render individual influencer card
@@ -1536,6 +2076,50 @@
                 }
             });
         });
+
+        // Keyboard Shortcuts (Power User Feature!)
+        document.addEventListener('keydown', (e) => {
+            // Only trigger if not typing in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            const firstCard = document.querySelector('.application-card');
+            if (!firstCard) return;
+
+            const appId = firstCard.dataset.appId;
+
+            // RIGHT ARROW or A = Accept first application
+            if (e.key === 'ArrowRight' || e.key === 'a' || e.key === 'A') {
+                e.preventDefault();
+                acceptApplication(appId);
+                showToast('💡 Tip: Use arrow keys for quick actions!', 'success');
+            }
+
+            // LEFT ARROW or D = Reject first application
+            if (e.key === 'ArrowLeft' || e.key === 'd' || e.key === 'D') {
+                e.preventDefault();
+                rejectApplication(appId);
+            }
+
+            // SPACE or ENTER = View details
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                viewApplicationDetails(appId);
+            }
+
+            // Number keys 1-5 = Change sort
+            if (e.key === '1') changeSort('best-match');
+            if (e.key === '2') changeSort('rating');
+            if (e.key === '3') changeSort('price-low');
+            if (e.key === '4') changeSort('reach');
+            if (e.key === '5') changeSort('engagement');
+        });
+
+        // Show keyboard shortcuts hint
+        setTimeout(() => {
+            if (document.querySelector('.application-card')) {
+                showToast('⌨️ Pro Tip: Use arrow keys or A/D to quickly accept/reject!', 'success');
+            }
+        }, 3000);
     </script>
 </body>
 </html>
