@@ -960,11 +960,204 @@
             margin-top: 12px;
         }
 
+        /* Status Pills */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+        }
+
+        .status-pill.working {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(34,197,94,0.15) 100%);
+            color: var(--success);
+            border: 1.5px solid rgba(16,185,129,0.3);
+        }
+
+        .status-pill.pending {
+            background: linear-gradient(135deg, rgba(245,158,11,0.15) 0%, rgba(251,146,60,0.15) 100%);
+            color: var(--warning);
+            border: 1.5px solid rgba(245,158,11,0.3);
+        }
+
+        .status-pill.invited {
+            background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.15) 100%);
+            color: var(--primary);
+            border: 1.5px solid rgba(99,102,241,0.3);
+        }
+
+        .status-pill.creating {
+            background: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(99,102,241,0.15) 100%);
+            color: var(--info);
+            border: 1.5px solid rgba(59,130,246,0.3);
+        }
+
+        .status-pill.completed {
+            background: linear-gradient(135deg, rgba(107,114,128,0.15) 0%, rgba(75,85,99,0.15) 100%);
+            color: var(--gray-600);
+            border: 1.5px solid rgba(107,114,128,0.3);
+        }
+
+        .status-pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        /* Floating Inbox Badge */
+        .inbox-badge {
+            position: fixed;
+            bottom: 90px;
+            right: calc(50% - 215px + 20px);
+            background: linear-gradient(135deg, var(--accent) 0%, #f43f5e 100%);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(236,72,153,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
+        .inbox-badge:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 12px 40px rgba(236,72,153,0.6);
+        }
+
+        .inbox-badge:active {
+            transform: scale(0.98);
+        }
+
+        .inbox-badge-icon {
+            font-size: 20px;
+        }
+
+        .inbox-badge-count {
+            background: white;
+            color: var(--accent);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* Bottom Sheet Modal */
+        .bottom-sheet-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .bottom-sheet-overlay.active {
+            display: block;
+        }
+
+        .bottom-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 430px;
+            max-height: 85vh;
+            background: white;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.2);
+            z-index: 201;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-sheet.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .bottom-sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--gray-300);
+            border-radius: 2px;
+            margin: 12px auto 8px;
+            flex-shrink: 0;
+        }
+
+        .bottom-sheet-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--gray-100);
+            flex-shrink: 0;
+        }
+
+        .bottom-sheet-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .bottom-sheet-subtitle {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .bottom-sheet-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .bottom-sheet-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .bottom-sheet-close:hover {
+            background: var(--gray-200);
+        }
+
         /* FAB Button */
         .fab {
             position: fixed;
             bottom: 90px;
-            right: calc(50% - 215px + 20px);
+            left: calc(50% - 215px + 20px);
             width: 56px;
             height: 56px;
             border-radius: 50%;
@@ -1194,6 +1387,20 @@
         </div>
     </div>
 
+    <!-- Bottom Sheet Modal for Applications -->
+    <div class="bottom-sheet-overlay" id="applications-overlay" onclick="closeApplicationsModal()"></div>
+    <div class="bottom-sheet" id="applications-sheet">
+        <div class="bottom-sheet-handle"></div>
+        <div class="bottom-sheet-header">
+            <h2 class="bottom-sheet-title">New Applications</h2>
+            <p class="bottom-sheet-subtitle">Swipe right to accept, left to reject</p>
+            <button class="bottom-sheet-close" onclick="closeApplicationsModal()">✕</button>
+        </div>
+        <div class="bottom-sheet-content" id="applications-content">
+            <!-- Applications will be rendered here -->
+        </div>
+    </div>
+
     <!-- Load Data -->
     <script src="data/campaigns-data.js"></script>
 
@@ -1325,79 +1532,51 @@
             document.getElementById('dashboard-stats').innerHTML = html;
         }
 
-        // Render Control Bar (Filters & Sort)
+        // Render Control Bar - REMOVED (Now inside modal only)
         function renderControlBar() {
-            // Only show for campaigns with applications
-            if (!campaign.applicationsData || campaign.applicationsData.length === 0) {
-                document.getElementById('control-bar').style.display = 'none';
-                return;
-            }
-
-            const html = `
-                <div class="control-bar">
-                    <button class="control-chip ${currentSort === 'best-match' ? 'active' : ''}" onclick="changeSort('best-match')">
-                        ⭐ Best Match
-                    </button>
-                    <button class="control-chip ${currentSort === 'rating' ? 'active' : ''}" onclick="changeSort('rating')">
-                        📊 Top Rated
-                    </button>
-                    <button class="control-chip ${currentSort === 'price-low' ? 'active' : ''}" onclick="changeSort('price-low')">
-                        💵 Lowest Price
-                    </button>
-                    <button class="control-chip ${currentSort === 'reach' ? 'active' : ''}" onclick="changeSort('reach')">
-                        📈 Most Reach
-                    </button>
-                    <button class="control-chip ${currentSort === 'engagement' ? 'active' : ''}" onclick="changeSort('engagement')">
-                        🔥 Best Engagement
-                    </button>
-                </div>
-            `;
-
-            document.getElementById('control-bar').innerHTML = html;
+            // Hide control bar - it's now inside the modal
+            document.getElementById('control-bar').style.display = 'none';
         }
 
         // Change Sort
         function changeSort(sortType) {
             currentSort = sortType;
-            renderControlBar();
-            renderInfluencers();
+
+            // Check if modal is open
+            const sheet = document.getElementById('applications-sheet');
+            if (sheet.classList.contains('active')) {
+                // Re-open modal with new sort
+                openApplicationsModal();
+            } else {
+                renderControlBar();
+                renderInfluencers();
+            }
         }
 
-        // Render influencers list (with sections for HYBRID)
+        // Render influencers list (ONLY YOUR TEAM - NO APPLICATIONS!)
         function renderInfluencers() {
             let html = '';
 
-            // Section 1: Your Team (invited influencers)
+            // Section 1: Your Team (invited influencers) - ALWAYS VISIBLE
             if (campaign.invited && campaign.invited.length > 0) {
                 html += renderTeamSection();
             }
 
-            // Section 2: Applications (for HYBRID and PUBLIC campaigns)
-            if ((campaign.type === 'hybrid' || campaign.type === 'public') &&
-                campaign.applicationsData && campaign.applicationsData.length > 0) {
-                html += renderApplicationsSection();
-            }
-
-            // Empty state for invite-only campaigns with no team
-            if (html === '' && campaign.type === 'invite-only') {
+            // Empty state for campaigns with no team
+            if (html === '') {
                 html = `
                     <div style="text-align: center; padding: 60px 20px;">
                         <div style="font-size: 48px; margin-bottom: 16px;">👥</div>
-                        <div style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No influencers yet</div>
-                        <div style="font-size: 14px; color: var(--gray-500);">Start by inviting influencers to your campaign</div>
+                        <div style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No team members yet</div>
+                        <div style="font-size: 14px; color: var(--gray-500);">Start by inviting influencers or reviewing applications</div>
                     </div>
                 `;
             }
 
-            // Empty state for public campaigns with no applications
-            if (html === '' && campaign.type === 'public') {
-                html = `
-                    <div style="text-align: center; padding: 60px 20px;">
-                        <div style="font-size: 48px; margin-bottom: 16px;">📬</div>
-                        <div style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No applications yet</div>
-                        <div style="font-size: 14px; color: var(--gray-500);">Waiting for influencers to apply to your campaign</div>
-                    </div>
-                `;
+            // Add Inbox Badge for HYBRID and PUBLIC campaigns (if there are applications)
+            if ((campaign.type === 'hybrid' || campaign.type === 'public') &&
+                campaign.applicationsData && campaign.applicationsData.filter(a => a.status === 'pending').length > 0) {
+                html += renderInboxBadge();
             }
 
             // Add FAB button for HYBRID and INVITE_ONLY campaigns
@@ -1409,15 +1588,12 @@
 
             // Add fade-in animation
             setTimeout(() => {
-                document.querySelectorAll('.influencer-card, .application-card').forEach((card, index) => {
+                document.querySelectorAll('.influencer-card').forEach((card, index) => {
                     setTimeout(() => {
                         card.classList.add('fade-in');
                     }, index * 50);
                 });
             }, 100);
-
-            // Attach event listeners for Accept/Reject buttons
-            attachApplicationHandlers();
         }
 
         // Render Team Section (invited influencers)
@@ -1436,31 +1612,105 @@
             return html;
         }
 
-        // Render Applications Section with Sorting
-        function renderApplicationsSection() {
+        // Render Inbox Badge (Floating Button)
+        function renderInboxBadge() {
+            const pendingCount = campaign.applicationsData.filter(a => a.status === 'pending').length;
+
+            return `
+                <div class="inbox-badge" onclick="openApplicationsModal()">
+                    <span class="inbox-badge-icon">📬</span>
+                    <span>New Applications</span>
+                    <span class="inbox-badge-count">${pendingCount}</span>
+                </div>
+            `;
+        }
+
+        // Open Applications Modal (Bottom Sheet)
+        function openApplicationsModal() {
+            const overlay = document.getElementById('applications-overlay');
+            const sheet = document.getElementById('applications-sheet');
+            const content = document.getElementById('applications-content');
+
+            // Get pending applications
             let pendingApps = campaign.applicationsData.filter(app => app.status === 'pending');
 
-            // Sort applications based on currentSort
+            // Sort applications
             pendingApps = sortApplications(pendingApps, currentSort);
 
-            let html = `
-                <div class="section-divider"></div>
-                <div class="section-title">
-                    <h3>📬 Applications</h3>
-                    <span class="section-count">${pendingApps.length} Pending</span>
+            // Render applications in modal
+            let html = '';
+
+            // Show control bar
+            html += `
+                <div class="control-bar" style="position: sticky; top: 0; background: white; z-index: 10; margin: -20px -20px 20px; padding: 16px 20px;">
+                    <button class="control-chip ${currentSort === 'best-match' ? 'active' : ''}" onclick="changeSort('best-match')">
+                        ⭐ Best Match
+                    </button>
+                    <button class="control-chip ${currentSort === 'rating' ? 'active' : ''}" onclick="changeSort('rating')">
+                        📊 Top Rated
+                    </button>
+                    <button class="control-chip ${currentSort === 'price-low' ? 'active' : ''}" onclick="changeSort('price-low')">
+                        💵 Lowest Price
+                    </button>
+                    <button class="control-chip ${currentSort === 'reach' ? 'active' : ''}" onclick="changeSort('reach')">
+                        📈 Most Reach
+                    </button>
+                    <button class="control-chip ${currentSort === 'engagement' ? 'active' : ''}" onclick="changeSort('engagement')">
+                        🔥 Best Engagement
+                    </button>
                 </div>
             `;
 
-            // Show swipe hint for first application
+            // Show swipe hint
             if (pendingApps.length > 0) {
                 html += `<div class="swipe-hint" id="swipe-hint">👆 Swipe cards: Right = Accept, Left = Reject</div>`;
             }
 
+            // Render application cards
             pendingApps.forEach(application => {
                 html += renderApplicationCard(application);
             });
 
-            return html;
+            if (pendingApps.length === 0) {
+                html += `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
+                        <div style="font-size: 16px; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">All caught up!</div>
+                        <div style="font-size: 14px; color: var(--gray-500);">No pending applications to review</div>
+                    </div>
+                `;
+            }
+
+            content.innerHTML = html;
+
+            // Show modal
+            overlay.classList.add('active');
+            setTimeout(() => {
+                sheet.classList.add('active');
+
+                // Add fade-in animation to cards
+                setTimeout(() => {
+                    document.querySelectorAll('.application-card').forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('fade-in');
+                        }, index * 50);
+                    });
+                }, 100);
+
+                // Attach swipe handlers
+                attachApplicationHandlers();
+            }, 10);
+        }
+
+        // Close Applications Modal
+        function closeApplicationsModal() {
+            const overlay = document.getElementById('applications-overlay');
+            const sheet = document.getElementById('applications-sheet');
+
+            sheet.classList.remove('active');
+            setTimeout(() => {
+                overlay.classList.remove('active');
+            }, 400);
         }
 
         // Sort Applications
@@ -1654,8 +1904,16 @@
 
                 // Re-render everything to update stats
                 renderDashboardStats();
-                renderControlBar();
                 renderInfluencers();
+
+                // Re-open modal if there are still pending applications
+                const pendingApps = campaign.applicationsData.filter(a => a.status === 'pending');
+                if (pendingApps.length > 0) {
+                    setTimeout(() => openApplicationsModal(), 500);
+                } else {
+                    closeApplicationsModal();
+                    showToast('🎉 All applications reviewed!', 'success');
+                }
             }, 400);
         }
 
@@ -1681,8 +1939,16 @@
 
                 // Re-render everything to update stats
                 renderDashboardStats();
-                renderControlBar();
                 renderInfluencers();
+
+                // Re-open modal if there are still pending applications
+                const pendingApps = campaign.applicationsData.filter(a => a.status === 'pending');
+                if (pendingApps.length > 0) {
+                    setTimeout(() => openApplicationsModal(), 500);
+                } else {
+                    closeApplicationsModal();
+                    showToast('🎉 All applications reviewed!', 'success');
+                }
             }, 400);
         }
 
@@ -1817,18 +2083,44 @@
             }
         }
 
-        // Render individual influencer card
+        // Render individual influencer card WITH STATUS PILL
         function renderInfluencerCard(influencer) {
             const state = window.getInfluencerFlowState(influencer);
             const steps = window.getInfluencerProgressSteps(influencer);
+            const statusPill = getStatusPill(state);
 
             return `
                 <div class="influencer-card" style="opacity: 0;">
+                    ${statusPill}
                     ${renderInfluencerHeader(influencer)}
                     ${renderProgressSteps(steps)}
                     ${renderStatusAlert(influencer, state)}
                     ${renderDeliverables(influencer)}
                     ${renderActionButtons(influencer, state)}
+                </div>
+            `;
+        }
+
+        // Get Status Pill based on state
+        function getStatusPill(state) {
+            const pills = {
+                'completed': { class: 'completed', icon: '✓', label: 'Completed' },
+                'content-submitted': { class: 'working', icon: '📝', label: 'Submitted' },
+                'creating-content': { class: 'creating', icon: '🎨', label: 'Creating' },
+                'content-revision': { class: 'pending', icon: '🔄', label: 'Revision' },
+                'awaiting-payment': { class: 'pending', icon: '💳', label: 'Awaiting Payment' },
+                'awaiting-brand-signature': { class: 'pending', icon: '📝', label: 'Your Signature' },
+                'awaiting-influencer-signature': { class: 'pending', icon: '✍️', label: 'Their Signature' },
+                'signature-expired': { class: 'pending', icon: '⚠️', label: 'Expired' },
+                'unknown': { class: 'invited', icon: '📩', label: 'Invited' }
+            };
+
+            const pill = pills[state] || pills['unknown'];
+
+            return `
+                <div class="status-pill ${pill.class}">
+                    <span class="status-pill-dot"></span>
+                    <span>${pill.icon} ${pill.label}</span>
                 </div>
             `;
         }
