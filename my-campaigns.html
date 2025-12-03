@@ -305,17 +305,39 @@
 
         /* Filters */
         .filters-section {
-            padding: 20px;
-            background: white;
+            padding: 24px 20px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
             border-bottom: 1px solid var(--gray-100);
+        }
+
+        .filter-group-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group-label::before {
+            content: '';
+            width: 3px;
+            height: 12px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 2px;
         }
 
         .filters-scroll {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            padding: 2px;
         }
 
         .filters-scroll::-webkit-scrollbar {
@@ -326,54 +348,77 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 14px;
+            padding: 11px 18px;
+            border-radius: 14px;
+            font-size: 13px;
             font-weight: 700;
             border: none;
             cursor: pointer;
             white-space: nowrap;
             flex-shrink: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.3px;
         }
 
         .filter-chip.inactive {
+            background: white;
+            color: var(--gray-600);
+            border: 1.5px solid var(--gray-200);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .filter-chip.inactive:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .filter-chip.inactive:active {
+            transform: translateY(0);
+        }
+
+        .filter-chip.active {
+            background: linear-gradient(135deg, #1a1f36 0%, #2d3548 100%);
+            color: white;
+            border: 1.5px solid transparent;
+            box-shadow: 0 6px 16px rgba(26,31,54,0.25), 0 2px 4px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .filter-chip.active::before {
+            content: '';
+            position: absolute;
+            inset: -1.5px;
+            border-radius: 14px;
+            padding: 1.5px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.6;
+        }
+
+        .filter-count {
+            padding: 4px 9px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            min-width: 22px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .filter-chip.inactive .filter-count {
             background: var(--gray-100);
             color: var(--gray-600);
         }
 
-        .filter-chip.inactive:hover {
-            background: var(--gray-200);
-            transform: translateY(-2px);
-        }
-
-        .filter-chip.active {
-            background: var(--gray-900);
-            color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
-        }
-
-        .filter-count {
-            background: rgba(0,0,0,0.15);
-            padding: 3px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 800;
-            min-width: 24px;
-            text-align: center;
-        }
-
-        .filter-chip.inactive .filter-count {
-            background: var(--gray-200);
-            color: var(--gray-600);
-        }
-
         .filter-chip.active .filter-count {
-            background: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.2);
             color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) inset;
         }
 
         /* Campaigns List */
@@ -783,26 +828,43 @@
         <!-- Filters -->
         <div class="filters-section">
             <!-- Status Filters -->
-            <div style="margin-bottom: 12px;">
-                <div style="font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">Status</div>
+            <div style="margin-bottom: 18px;">
+                <div class="filter-group-label">Status</div>
                 <div class="filters-scroll">
                     <button class="filter-chip active status-filter" data-status="all">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <rect x="1" y="1" width="10" height="10" rx="2"/>
+                            <path d="M4 6h4M6 4v4"/>
+                        </svg>
                         All
                         <span class="filter-count" id="count-all">0</span>
                     </button>
                     <button class="filter-chip inactive status-filter" data-status="active">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <circle cx="6" cy="6" r="5"/>
+                        </svg>
                         Active
                         <span class="filter-count" id="count-active">0</span>
                     </button>
                     <button class="filter-chip inactive status-filter" data-status="draft">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <path d="M2 2h8M2 6h5M2 10h6"/>
+                        </svg>
                         Draft
                         <span class="filter-count" id="count-draft">0</span>
                     </button>
                     <button class="filter-chip inactive status-filter" data-status="paused">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <rect x="2" y="2" width="2.5" height="8" rx="1"/>
+                            <rect x="7.5" y="2" width="2.5" height="8" rx="1"/>
+                        </svg>
                         Paused
                         <span class="filter-count" id="count-paused">0</span>
                     </button>
                     <button class="filter-chip inactive status-filter" data-status="completed">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <path d="M10 3L4.5 8.5L2 6"/>
+                        </svg>
                         Completed
                         <span class="filter-count" id="count-completed">0</span>
                     </button>
@@ -811,22 +873,38 @@
 
             <!-- Type Filters -->
             <div>
-                <div style="font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">Campaign Type</div>
+                <div class="filter-group-label">Campaign Type</div>
                 <div class="filters-scroll">
                     <button class="filter-chip active type-filter" data-type="all">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <path d="M6 2v8M2 6h8"/>
+                        </svg>
                         All Types
                         <span class="filter-count" id="count-type-all">0</span>
                     </button>
                     <button class="filter-chip inactive type-filter" data-type="hybrid">
-                        🔀 Hybrid
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <circle cx="4" cy="7" r="2"/>
+                            <circle cx="10" cy="7" r="2"/>
+                            <path d="M6 7h2"/>
+                        </svg>
+                        Hybrid
                         <span class="filter-count" id="count-hybrid">0</span>
                     </button>
                     <button class="filter-chip inactive type-filter" data-type="invite-only">
-                        👥 Invite Only
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <circle cx="7" cy="4" r="2.5"/>
+                            <path d="M2 12c0-2.5 2.2-4 5-4s5 1.5 5 4"/>
+                        </svg>
+                        Invite Only
                         <span class="filter-count" id="count-invite">0</span>
                     </button>
                     <button class="filter-chip inactive type-filter" data-type="public">
-                        🌍 Public
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" style="flex-shrink: 0;">
+                            <circle cx="7" cy="7" r="5.5"/>
+                            <path d="M7 2v10M2 7h10"/>
+                        </svg>
+                        Public
                         <span class="filter-count" id="count-public">0</span>
                     </button>
                 </div>
