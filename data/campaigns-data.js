@@ -177,6 +177,92 @@ window.campaignsData = [
           engagement: 8500,
           views: 98000
         }
+      },
+      // NEW: Applicants Ready to Pay (for Bulk Payment CTA)
+      {
+        id: 'INF-009',
+        name: 'Sara Abdullah',
+        avatar: 'S',
+        platform: 'tiktok',
+        followers: 200000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+        source: 'application',
+        avgEngagement: 4.5,
+        contractAmount: 6500,
+        contractStatus: 'signed',
+        paymentStatus: 'pending',
+        brandSignedAt: '2025-12-01T10:00:00',
+        influencerSignedAt: '2025-12-02T14:30:00',
+        deliverables: ['TikTok Video ×1', 'Story ×2']
+      },
+      {
+        id: 'INF-010',
+        name: 'Noura Hassan',
+        avatar: 'N',
+        platform: 'instagram',
+        followers: 180000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        source: 'application',
+        avgEngagement: 5.2,
+        contractAmount: 8000,
+        contractStatus: 'signed',
+        paymentStatus: 'pending',
+        brandSignedAt: '2025-12-01T11:00:00',
+        influencerSignedAt: '2025-12-02T09:00:00',
+        deliverables: ['Instagram Reel ×1', 'Story ×3']
+      },
+      {
+        id: 'INF-011',
+        name: 'Layla Ahmed',
+        avatar: 'L',
+        platform: 'tiktok',
+        followers: 165000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+        source: 'application',
+        avgEngagement: 4.8,
+        contractAmount: 7500,
+        contractStatus: 'signed',
+        paymentStatus: 'pending',
+        brandSignedAt: '2025-12-01T15:00:00',
+        influencerSignedAt: '2025-12-02T16:00:00',
+        deliverables: ['TikTok Video ×2', 'Story ×4']
+      },
+      {
+        id: 'INF-012',
+        name: 'Maha Salem',
+        avatar: 'M',
+        platform: 'instagram',
+        followers: 145000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        source: 'application',
+        avgEngagement: 6.1,
+        contractAmount: 9500,
+        contractStatus: 'signed',
+        paymentStatus: 'pending',
+        brandSignedAt: '2025-12-02T10:00:00',
+        influencerSignedAt: '2025-12-02T18:00:00',
+        deliverables: ['Instagram Reel ×1', 'Story ×2']
+      },
+      {
+        id: 'INF-013',
+        name: 'Aisha Youssef',
+        avatar: 'A',
+        platform: 'youtube',
+        followers: 220000,
+        status: 'accepted',
+        gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+        source: 'application',
+        avgEngagement: 3.8,
+        contractAmount: 11000,
+        contractStatus: 'signed',
+        paymentStatus: 'pending',
+        brandSignedAt: '2025-12-02T12:00:00',
+        influencerSignedAt: '2025-12-02T20:00:00',
+        deliverables: ['YouTube Video ×1']
       }
     ],
 
@@ -334,7 +420,7 @@ window.campaignsData = [
 
     settings: {
       targetInfluencers: 25,
-      budget: 125000,
+      budget: 500000,
       maxBudgetPerInfluencer: 8000,
       tiers: ['10k-50k', '50k-200k'],
       niches: ['food', 'lifestyle', 'family']
