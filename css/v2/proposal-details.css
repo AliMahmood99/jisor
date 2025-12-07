@@ -1,0 +1,278 @@
+/* Proposal Details Page Styles */
+
+.proposal-container {
+    padding: 20px;
+    padding-bottom: 120px;
+}
+
+/* Influencer Header */
+.influencer-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.influencer-avatar-xl {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+}
+
+.influencer-header-info {
+    flex: 1;
+}
+
+.influencer-header-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.influencer-name-large {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--gray-900);
+}
+
+.verified-badge-large {
+    width: 20px;
+    height: 20px;
+}
+
+.influencer-header-stats {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+}
+
+.view-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.view-profile-link svg {
+    width: 14px;
+    height: 14px;
+}
+
+.view-profile-link:hover {
+    text-decoration: underline;
+}
+
+.status-badge-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-badge-large.pending {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+/* Proposal Sections */
+.proposal-section {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-700);
+    margin-bottom: 12px;
+}
+
+.section-content {
+    padding: 16px;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+/* Price Section */
+.price-display {
+    padding: 20px;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.price-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.price-large {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gray-900);
+}
+
+.price-reduction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--success-bg);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    color: var(--success);
+    font-weight: 600;
+}
+
+.price-reduction svg {
+    width: 16px;
+    height: 16px;
+}
+
+.price-note {
+    font-size: 13px;
+    color: var(--gray-500);
+}
+
+.price-note strong {
+    color: var(--gray-700);
+}
+
+/* Deliverables */
+.deliverables-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.deliverable-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.deliverable-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.deliverable-icon.instagram {
+    background: linear-gradient(135deg, #833AB4, #E1306C, #FCAF45);
+}
+
+.deliverable-icon.tiktok {
+    background: #000;
+}
+
+.deliverable-icon svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+}
+
+.deliverable-text {
+    flex: 1;
+}
+
+.deliverable-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.deliverable-desc {
+    font-size: 12px;
+    color: var(--gray-500);
+}
+
+/* Sticky Actions */
+.sticky-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 430px;
+    margin: 0 auto;
+    background: white;
+    border-top: 1px solid var(--gray-100);
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-btn {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.sticky-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.sticky-btn.reject {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 2px solid var(--error);
+}
+
+.sticky-btn.reject:hover {
+    background: var(--error);
+    color: white;
+}
+
+.sticky-btn.message {
+    background: var(--gray-100);
+    color: var(--gray-700);
+}
+
+.sticky-btn.message:hover {
+    background: var(--gray-200);
+}
+
+.sticky-btn.accept {
+    flex: 1.5;
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.sticky-btn.accept:hover {
+    opacity: 0.9;
+}

@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JISOR - Invite Only Campaign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary-50: #F5F3FF;
+            --primary-100: #EDE9FE;
+            --primary-200: #DDD6FE;
+            --primary-400: #A78BFA;
+            --primary-500: #8B5CF6;
+            --primary-600: #7C3AED;
+            --primary-700: #6D28D9;
+
+            --success-50: #ECFDF5;
+            --success-100: #D1FAE5;
+            --success-400: #34D399;
+            --success-500: #10B981;
+            --success-600: #059669;
+
+            --warning-50: #FFFBEB;
+            --warning-100: #FEF3C7;
+            --warning-400: #FBBF24;
+            --warning-500: #F59E0B;
+
+            --danger-50: #FEF2F2;
+            --danger-100: #FEE2E2;
+            --danger-500: #EF4444;
+
+            --slate-50: #F8FAFC;
+            --slate-100: #F1F5F9;
+            --slate-200: #E2E8F0;
+            --slate-300: #CBD5E1;
+            --slate-400: #94A3B8;
+            --slate-500: #64748B;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1E293B;
+            --slate-900: #0F172A;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.12);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-full: 9999px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1E293B;
+            min-height: 100vh;
+            color: var(--slate-900);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app {
+            max-width: 430px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--slate-50);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Status Bar - Transparent with white text */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px 8px;
+            background: transparent;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 20;
+        }
+
+        /* Header - Transparent with glass buttons */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px 12px;
+            background: transparent;
+            position: relative;
+            z-index: 20;
+        }
+
+        .back-btn, .header-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover, .header-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .back-btn svg, .header-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Hero - Gradient Purple Background */
+        .hero {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 40%, #A855F7 70%, #D946EF 100%);
+            padding: 0 20px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Wave at bottom of hero */
+        .hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .hero-wave svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .campaign-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .platforms {
+            display: flex;
+            gap: 4px;
+        }
+
+        .platform {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .campaign-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10B981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.9); }
+        }
+
+        .deadline {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 18px 12px;
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--slate-900);
+            line-height: 1;
+        }
+
+        .stat-value span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--slate-400);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-500);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-top: 4px;
+        }
+
+        /* Main */
+        .main {
+            padding: 20px 16px 180px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding: 0 4px;
+        }
+
+        .section-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .section-icon.action { background: linear-gradient(135deg, var(--danger-100), var(--danger-50)); }
+        .section-icon.team { background: linear-gradient(135deg, var(--primary-100), var(--primary-50)); }
+        .section-icon.budget { background: linear-gradient(135deg, var(--warning-100), var(--warning-50)); }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--slate-800);
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           ENABLE APPLICATIONS CTA
+        ══════════════════════════════════════════════════════════════ */
+        .enable-cta {
+            background: white;
+            border-radius: var(--radius-xl);
+            border: 2px dashed var(--success-300);
+            padding: 20px;
+            margin-bottom: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enable-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--success-50) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .enable-cta:hover::before {
+            opacity: 1;
+        }
+
+        .enable-cta:hover {
+            border-color: var(--success-500);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .enable-cta-inner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .enable-cta-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--success-100), var(--success-50));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .enable-cta-content {
+            flex: 1;
+        }
+
+        .enable-cta-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate-800);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .enable-cta-badge {
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: var(--success-100);
+            color: var(--success-700);
+        }
+
+        .enable-cta-desc {
+            font-size: 13px;
+            color: var(--slate-500);
+            line-height: 1.4;
+        }
+
+        .enable-cta-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--success-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--success-600);
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .enable-cta:hover .enable-cta-arrow {
+            background: var(--success-500);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* Action Cards */
+        .action-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 4px;
+            margin: -4px;
+        }
+
+        .action-scroll::-webkit-scrollbar { display: none; }
+
+        .action-card {
+            flex: 0 0 auto;
+            width: 140px;
+            padding: 16px;
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1.5px solid var(--slate-200);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .action-card:hover {
+            border-color: var(--primary-300);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .action-card.urgent {
+            border-color: var(--danger-200);
+            background: linear-gradient(135deg, white 0%, var(--danger-50) 100%);
+        }
+
+        .action-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--danger-500);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .action-icon { font-size: 24px; margin-bottom: 10px; }
+
+        .action-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-700);
+            line-height: 1.3;
+        }
+
+        .action-sublabel {
+            font-size: 11px;
+            color: var(--slate-500);
+            margin-top: 4px;
+        }
+
+        /* Team Card */
+        .team-card {
+            padding: 20px;
+            border-radius: var(--radius-xl);
+            border: 1.5px solid var(--primary-200);
+            background: linear-gradient(135deg, var(--primary-50) 0%, white 100%);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .team-card-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--primary-500);
+            color: white;
+        }
+
+        .team-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .team-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .team-card-info h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .team-card-info p {
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        .team-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .team-stat {
+            text-align: center;
+            padding: 12px;
+            background: white;
+            border-radius: var(--radius-md);
+        }
+
+        .team-stat-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .team-stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-500);
+            margin-top: 2px;
+        }
+
+        .team-stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        .team-stat-dot.working { background: var(--success-500); }
+        .team-stat-dot.pending { background: var(--warning-500); }
+        .team-stat-dot.done { background: var(--primary-500); }
+
+        .team-card-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            background: var(--primary-500);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .team-card-btn:hover {
+            background: var(--primary-600);
+            transform: translateY(-1px);
+        }
+
+        /* Influencer Cards */
+        .influencer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .influencer-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            border: 2px solid var(--primary-200);
+            overflow: hidden;
+        }
+
+        .source-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, var(--primary-500), var(--primary-400));
+            color: white;
+        }
+
+        .source-tag {
+            padding: 3px 8px;
+            border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.2);
+            font-size: 10px;
+        }
+
+        .influencer-content { padding: 16px; }
+
+        .influencer-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .influencer-avatar { position: relative; flex-shrink: 0; }
+
+        .avatar-img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #EC4899, #8B5CF6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .avatar-verified {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-500);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+        }
+
+        .influencer-info { flex: 1; min-width: 0; }
+
+        .influencer-name-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2px;
+        }
+
+        .influencer-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+
+        .influencer-price {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--success-600);
+        }
+
+        .influencer-handle {
+            font-size: 13px;
+            color: var(--slate-500);
+            margin-bottom: 8px;
+        }
+
+        .influencer-metrics {
+            display: flex;
+            gap: 12px;
+        }
+
+        .metric {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-600);
+        }
+
+        /* Pipeline */
+        .pipeline-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: var(--slate-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 14px;
+        }
+
+        .pipeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .pipeline-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .pipeline-icon.done { background: var(--success-500); color: white; }
+        .pipeline-icon.current { background: var(--primary-500); color: white; animation: pulseIcon 2s infinite; }
+        .pipeline-icon.pending { background: var(--slate-200); color: var(--slate-400); }
+
+        @keyframes pulseIcon {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(124, 58, 237, 0); }
+        }
+
+        .pipeline-label { font-size: 11px; font-weight: 600; }
+        .pipeline-label.done { color: var(--success-600); }
+        .pipeline-label.current { color: var(--primary-600); }
+        .pipeline-label.pending { color: var(--slate-400); }
+
+        .pipeline-connector {
+            flex: 0.5;
+            height: 2px;
+            background: var(--slate-200);
+            margin: 0 -8px;
+            margin-bottom: 20px;
+        }
+
+        .pipeline-connector.done { background: var(--success-500); }
+
+        .card-actions { display: flex; gap: 10px; }
+
+        .card-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .card-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .card-btn.secondary {
+            background: var(--slate-100);
+            color: var(--slate-700);
+            border: 1px solid var(--slate-200);
+        }
+
+        .card-btn.sign {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+        }
+
+        /* Budget */
+        .budget-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            border: 1px solid var(--slate-200);
+        }
+
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .budget-total {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .budget-total span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--slate-500);
+        }
+
+        .budget-bar {
+            height: 12px;
+            background: var(--slate-100);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: 16px;
+            display: flex;
+        }
+
+        .budget-segment { height: 100%; }
+        .budget-segment.paid { background: var(--success-500); }
+        .budget-segment.escrow { background: var(--warning-400); }
+
+        .budget-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--slate-50);
+            border-radius: var(--radius-md);
+        }
+
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .legend-dot.paid { background: var(--success-500); }
+        .legend-dot.escrow { background: var(--warning-400); }
+        .legend-dot.remaining { background: var(--slate-300); }
+
+        .legend-value { font-size: 15px; font-weight: 700; color: var(--slate-900); }
+        .legend-label { font-size: 11px; color: var(--slate-500); }
+
+        /* Bottom Sheet */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        .bottom-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            width: 100%;
+            max-width: 430px;
+            max-height: 85vh;
+            background: white;
+            border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+            z-index: 301;
+            transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bottom-sheet.active { transform: translateX(-50%) translateY(0); }
+
+        .sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--slate-300);
+            border-radius: 2px;
+            margin: 12px auto;
+        }
+
+        .sheet-header {
+            padding: 0 20px 16px;
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .sheet-header-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .sheet-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--success-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .sheet-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--slate-900);
+        }
+
+        .sheet-subtitle {
+            font-size: 13px;
+            color: var(--slate-500);
+            padding-left: 56px;
+        }
+
+        .sheet-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .field-group { margin-bottom: 24px; }
+
+        .field-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--slate-700);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .field-label .required { color: #EF4444; }
+
+        .chip-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            padding: 10px 16px;
+            border-radius: var(--radius-full);
+            border: 1.5px solid var(--slate-200);
+            background: white;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-600);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip:hover {
+            border-color: var(--success-300);
+            background: var(--success-50);
+        }
+
+        .chip.selected {
+            border-color: var(--success-500);
+            background: var(--success-500);
+            color: white;
+        }
+
+        .budget-input {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-lg);
+            background: white;
+        }
+
+        .budget-input:focus-within {
+            border-color: var(--success-500);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .budget-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--slate-800);
+            background: transparent;
+        }
+
+        .budget-currency {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--slate-400);
+        }
+
+        .field-hint {
+            font-size: 12px;
+            color: var(--slate-500);
+            margin-top: 8px;
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stepper-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--slate-200);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--slate-600);
+            transition: all 0.2s;
+        }
+
+        .stepper-btn:hover {
+            border-color: var(--success-400);
+            background: var(--success-50);
+        }
+
+        .stepper-btn.plus {
+            background: var(--success-500);
+            border-color: var(--success-500);
+            color: white;
+        }
+
+        .stepper-btn.plus:hover {
+            background: var(--success-600);
+        }
+
+        .stepper-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--slate-800);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .sheet-footer {
+            padding: 16px 20px 32px;
+            border-top: 1px solid var(--slate-200);
+            background: white;
+        }
+
+        .sheet-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: var(--radius-lg);
+            border: none;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--success-500), var(--success-600));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .sheet-btn:hover {
+            background: linear-gradient(135deg, var(--success-600), var(--success-700));
+            transform: translateY(-1px);
+        }
+
+        /* Version Switcher */
+        .version-switcher {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 9999;
+            background: white;
+            border-radius: 30px;
+            padding: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+        }
+
+        .version-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #6B7280;
+        }
+
+        .version-btn.active {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+        }
+
+        .version-btn:hover:not(.active) {
+            background: #F3F4F6;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Version Switcher -->
+        <div class="version-switcher">
+            <button class="version-btn" onclick="window.location.href='campaign-details.html'">Hybrid</button>
+            <button class="version-btn active">Invite</button>
+            <button class="version-btn" onclick="window.location.href='public-campaign.html'">Public</button>
+        </div>
+
+        <section class="hero">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <span>9:41</span>
+                <div>📶 📡 🔋</div>
+            </div>
+
+            <!-- Header -->
+            <header class="header">
+                <button class="back-btn" onclick="window.location.href='my-campaigns.html'">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <span class="header-title">Campaign Details</span>
+                <button class="header-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                </button>
+            </header>
+
+            <!-- Wave -->
+            <div class="hero-wave">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M0,60 C200,100 400,20 600,60 C800,100 1000,20 1200,60 L1200,120 L0,120 Z" fill="var(--slate-50)"/>
+                </svg>
+            </div>
+
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <div class="hero-meta">
+                    <span class="campaign-type">🎯 Invite Only</span>
+                    <div class="platforms">
+                        <span class="platform">📷</span>
+                        <span class="platform">🎵</span>
+                    </div>
+                </div>
+
+                <h1 class="campaign-name">Ramadan Food Products</h1>
+
+                <div class="status-row">
+                    <div class="status-badge"><span class="status-dot"></span> Active</div>
+                    <div class="deadline">⏰ 3 days left</div>
+                </div>
+
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Invited</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value">300K</div>
+                        <div class="stat-label">Budget</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value">2<span>/5</span></div>
+                        <div class="stat-label">Done</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <main class="main">
+            <!-- Enable Applications CTA -->
+            <div class="enable-cta" onclick="openSheet()">
+                <div class="enable-cta-inner">
+                    <div class="enable-cta-icon">📢</div>
+                    <div class="enable-cta-content">
+                        <div class="enable-cta-title">
+                            Enable Applications
+                            <span class="enable-cta-badge">Expand Reach</span>
+                        </div>
+                        <div class="enable-cta-desc">Let qualified influencers discover and apply to join your campaign</div>
+                    </div>
+                    <div class="enable-cta-arrow">→</div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-row">
+                        <div class="section-icon action">🔥</div>
+                        <span class="section-title">Needs Your Action</span>
+                    </div>
+                </div>
+
+                <div class="action-scroll">
+                    <div class="action-card" style="background: linear-gradient(135deg, var(--primary-50) 0%, white 100%); border-color: var(--primary-200);">
+                        <div class="action-icon">🎯</div>
+                        <div class="action-label">Invite Influencer</div>
+                        <div class="action-sublabel">Add more to team</div>
+                    </div>
+                    <div class="action-card urgent">
+                        <span class="action-badge">2</span>
+                        <div class="action-icon">💳</div>
+                        <div class="action-label">Pay Now</div>
+                        <div class="action-sublabel">160,000 SAR</div>
+                    </div>
+                    <div class="action-card">
+                        <span class="action-badge">1</span>
+                        <div class="action-icon">✍️</div>
+                        <div class="action-label">Sign Contract</div>
+                        <div class="action-sublabel">Your signature</div>
+                    </div>
+                    <div class="action-card">
+                        <span class="action-badge">1</span>
+                        <div class="action-icon">👁️</div>
+                        <div class="action-label">Review Content</div>
+                        <div class="action-sublabel">Ready to review</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-row">
+                        <div class="section-icon team">👥</div>
+                        <span class="section-title">Team</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <span class="team-card-badge">🎯 INVITED</span>
+                    <div class="team-card-header">
+                        <div class="team-card-icon">🎯</div>
+                        <div class="team-card-info">
+                            <h3>5 Influencers</h3>
+                            <p>Personally invited by you</p>
+                        </div>
+                    </div>
+                    <div class="team-stats">
+                        <div class="team-stat">
+                            <div class="team-stat-value"><span class="team-stat-dot working"></span>2</div>
+                            <div class="team-stat-label">Working</div>
+                        </div>
+                        <div class="team-stat">
+                            <div class="team-stat-value"><span class="team-stat-dot pending"></span>1</div>
+                            <div class="team-stat-label">Pending</div>
+                        </div>
+                        <div class="team-stat">
+                            <div class="team-stat-value"><span class="team-stat-dot done"></span>2</div>
+                            <div class="team-stat-label">Done</div>
+                        </div>
+                    </div>
+                    <button class="team-card-btn">View All Invited →</button>
+                </div>
+
+                <!-- Influencer Card -->
+                <div class="influencer-list">
+                    <article class="influencer-card">
+                        <div class="source-banner">
+                            <span>🎯 Invited</span>
+                            <span class="source-tag">Individual Terms</span>
+                        </div>
+                        <div class="influencer-content">
+                            <div class="influencer-header">
+                                <div class="influencer-avatar">
+                                    <div class="avatar-img">SA</div>
+                                    <span class="avatar-verified">✓</span>
+                                </div>
+                                <div class="influencer-info">
+                                    <div class="influencer-name-row">
+                                        <span class="influencer-name">Sara Ahmed</span>
+                                        <span class="influencer-price">80,000 SAR</span>
+                                    </div>
+                                    <div class="influencer-handle">@sara.lifestyle</div>
+                                    <div class="influencer-metrics">
+                                        <span class="metric">📷 250K</span>
+                                        <span class="metric">🎵 180K</span>
+                                        <span class="metric">⭐ 4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pipeline-status">
+                                <div class="pipeline-step">
+                                    <div class="pipeline-icon done">✓</div>
+                                    <span class="pipeline-label done">Paid</span>
+                                </div>
+                                <div class="pipeline-connector done"></div>
+                                <div class="pipeline-step">
+                                    <div class="pipeline-icon current">📝</div>
+                                    <span class="pipeline-label current">You Sign</span>
+                                </div>
+                                <div class="pipeline-connector"></div>
+                                <div class="pipeline-step">
+                                    <div class="pipeline-icon pending">👤</div>
+                                    <span class="pipeline-label pending">They Sign</span>
+                                </div>
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="card-btn secondary">💬 Message</button>
+                                <button class="card-btn sign">✍️ Sign Contract</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Budget -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-row">
+                        <div class="section-icon budget">💰</div>
+                        <span class="section-title">Budget Overview</span>
+                    </div>
+                </div>
+                <div class="budget-card">
+                    <div class="budget-header">
+                        <span class="budget-total">300,000 <span>SAR</span></span>
+                    </div>
+                    <div class="budget-bar">
+                        <div class="budget-segment paid" style="width: 30%"></div>
+                        <div class="budget-segment escrow" style="width: 25%"></div>
+                    </div>
+                    <div class="budget-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot paid"></span>
+                            <div><div class="legend-value">90K</div><div class="legend-label">Paid</div></div>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot escrow"></span>
+                            <div><div class="legend-value">75K</div><div class="legend-label">In Escrow</div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSheet()"></div>
+
+    <!-- Bottom Sheet: Enable Applications -->
+    <div class="bottom-sheet" id="sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-header">
+            <div class="sheet-header-top">
+                <div class="sheet-icon">📢</div>
+                <h2 class="sheet-title">Enable Applications</h2>
+            </div>
+            <p class="sheet-subtitle">Set requirements for influencers who want to apply</p>
+        </div>
+        <div class="sheet-content">
+            <div class="field-group">
+                <label class="field-label">Influencer Tier <span class="required">*</span></label>
+                <div class="chip-grid">
+                    <span class="chip" onclick="this.classList.toggle('selected')">10K-50K</span>
+                    <span class="chip selected" onclick="this.classList.toggle('selected')">50K-200K</span>
+                    <span class="chip selected" onclick="this.classList.toggle('selected')">200K-500K</span>
+                    <span class="chip" onclick="this.classList.toggle('selected')">500K-1M</span>
+                    <span class="chip" onclick="this.classList.toggle('selected')">1M+</span>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Influencer Niche <span class="required">*</span></label>
+                <div class="chip-grid">
+                    <span class="chip" onclick="this.classList.toggle('selected')">Fashion</span>
+                    <span class="chip selected" onclick="this.classList.toggle('selected')">Beauty</span>
+                    <span class="chip selected" onclick="this.classList.toggle('selected')">Lifestyle</span>
+                    <span class="chip" onclick="this.classList.toggle('selected')">Tech</span>
+                    <span class="chip selected" onclick="this.classList.toggle('selected')">Food</span>
+                    <span class="chip" onclick="this.classList.toggle('selected')">Travel</span>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Max Budget per Influencer <span class="required">*</span></label>
+                <div class="budget-input">
+                    <input type="text" value="50,000">
+                    <span class="budget-currency">SAR</span>
+                </div>
+                <p class="field-hint">Influencers can only apply if their rate is within this budget</p>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">How many influencers needed? <span class="required">*</span></label>
+                <div class="stepper">
+                    <button class="stepper-btn" onclick="updateCount(-1)">−</button>
+                    <span class="stepper-value" id="countValue">5</span>
+                    <button class="stepper-btn plus" onclick="updateCount(1)">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="sheet-footer">
+            <button class="sheet-btn">📢 Enable Applications</button>
+        </div>
+    </div>
+
+    <script>
+        let count = 5;
+
+        function openSheet() {
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('sheet').classList.add('active');
+        }
+
+        function closeSheet() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('sheet').classList.remove('active');
+        }
+
+        function updateCount(delta) {
+            count = Math.max(1, Math.min(50, count + delta));
+            document.getElementById('countValue').textContent = count;
+        }
+    </script>
+</body>
+</html>

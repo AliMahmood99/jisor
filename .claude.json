@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "notion": {
+      "transport": "http",
+      "url": "https://mcp.notion.com/mcp",
+      "env": {
+        "NOTION_API_KEY": "YOUR_NOTION_INTEGRATION_TOKEN_HERE"
+      }
+    }
+  }
+}

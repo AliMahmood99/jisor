@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Create Campaign - Step 2 | JISOR</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/v1/styles.css" data-version-file="styles.css">
     <style>
         /* Reuse styles from step 1 */
         .progress-container {
@@ -250,8 +250,54 @@
             opacity: 0.5;
         }
     </style>
+    <style>
+        /* Version Switcher Styles */
+        .version-switcher {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 9999;
+            background: white;
+            border-radius: 30px;
+            padding: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+        }
+
+        .version-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #6B7280;
+        }
+
+        .version-btn.active {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+        }
+
+        .version-btn:hover:not(.active) {
+            background: #F3F4F6;
+        }
+    </style>
+
 </head>
 <body>
+    <!-- Version Switcher -->
+    <div class="version-switcher">
+        <button class="version-btn active" data-switch-version="hybrid">Hybrid</button>
+        <button class="version-btn" data-switch-version="invite">Invite</button>
+        <button class="version-btn" data-switch-version="public">Public</button>
+    </div>
+
+
     <div class="mobile-container">
         <!-- Status Bar -->
         <div class="status-bar">
@@ -355,17 +401,17 @@
             <!-- Location -->
             <div class="form-group">
                 <label class="form-label">
-                    Target Location <span class="required">*</span>
+                    Target City <span class="required">*</span>
                 </label>
                 <div class="chips-container" id="location-chips">
-                    <div class="chip" data-value="saudi-arabia">Saudi Arabia</div>
-                    <div class="chip" data-value="uae">UAE</div>
-                    <div class="chip" data-value="kuwait">Kuwait</div>
-                    <div class="chip" data-value="qatar">Qatar</div>
-                    <div class="chip" data-value="bahrain">Bahrain</div>
-                    <div class="chip" data-value="oman">Oman</div>
-                    <div class="chip" data-value="egypt">Egypt</div>
-                    <div class="chip" data-value="jordan">Jordan</div>
+                    <div class="chip" data-value="riyadh">Riyadh</div>
+                    <div class="chip" data-value="jeddah">Jeddah</div>
+                    <div class="chip" data-value="mecca">Mecca</div>
+                    <div class="chip" data-value="medina">Medina</div>
+                    <div class="chip" data-value="dammam">Dammam</div>
+                    <div class="chip" data-value="khobar">Khobar</div>
+                    <div class="chip" data-value="tabuk">Tabuk</div>
+                    <div class="chip" data-value="abha">Abha</div>
                 </div>
             </div>
 
@@ -388,17 +434,6 @@
                 </div>
             </div>
 
-            <!-- Language -->
-            <div class="form-group">
-                <label class="form-label">
-                    Content Language <span class="required">*</span>
-                </label>
-                <div class="chips-container" id="language-chips">
-                    <div class="chip" data-value="arabic">العربية</div>
-                    <div class="chip" data-value="english">English</div>
-                    <div class="chip" data-value="both">Both</div>
-                </div>
-            </div>
         </div>
 
         <!-- Bottom Navigation -->
@@ -452,8 +487,7 @@
         const formData = {
             gender: null,
             locations: [],
-            interests: [],
-            language: null
+            interests: []
         };
 
         // Single select chips (gender, language)
@@ -495,13 +529,11 @@
         setupSingleSelectChips('gender-chips', 'gender');
         setupMultiSelectChips('location-chips', 'locations');
         setupMultiSelectChips('interests-chips', 'interests');
-        setupSingleSelectChips('language-chips', 'language');
 
         // Form validation
         function validateForm() {
             const isValid = formData.gender &&
-                           formData.locations.length > 0 &&
-                           formData.language;
+                           formData.locations.length > 0;
 
             const nextBtn = document.getElementById('next-btn');
             nextBtn.disabled = !isValid;
@@ -522,8 +554,7 @@
                 },
                 gender: formData.gender,
                 locations: formData.locations,
-                interests: formData.interests,
-                language: formData.language
+                interests: formData.interests
             };
 
             sessionStorage.setItem('campaignData_step2', JSON.stringify(stepData));
@@ -575,15 +606,6 @@
                     });
                 }
 
-                // Restore language
-                if (data.language) {
-                    const langChip = document.querySelector(`#language-chips .chip[data-value="${data.language}"]`);
-                    if (langChip) {
-                        langChip.classList.add('selected');
-                        formData.language = data.language;
-                    }
-                }
-
                 validateForm();
             }
         });
@@ -593,5 +615,8 @@
         nextBtn.disabled = true;
         nextBtn.style.opacity = '0.5';
     </script>
+
+    <!-- Version Switcher Script -->
+    <script src="js/version-switcher.js"></script>
 </body>
 </html>

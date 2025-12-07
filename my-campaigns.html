@@ -50,11 +50,10 @@
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
-            color: var(--gray-900);
+            background: var(--gray-100);
             min-height: 100vh;
-            overflow-x: hidden;
-            padding: 20px 0;
+            color: var(--slate-900);
+            -webkit-font-smoothing: antialiased;
         }
 
         .mobile-container {
@@ -779,8 +778,54 @@
         .campaign-card:nth-child(2) { animation-delay: 0.1s; }
         .campaign-card:nth-child(3) { animation-delay: 0.15s; }
     </style>
+    <style>
+        /* Version Switcher Styles */
+        .version-switcher {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 9999;
+            background: white;
+            border-radius: 30px;
+            padding: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+        }
+
+        .version-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #6B7280;
+        }
+
+        .version-btn.active {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+        }
+
+        .version-btn:hover:not(.active) {
+            background: #F3F4F6;
+        }
+    </style>
+
 </head>
 <body>
+    <!-- Version Switcher -->
+    <div class="version-switcher">
+        <button class="version-btn active" data-switch-version="hybrid">Hybrid</button>
+        <button class="version-btn" data-switch-version="invite">Invite</button>
+        <button class="version-btn" data-switch-version="public">Public</button>
+    </div>
+
+
     <div class="mobile-container">
         <!-- Status Bar -->
         <div class="status-bar">
@@ -1540,5 +1585,8 @@
             setInterval(updateTime, 60000);
         });
     </script>
+
+    <!-- Version Switcher Script -->
+    <script src="js/version-switcher.js"></script>
 </body>
 </html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Add Influencers - JISOR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #1a1f36;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+            color: var(--slate-900);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mobile-container {
+            max-width: 430px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: white;
+        }
+
+        .time {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Header */
+        .page-header {
+            padding: 16px 20px;
+            background: white;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .header-title {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .filter-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .filter-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--error);
+            border-radius: 50%;
+        }
+
+        /* Search */
+        .search-container {
+            padding: 16px 20px;
+            background: white;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-900);
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* Influencers List */
+        .influencers-list {
+            padding: 16px;
+            background: #FAFBFC;
+        }
+
+        /* Influencer Card */
+        .influencer-card {
+            background: white;
+            border-radius: 16px;
+            padding: 0;
+            margin-bottom: 16px;
+            border: 1.5px solid var(--gray-200);
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .influencer-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.15);
+            transform: translateY(-2px);
+        }
+
+        .rank-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            color: white;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        }
+
+        .influencer-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        .influencer-info {
+            padding: 16px;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(26,31,54,0.9);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 800;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .pricing-label {
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .pricing-currency {
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .influencer-stats {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+            margin-bottom: 12px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .stat svg {
+            width: 14px;
+            height: 14px;
+            color: var(--gray-500);
+        }
+
+        .influencer-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .influencer-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .influencer-location {
+            font-size: 12px;
+            color: var(--gray-500);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .favorite-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .favorite-btn.active {
+            background: rgba(239,68,68,0.1);
+            color: var(--error);
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .add-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+        }
+
+        .add-btn.added {
+            background: linear-gradient(135deg, var(--warning) 0%, #fb923c 100%);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+            border: 2px solid var(--success);
+            color: var(--success);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <style>
+        /* Version Switcher Styles */
+        .version-switcher {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 9999;
+            background: white;
+            border-radius: 30px;
+            padding: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+        }
+
+        .version-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #6B7280;
+        }
+
+        .version-btn.active {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+        }
+
+        .version-btn:hover:not(.active) {
+            background: #F3F4F6;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Version Switcher -->
+    <div class="version-switcher">
+        <button class="version-btn active" data-switch-version="hybrid">Hybrid</button>
+        <button class="version-btn" data-switch-version="invite">Invite</button>
+        <button class="version-btn" data-switch-version="public">Public</button>
+    </div>
+
+
+    <div class="mobile-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div style="display: flex; gap: 6px;">
+                <svg width="17" height="12" fill="currentColor">
+                    <rect x="0" y="3" width="3" height="9" rx="1"/>
+                    <rect x="4.5" y="2" width="3" height="10" rx="1"/>
+                    <rect x="9" y="0" width="3" height="12" rx="1"/>
+                    <rect x="13.5" y="0" width="3" height="12" rx="1"/>
+                </svg>
+                <svg width="25" height="12" fill="currentColor">
+                    <rect x="0" y="0" width="22" height="12" rx="3" stroke="currentColor" stroke-width="1" fill="none"/>
+                    <rect x="2" y="2" width="17" height="8" rx="1.5"/>
+                    <path d="M23 4v4a2 2 0 0 0 2-2 2 2 0 0 0-2-2z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBack()">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <h1 class="header-title">Add Influencers</h1>
+            </div>
+            <button class="filter-btn">
+                <div class="filter-badge"></div>
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18M8 12h8M10 18h4"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-box">
+                <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search" id="search-input" onkeyup="filterInfluencers()">
+            </div>
+        </div>
+
+        <!-- Influencers List -->
+        <div class="influencers-list" id="influencers-list">
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <div style="color: var(--gray-500); font-size: 14px;">Loading influencers...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get campaign ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const campaignId = urlParams.get('campaign');
+
+        // Available Influencers Database
+        const availableInfluencers = [
+            {
+                id: 'AVAIL-001',
+                name: 'S7S',
+                image: '👨‍🦲',
+                location: 'Riyadh, Saudi Arabia',
+                platform: 'tiktok',
+                followers: { tiktok: 14000, instagram: 14600, youtube: 14800 },
+                startingPrice: 5000,
+                rating: 4.7,
+                completedCampaigns: 18,
+                engagementRate: 6.2,
+                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            },
+            {
+                id: 'AVAIL-002',
+                name: 'Khalid Yousef',
+                image: '👨',
+                location: 'Dubai, UAE',
+                platform: 'instagram',
+                followers: { tiktok: 8000, instagram: 45000, youtube: 12000 },
+                startingPrice: 8000,
+                rating: 4.9,
+                completedCampaigns: 35,
+                engagementRate: 7.8,
+                gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+            },
+            {
+                id: 'AVAIL-003',
+                name: 'Mariam Hassan',
+                image: '👩',
+                location: 'Jeddah, Saudi Arabia',
+                platform: 'youtube',
+                followers: { tiktok: 5000, instagram: 23000, youtube: 89000 },
+                startingPrice: 12000,
+                rating: 4.8,
+                completedCampaigns: 42,
+                engagementRate: 5.4,
+                gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+            },
+            {
+                id: 'AVAIL-004',
+                name: 'Ahmed Saleh',
+                image: '👨‍🦱',
+                location: 'Cairo, Egypt',
+                platform: 'tiktok',
+                followers: { tiktok: 156000, instagram: 67000, youtube: 34000 },
+                startingPrice: 15000,
+                rating: 4.6,
+                completedCampaigns: 28,
+                engagementRate: 8.9,
+                gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+            },
+            {
+                id: 'AVAIL-005',
+                name: 'Nada Ali',
+                image: '👩‍🦰',
+                location: 'Riyadh, Saudi Arabia',
+                platform: 'instagram',
+                followers: { tiktok: 12000, instagram: 234000, youtube: 45000 },
+                startingPrice: 18000,
+                rating: 4.9,
+                completedCampaigns: 56,
+                engagementRate: 6.7,
+                gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+            },
+            {
+                id: 'AVAIL-006',
+                name: 'Yara Mohammed',
+                image: '👩‍🦱',
+                location: 'Dubai, UAE',
+                platform: 'tiktok',
+                followers: { tiktok: 89000, instagram: 45000, youtube: 23000 },
+                startingPrice: 9000,
+                rating: 4.5,
+                completedCampaigns: 21,
+                engagementRate: 7.2,
+                gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)'
+            }
+        ];
+
+        let favorites = [];
+        let added = [];
+        let filteredInfluencers = [...availableInfluencers];
+
+        // Initialize
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+            renderInfluencers();
+        }, 500);
+
+        // Render Influencers
+        function renderInfluencers() {
+            const list = document.getElementById('influencers-list');
+            let html = '';
+
+            filteredInfluencers.forEach((influencer, index) => {
+                const isFavorite = favorites.includes(influencer.id);
+                const isAdded = added.includes(influencer.id);
+
+                html += `
+                    <div class="influencer-card" style="opacity: 0;">
+                        <div class="rank-badge">${index + 1}</div>
+                        <div class="influencer-image" style="background: ${influencer.gradient};">
+                            <div style="font-size: 64px;">${influencer.image}</div>
+                            <div class="pricing-badge">
+                                <span class="pricing-label">Starting from</span>
+                                ${(influencer.startingPrice / 1000).toFixed(0)},000
+                                <span class="pricing-currency">﷼</span>
+                            </div>
+                        </div>
+                        <div class="influencer-info">
+                            <div class="influencer-stats">
+                                <div class="stat">
+                                    <svg fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                                    </svg>
+                                    ${(influencer.followers.tiktok / 1000).toFixed(0)}k
+                                </div>
+                                <div class="stat">
+                                    <svg fill="currentColor" viewBox="0 0 24 24">
+                                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"/>
+                                    </svg>
+                                    ${(influencer.followers.instagram / 1000).toFixed(1)}k
+                                </div>
+                                <div class="stat">
+                                    <svg fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/>
+                                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                                    </svg>
+                                    ${(influencer.followers.youtube / 1000).toFixed(1)}k
+                                </div>
+                            </div>
+                            <div class="influencer-details">
+                                <div>
+                                    <div class="influencer-name">${influencer.name}</div>
+                                    <div class="influencer-location">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                                            <circle cx="12" cy="9" r="2.5"/>
+                                        </svg>
+                                        ${influencer.location}
+                                    </div>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${influencer.id}')">
+                                        ${isFavorite ? '❤️' : '🤍'}
+                                    </button>
+                                    <button class="add-btn ${isAdded ? 'added' : ''}" onclick="addInfluencer('${influencer.id}')">
+                                        ${isAdded ? '✓' : '+'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
+
+            // Add fade-in animation
+            setTimeout(() => {
+                document.querySelectorAll('.influencer-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('fade-in');
+                    }, index * 50);
+                });
+            }, 100);
+        }
+
+        // Filter Influencers
+        function filterInfluencers() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            filteredInfluencers = availableInfluencers.filter(inf =>
+                inf.name.toLowerCase().includes(searchTerm) ||
+                inf.location.toLowerCase().includes(searchTerm)
+            );
+            renderInfluencers();
+        }
+
+        // Toggle Favorite
+        function toggleFavorite(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(fid => fid !== id);
+            } else {
+                favorites.push(id);
+            }
+            renderInfluencers();
+        }
+
+        // Add Influencer
+        function addInfluencer(id) {
+            if (added.includes(id)) {
+                // Already added
+                showToast('Already added to campaign');
+                return;
+            }
+
+            const influencer = availableInfluencers.find(inf => inf.id === id);
+            if (!influencer) return;
+
+            added.push(id);
+            showToast(`✓ ${influencer.name} added to campaign`);
+            renderInfluencers();
+
+            // Scroll to top to show next influencer
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        }
+
+        // Show Toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Go Back
+        function goBack() {
+            if (campaignId) {
+                window.location.href = `campaign-details.html?id=${campaignId}`;
+            } else {
+                window.location.href = 'my-campaigns.html';
+            }
+        }
+    </script>
+
+    <!-- Version Switcher Script -->
+    <script src="js/version-switcher.js"></script>
+</body>
+</html>
