@@ -876,44 +876,6 @@ window.campaignsData = [
   },
 
   // ============================================
-  // PAUSED CAMPAIGNS
-  // ============================================
-
-  {
-    id: 'CAMP-2025-00165',
-    name: 'Gaming Accessories Launch',
-    type: 'invite-only',
-    status: 'paused',
-    createdDate: '2025-11-05',
-    deadline: '2025-12-20',
-    daysLeft: 17,
-    pausedDate: '2025-11-28',
-    pausedReason: 'Budget revision needed',
-
-    invited: [
-      {
-        name: 'Ahmad',
-        avatar: 'A',
-        platform: 'youtube',
-        followers: 320000,
-        status: 'accepted',
-        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-      },
-      {
-        name: 'Lina',
-        avatar: 'L',
-        platform: 'tiktok',
-        followers: 180000,
-        status: 'pending',
-        gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
-      }
-    ],
-
-    budget: 55000,
-    progress: 40
-  },
-
-  // ============================================
   // COMPLETED CAMPAIGNS
   // ============================================
 
