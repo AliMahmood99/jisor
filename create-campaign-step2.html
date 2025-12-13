@@ -104,6 +104,33 @@
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
+        /* Select All Button Hover */
+        #select-all-cities:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        #select-all-cities:active {
+            transform: scale(0.96);
+        }
+
+        /* Campaign Location Cards */
+        .location-card:hover {
+            border-color: var(--primary) !important;
+            background: var(--primary-bg) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+        }
+
+        .location-card.selected {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%) !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+        }
+
+        .location-card.selected div {
+            color: white !important;
+        }
+
         /* Range Slider */
         .range-container {
             padding: 20px;
@@ -400,9 +427,17 @@
 
             <!-- Location -->
             <div class="form-group">
-                <label class="form-label">
-                    Target City <span class="required">*</span>
-                </label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <label class="form-label" style="margin: 0;">
+                        Target City <span class="required">*</span>
+                    </label>
+                    <button type="button" id="select-all-cities" onclick="selectAllCities()" style="background: none; border: none; color: #6366F1; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 6px; transition: all 0.2s;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span id="select-all-text">Select All</span>
+                    </button>
+                </div>
                 <div class="chips-container" id="location-chips">
                     <div class="chip" data-value="riyadh">Riyadh</div>
                     <div class="chip" data-value="jeddah">Jeddah</div>
@@ -413,9 +448,6 @@
                     <div class="chip" data-value="tabuk">Tabuk</div>
                     <div class="chip" data-value="abha">Abha</div>
                 </div>
-                <button type="button" class="select-all-btn" id="select-all-cities" onclick="selectAllCities()" style="margin-top: 12px; padding: 8px 16px; background: transparent; border: 1px solid #6366F1; color: #6366F1; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
-                    Select All Cities
-                </button>
             </div>
 
             <!-- Interests -->
@@ -442,10 +474,19 @@
                 <label class="form-label">
                     Campaign Location <span class="required">*</span>
                 </label>
-                <div class="chips-container" id="campaign-location-chips">
-                    <div class="chip" data-value="virtual">Virtual</div>
-                    <div class="chip" data-value="in-person">In-person</div>
-                    <div class="chip" data-value="both">Both</div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;" id="campaign-location-chips">
+                    <div class="location-card" data-value="virtual" style="padding: 16px; background: white; border: 2px solid var(--gray-200); border-radius: 12px; cursor: pointer; transition: all 0.25s; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 8px;">💻</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--gray-900);">Virtual</div>
+                    </div>
+                    <div class="location-card" data-value="in-person" style="padding: 16px; background: white; border: 2px solid var(--gray-200); border-radius: 12px; cursor: pointer; transition: all 0.25s; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 8px;">🏢</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--gray-900);">In-person</div>
+                    </div>
+                    <div class="location-card" data-value="both" style="padding: 16px; background: white; border: 2px solid var(--gray-200); border-radius: 12px; cursor: pointer; transition: all 0.25s; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 8px;">🌐</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--gray-900);">Both</div>
+                    </div>
                 </div>
             </div>
 
@@ -532,14 +573,14 @@
             validateForm();
 
             // Update button text
-            const btn = document.getElementById('select-all-cities');
-            btn.textContent = allSelected ? 'Select All Cities' : 'Deselect All Cities';
+            const textSpan = document.getElementById('select-all-text');
+            textSpan.textContent = allSelected ? 'Select All' : 'Deselect All';
         }
 
-        // Single select chips (gender, language)
+        // Single select chips (gender, language, location cards)
         function setupSingleSelectChips(containerId, dataKey) {
             const container = document.getElementById(containerId);
-            const chips = container.querySelectorAll('.chip');
+            const chips = container.querySelectorAll('.chip, .location-card');
 
             chips.forEach(chip => {
                 chip.addEventListener('click', () => {
