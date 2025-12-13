@@ -413,6 +413,9 @@
                     <div class="chip" data-value="tabuk">Tabuk</div>
                     <div class="chip" data-value="abha">Abha</div>
                 </div>
+                <button type="button" class="select-all-btn" id="select-all-cities" onclick="selectAllCities()" style="margin-top: 12px; padding: 8px 16px; background: transparent; border: 1px solid #6366F1; color: #6366F1; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                    Select All Cities
+                </button>
             </div>
 
             <!-- Interests -->
@@ -431,6 +434,18 @@
                     <div class="chip" data-value="gaming">Gaming</div>
                     <div class="chip" data-value="education">Education</div>
                     <div class="chip" data-value="entertainment">Entertainment</div>
+                </div>
+            </div>
+
+            <!-- Campaign Location -->
+            <div class="form-group">
+                <label class="form-label">
+                    Campaign Location <span class="required">*</span>
+                </label>
+                <div class="chips-container" id="campaign-location-chips">
+                    <div class="chip" data-value="virtual">Virtual</div>
+                    <div class="chip" data-value="in-person">In-person</div>
+                    <div class="chip" data-value="both">Both</div>
                 </div>
             </div>
 
@@ -487,8 +502,39 @@
         const formData = {
             gender: null,
             locations: [],
-            interests: []
+            interests: [],
+            campaignLocation: null
         };
+
+        // Select All Cities Function
+        function selectAllCities() {
+            const container = document.getElementById('location-chips');
+            const chips = container.querySelectorAll('.chip');
+            const allSelected = Array.from(chips).every(chip => chip.classList.contains('selected'));
+
+            if (allSelected) {
+                // Deselect all
+                chips.forEach(chip => {
+                    chip.classList.remove('selected');
+                });
+                formData.locations = [];
+            } else {
+                // Select all
+                chips.forEach(chip => {
+                    chip.classList.add('selected');
+                    const value = chip.dataset.value;
+                    if (!formData.locations.includes(value)) {
+                        formData.locations.push(value);
+                    }
+                });
+            }
+
+            validateForm();
+
+            // Update button text
+            const btn = document.getElementById('select-all-cities');
+            btn.textContent = allSelected ? 'Select All Cities' : 'Deselect All Cities';
+        }
 
         // Single select chips (gender, language)
         function setupSingleSelectChips(containerId, dataKey) {
@@ -529,11 +575,13 @@
         setupSingleSelectChips('gender-chips', 'gender');
         setupMultiSelectChips('location-chips', 'locations');
         setupMultiSelectChips('interests-chips', 'interests');
+        setupSingleSelectChips('campaign-location-chips', 'campaignLocation');
 
         // Form validation
         function validateForm() {
             const isValid = formData.gender &&
-                           formData.locations.length > 0;
+                           formData.locations.length > 0 &&
+                           formData.campaignLocation;
 
             const nextBtn = document.getElementById('next-btn');
             nextBtn.disabled = !isValid;
@@ -554,7 +602,8 @@
                 },
                 gender: formData.gender,
                 locations: formData.locations,
-                interests: formData.interests
+                interests: formData.interests,
+                campaignLocation: formData.campaignLocation
             };
 
             sessionStorage.setItem('campaignData_step2', JSON.stringify(stepData));

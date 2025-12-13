@@ -536,6 +536,30 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Number of Posts Required -->
+            <div class="form-group">
+                <label class="form-label">
+                    Number of Posts Required <span class="required">*</span>
+                </label>
+                <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #F9FAFB; border-radius: 12px;">
+                    <button type="button" onclick="decrementPosts()" style="width: 40px; height: 40px; border-radius: 50%; background: white; border: 2px solid #E5E7EB; color: #6366F1; font-size: 20px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;">−</button>
+                    <input type="number" id="posts-count" value="1" min="1" max="100" readonly style="width: 80px; text-align: center; font-size: 24px; font-weight: 700; color: #1F2937; border: none; background: transparent; outline: none;" />
+                    <button type="button" onclick="incrementPosts()" style="width: 40px; height: 40px; border-radius: 50%; background: #6366F1; border: none; color: white; font-size: 20px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+                </div>
+            </div>
+
+            <!-- Who Will Post -->
+            <div class="form-group">
+                <label class="form-label">
+                    Who will post <span class="required">*</span>
+                </label>
+                <p style="font-size: 13px; color: #6B7280; margin-bottom: 12px;">Select who will publish the content on social media</p>
+                <div class="chips-container" id="who-will-post-chips">
+                    <div class="chip" data-value="company">Company Socials</div>
+                    <div class="chip" data-value="influencer">Influencer Socials</div>
+                </div>
+            </div>
         </div>
 
         <!-- Bottom Navigation -->
@@ -568,8 +592,29 @@
                 instagram: [],
                 tiktok: [],
                 youtube: []
-            }
+            },
+            postsCount: 1,
+            whoWillPost: null
         };
+
+        // Posts count functions
+        function incrementPosts() {
+            const input = document.getElementById('posts-count');
+            const currentValue = parseInt(input.value);
+            if (currentValue < 100) {
+                input.value = currentValue + 1;
+                formData.postsCount = currentValue + 1;
+            }
+        }
+
+        function decrementPosts() {
+            const input = document.getElementById('posts-count');
+            const currentValue = parseInt(input.value);
+            if (currentValue > 1) {
+                input.value = currentValue - 1;
+                formData.postsCount = currentValue - 1;
+            }
+        }
 
         // Platform selection
         const platformCards = document.querySelectorAll('.platform-card');
@@ -629,9 +674,20 @@
             });
         });
 
+        // Who Will Post selection
+        const whoWillPostChips = document.querySelectorAll('#who-will-post-chips .chip');
+        whoWillPostChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                whoWillPostChips.forEach(c => c.classList.remove('selected'));
+                chip.classList.add('selected');
+                formData.whoWillPost = chip.dataset.value;
+                validateForm();
+            });
+        });
+
         // Validation
         function validateForm() {
-            let isValid = formData.platforms.length > 0;
+            let isValid = formData.platforms.length > 0 && formData.whoWillPost;
 
             // Check that each selected platform has at least one content type
             if (isValid) {
@@ -652,7 +708,9 @@
         function goToNextStep() {
             const stepData = {
                 platforms: formData.platforms,
-                contentTypes: formData.contentTypes
+                contentTypes: formData.contentTypes,
+                postsCount: formData.postsCount,
+                whoWillPost: formData.whoWillPost
             };
 
             sessionStorage.setItem('campaignData_step3', JSON.stringify(stepData));

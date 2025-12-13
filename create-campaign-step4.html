@@ -653,26 +653,10 @@
                     </div>
                 </div>
 
-                <!-- Influencer Niche -->
+                <!-- Budget per Influencer -->
                 <div class="form-group">
                     <label class="form-label">
-                        Influencer Niche <span class="required">*</span>
-                    </label>
-                    <div class="chips-container" id="niche-chips">
-                        <div class="chip" data-value="fashion">Fashion</div>
-                        <div class="chip" data-value="beauty">Beauty</div>
-                        <div class="chip" data-value="lifestyle">Lifestyle</div>
-                        <div class="chip" data-value="tech">Tech</div>
-                        <div class="chip" data-value="food">Food</div>
-                        <div class="chip" data-value="travel">Travel</div>
-                        <div class="chip chip-more">See All →</div>
-                    </div>
-                </div>
-
-                <!-- Max Budget -->
-                <div class="form-group">
-                    <label class="form-label">
-                        Max Budget per Influencer <span class="required">*</span>
+                        Budget per Influencer <span class="required">*</span>
                     </label>
                     <div class="budget-input-wrapper">
                         <input
@@ -698,6 +682,38 @@
                         <button class="number-btn minus" onclick="changeInfluencerCount(-1)">−</button>
                         <span class="number-display" id="influencer-count">5</span>
                         <button class="number-btn plus" onclick="changeInfluencerCount(1)">+</button>
+                    </div>
+                </div>
+
+                <!-- Available Influencers Info -->
+                <div class="form-group">
+                    <div style="background: #EEF2FF; border-radius: 12px; padding: 16px; border-left: 4px solid #6366F1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                            <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #1F2937;">Available Influencers</h4>
+                        </div>
+                        <p style="margin: 0; font-size: 13px; color: #4B5563; line-height: 1.5;">
+                            <span id="available-influencers-count" style="font-weight: 700; color: #6366F1;">Calculating...</span> influencers match your criteria (tier, location, interests)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Estimated Budget -->
+                <div class="form-group">
+                    <div style="background: #F0FDF4; border-radius: 12px; padding: 20px; border: 2px solid #10B981;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #1F2937;">Estimated Budget</h4>
+                            <span id="estimated-budget" style="font-size: 24px; font-weight: 800; color: #10B981;">0 SAR</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #6B7280; line-height: 1.6;">
+                            <strong>Calculation:</strong> Number of influencers × Budget per influencer<br>
+                            <span id="budget-formula" style="font-style: italic; color: #9CA3AF;">5 influencers × 0 SAR = 0 SAR</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -747,7 +763,6 @@
             openForApplications: false,
             applicationSettings: {
                 tiers: [],
-                niches: [],
                 maxBudget: null,
                 influencerCount: 5
             }
@@ -810,12 +825,12 @@
         }
 
         setupMultiSelectChips('tier-chips', 'tiers');
-        setupMultiSelectChips('niche-chips', 'niches');
 
         // Budget input
         const budgetInput = document.getElementById('max-budget');
         budgetInput.addEventListener('input', (e) => {
             formData.applicationSettings.maxBudget = parseInt(e.target.value) || null;
+            updateBudgetCalculations();
             validateForm();
         });
 
@@ -825,6 +840,23 @@
             const newValue = Math.max(1, current + delta);
             formData.applicationSettings.influencerCount = newValue;
             document.getElementById('influencer-count').textContent = newValue;
+            updateBudgetCalculations();
+        }
+
+        // Update Budget Calculations
+        function updateBudgetCalculations() {
+            const influencerCount = formData.applicationSettings.influencerCount;
+            const budgetPerInfluencer = formData.applicationSettings.maxBudget || 0;
+            const estimatedBudget = influencerCount * budgetPerInfluencer;
+
+            // Update Estimated Budget
+            document.getElementById('estimated-budget').textContent = estimatedBudget.toLocaleString() + ' SAR';
+            document.getElementById('budget-formula').textContent =
+                `${influencerCount} influencers × ${budgetPerInfluencer.toLocaleString()} SAR = ${estimatedBudget.toLocaleString()} SAR`;
+
+            // Simulate available influencers calculation (based on tier, location, interests from previous steps)
+            const mockAvailableInfluencers = Math.floor(Math.random() * (500 - 50 + 1)) + 50;
+            document.getElementById('available-influencers-count').textContent = mockAvailableInfluencers.toLocaleString();
         }
 
         // Validation
@@ -834,7 +866,6 @@
             // If applications is on, validate settings
             if (formData.openForApplications && isValid) {
                 isValid = formData.applicationSettings.tiers.length > 0 &&
-                         formData.applicationSettings.niches.length > 0 &&
                          formData.applicationSettings.maxBudget > 0;
             }
 
